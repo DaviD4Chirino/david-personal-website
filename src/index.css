@@ -1,0 +1,53 @@
+/* @import url("https://fonts.googleapis.com/css?family=Familjen%20Grotesk:700|Noto%20Sans%20Multani:400"); */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --text: #050315;
+  --background: #fbfbfe;
+  --primary: #474646;
+  --secondary: #b6b6b6;
+  --accent: #141414;
+}
+body {
+  /* font-family: "Noto Sans Multani"; */
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  /* font-family: "Familjen Grotesk"; */
+  font-weight: 700;
+}
+
+html {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 40px; /* 2.5rem */
+}
+
+h2 {
+  font-size: 34px; /* 2.125rem */
+}
+
+h3 {
+  font-size: 28px; /* 1.75rem */
+}
+
+h4 {
+  font-size: 24px; /* 1.5rem */
+}
+
+h5 {
+  font-size: 20px; /* 1.25rem */
+}
+
+small,
+.small {
+  font-size: 14px; /* 0.875rem */
+}
