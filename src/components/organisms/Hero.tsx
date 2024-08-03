@@ -1,5 +1,6 @@
 import { NavLink as Link } from "react-router-dom";
 import { routes } from "../../staticData/pages.json";
+import RandomQuote from "../atoms/RandomQuote";
 
 export default function Hero() {
   const textClassNames: string =
@@ -22,11 +23,20 @@ export default function Hero() {
       w-full
       max-w-56
       md:max-w-md
+
+      relative
       
       "
       >
         <h1 className={textClassNames + "text-left"}>David</h1>
         <h1 className={textClassNames + "text-right "}>Space</h1>
+        <RandomQuote
+          className="
+        absolute top-[140%] md:top-36 right-0 
+        text-xs text-right
+      
+        "
+        />
       </div>
       <ul
         className="
