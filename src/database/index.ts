@@ -1,6 +1,11 @@
 import axios from "axios";
-
-export async function getGistFile(fileName: string) {
+/**
+ *
+ * @param fileName THe name of the file WITH THE EXTENSION NAME
+ * @example getGistFile("library.json")
+ * @returns The file or null if it doesn't have it
+ */
+export async function getGistFile(fileName: string): Promise<File | null> {
   const files = await getGistFiles();
 
   if (!files) {
