@@ -1,9 +1,9 @@
-import React from "react";
-
-const textClassNames: string =
-  " text-7xl md:text-8xl leading-9 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-secondary text-stroke-outside ";
+import { NavLink as Link } from "react-router-dom";
+import { routes } from "../../staticData/pages.json";
 
 export default function Hero() {
+  const textClassNames: string =
+    " text-7xl md:text-8xl leading-9 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-white text-stroke-outside ";
   return (
     <header
       className="
@@ -35,22 +35,8 @@ export default function Hero() {
       place-content-center
       "
       >
-        {/* 
-				TODO: Turn this into its own Molecule, also each link should be an Atom */}
         <li>
-          <a href="">Writer</a>
-        </li>
-        <li>
-          <a href="">Writer</a>
-        </li>
-        <li>
-          <a href="">Writer</a>
-        </li>
-        <li>
-          <a href="">Writer</a>
-        </li>
-        <li>
-          <a href="">Writer</a>
+          <Link to={routes.library}>Writer</Link>
         </li>
       </ul>
     </header>

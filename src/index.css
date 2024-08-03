@@ -29,26 +29,26 @@ html {
 }
 
 h1 {
-  font-size: 40px; /* 2.5rem */
+  font-size: 2.5rem; /* 2.5rem */
 }
 
 h2 {
-  font-size: 34px; /* 2.125rem */
+  font-size: 2.125rem; /* 2.125rem */
 }
 
 h3 {
-  font-size: 28px; /* 1.75rem */
+  font-size: 1.75rem; /* 1.75rem */
 }
 
 h4 {
-  font-size: 24px; /* 1.5rem */
+  font-size: 1.5rem; /* 1.5rem */
 }
 
 h5 {
-  font-size: 20px; /* 1.25rem */
+  font-size: 1.25rem; /* 1.25rem */
 }
 
 small,
 .small {
-  font-size: 14px; /* 0.875rem */
+  font-size: 0.875rem; /* 0.875rem */
 }
