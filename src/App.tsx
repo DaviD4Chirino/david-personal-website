@@ -2,8 +2,11 @@
 // import axios from "axios";
 import "./App.css";
 import Hero from "./components/organisms/Hero";
+import { getGistFile } from "./database";
 
 function App() {
+  console.log(getGistFile("library.json"));
+
   // const [library, setLibrary] = useState();
 
   /* useEffect(() => {

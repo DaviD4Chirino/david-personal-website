@@ -33,10 +33,17 @@ export default function Hero() {
       w-full
       flex gap-2 
       place-content-center
+      text-xl
       "
       >
         <li>
           <Link to={routes.library}>Writer</Link>
+        </li>
+        <li>
+          <Link to={routes.projects}>Developer</Link>
+        </li>
+        <li>
+          <Link to={routes.blogs}>Yapper</Link>
         </li>
       </ul>
     </header>

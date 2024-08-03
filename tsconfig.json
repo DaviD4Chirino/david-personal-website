@@ -7,5 +7,9 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": ["esnext", "dom"]
+  }
 }
