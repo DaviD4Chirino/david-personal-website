@@ -1,7 +1,10 @@
+import "./App.css";
+import Hero from "./components/organisms/Hero";
+
 function App() {
   return (
     <section>
-      <h1 className=" ">Hello world!</h1>
+      <Hero />
     </section>
   );
 }
