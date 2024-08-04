@@ -1,6 +1,7 @@
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 import "./App.css";
+import About from "./components/organisms/About";
 import Hero from "./components/organisms/Hero";
 import { getGistFile } from "./database";
 
@@ -22,6 +23,7 @@ function App() {
   return (
     <section>
       <Hero />
+      <About />
     </section>
   );
 }

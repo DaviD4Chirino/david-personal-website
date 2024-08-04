@@ -34,7 +34,6 @@ export default function Hero() {
           className="
         absolute top-[140%] md:top-36 right-0 
         text-xs text-right
-      
         "
         />
       </div>
