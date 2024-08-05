@@ -23,3 +23,17 @@ a {
     text-decoration: none;
   }
 }
+
+.tooltip-alt {
+  position: relative;
+  &:after {
+    display: block;
+    content: attr(alt);
+    position: absolute;
+    bottom: 5px;
+    color: red;
+    background-color: rgba(200, 200, 200, 0.8);
+    border-radius: 2px;
+    padding: 2px;
+  }
+}

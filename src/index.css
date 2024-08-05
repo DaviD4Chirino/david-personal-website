@@ -1,4 +1,5 @@
 /* @import url("https://fonts.googleapis.com/css?family=Familjen%20Grotesk:700|Noto%20Sans%20Multani:400"); */
+@import url("https://fonts.googleapis.com/css?family=Lunasima:700|Urbanist:400");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,10 +10,10 @@
   --secondary: #b6b6b6;
   --accent: #141414;
 }
+
 body {
-  /* font-family: "Noto Sans Multani"; */
+  font-family: "Urbanist";
   font-weight: 400;
-  min-height: 100vh;
 }
 
 h1,
@@ -20,35 +21,34 @@ h2,
 h3,
 h4,
 h5 {
-  /* font-family: "Familjen Grotesk"; */
+  font-family: "Lunasima";
   font-weight: 700;
 }
 
 html {
-  font-size: 16px;
-}
+  font-size: 100%;
+} /* 16px */
 
 h1 {
-  font-size: 2.5rem; /* 2.5rem */
+  font-size: 3.053rem; /* 48.8px */
 }
 
 h2 {
-  font-size: 2.125rem; /* 2.125rem */
+  font-size: 2.442rem; /* 39.04px */
 }
 
 h3 {
-  font-size: 1.75rem; /* 1.75rem */
+  font-size: 1.954rem; /* 31.2px */
 }
 
 h4 {
-  font-size: 1.5rem; /* 1.5rem */
+  font-size: 1.563rem; /* 24.96px */
 }
 
 h5 {
-  font-size: 1.25rem; /* 1.25rem */
+  font-size: 1.25rem; /* 20px */
 }
 
-small,
-.small {
-  font-size: 0.875rem; /* 0.875rem */
+small {
+  font-size: 0.8rem; /* 12.8px */
 }

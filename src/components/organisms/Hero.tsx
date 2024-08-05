@@ -4,7 +4,7 @@ import RandomQuote from "../atoms/RandomQuote";
 
 export default function Hero() {
   const textClassNames: string =
-    " text-7xl md:text-8xl leading-9 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-white text-stroke-outside ";
+    " text-[3.8rem] md:text-[6rem] leading-8 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-white text-stroke-outside ";
   return (
     <header
       className="

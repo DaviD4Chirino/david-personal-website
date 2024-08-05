@@ -9,6 +9,20 @@ export default {
       secondary: "#b6b6b6",
       accent: "#141414",
     },
+    fontFamily: {
+      heading: "Urbanist",
+      body: "Urbanist",
+    },
+    fontSize: {
+      sm: "0.800rem",
+      base: "1rem",
+      xl: "1.250rem",
+      "2xl": "1.563rem",
+      "3xl": "1.954rem",
+      "4xl": "2.442rem",
+      "5xl": "3.053rem",
+    },
+
     extend: {},
   },
   // eslint-disable-next-line no-undef
