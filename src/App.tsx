@@ -12,21 +12,60 @@ function App() {
   console.log(getGistFile("library.json"));
 
   return (
-    <section className="grid gap-8">
+    <section className="grid gap-8 ">
       <Hero />
-      <About />
-      <Updates />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
+      <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <BlogCard
+          title="Some big title"
+          date={new Date().toString()}
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi et nostrum magnam corrupti ab velit eveniet. Nostrum placeat ex, dolor enim numquam sunt eos, aut excepturi cupiditate perferendis ut."
+          tags={[{ title: "Blog", href: "#" }]}
+        />
+        <BlogCard
+          title="Some big title"
+          date={new Date().toString()}
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi et nostrum magnam corrupti ab velit eveniet. Nostrum placeat ex, dolor enim numquam sunt eos, aut excepturi cupiditate perferendis ut."
+          tags={[
+            { title: "Blog", href: "#" },
+            { title: "Blog", href: "#" },
+            { title: "Blog", href: "#" },
+            { title: "Blog", href: "#" },
+            { title: "Blog", href: "#" },
+            { title: "Blog", href: "#" },
+          ]}
+        />
+        <BlogCard
+          title="Some big title"
+          date={new Date().toString()}
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi et nostrum magnam corrupti ab velit eveniet. Nostrum placeat ex, dolor enim numquam sunt eos, aut excepturi cupiditate perferendis ut."
+          tags={[{ title: "Blog", href: "#" }]}
+        />
+        <BlogCard
+          title="Some big title"
+          date={new Date().toString()}
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi et nostrum magnam corrupti ab velit eveniet. Nostrum placeat ex, dolor enim numquam sunt eos, aut excepturi cupiditate perferendis ut."
+          tags={[{ title: "Blog", href: "#" }]}
+        />
+        <BlogCard
+          title="Some big title"
+          date={new Date().toString()}
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi et nostrum magnam corrupti ab velit eveniet. Nostrum placeat ex, dolor enim numquam sunt eos, aut excepturi cupiditate perferendis ut."
+          tags={[{ title: "Blog", href: "#" }]}
+        />
+        <BlogCard
+          title="Some big title"
+          date={new Date().toString()}
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi et nostrum magnam corrupti ab velit eveniet. Nostrum placeat ex, dolor enim numquam sunt eos, aut excepturi cupiditate perferendis ut."
+          tags={[{ title: "Blog", href: "#" }]}
+        />
+        <BlogCard
+          title="Some big title"
+          date={new Date().toString()}
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium animi et nostrum magnam corrupti ab velit eveniet. Nostrum placeat ex, dolor enim numquam sunt eos, aut excepturi cupiditate perferendis ut."
+          tags={[{ title: "Blog", href: "#" }]}
+        />
       </div>
+      <About />
     </section>
   );
 }

@@ -2,10 +2,7 @@ import FigureImg from "../atoms/FigureImg";
 
 export default function About() {
   return (
-    <section
-      className=" mx-auto max-w-[60rem] grid gap-5 px-5 mt-5 "
-      id="About"
-    >
+    <section className="container grid gap-5 px-5 mt-5 " id="About">
       <h2>Who I am</h2>
       <article
         id="Presentation"

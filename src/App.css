@@ -5,7 +5,11 @@
 .text-stroke-outside {
   paint-order: stroke fill;
 }
-
+.container {
+  max-width: 60rem;
+  padding-inline: 2rem;
+  margin-inline: auto;
+}
 .bg-pattern-noisy {
   position: absolute;
   z-index: -1;

@@ -1,55 +1,57 @@
-export default function BlogCard() {
+import Tag, { TagProps } from "../atoms/Tag";
+
+// TODO: Add diferent border by the type of blog, no idea how many yet,
+// TODO: but at least: Article, Project, Personal, Story, Game Development,
+// TODO: With special conditions like Project release the diferent kinds of update
+// TODO: and game release and updates as well
+
+// * Maybe the specials should be only tags
+
+export type BlogCardProps = {
+  title: string;
+  date: string;
+  description: string;
+  tags: TagProps[];
+};
+
+export default function BlogCard({
+  title,
+  date,
+  description,
+  tags,
+}: BlogCardProps) {
+  const formattedDate = new Date(date).toLocaleString("en", {
+    day: "2-digit",
+    month: "long",
+    year: "2-digit",
+  });
   return (
     <article
       className="
-		grid grid-cols-1 gap-3 grid-rows-1
-		sm:grid-cols-[.5fr_1fr] sm:grid-rows-[auto_1fr_auto]
-		bg-[white] 
-		rounded-lg
-		h-40
-		
+      grid grid-rows-[.1fr_.1fr_1fr_.2fr] gap-2
+      aspect-auto md:aspect-square
+      outline-dashed
+      p-3
+      bg-[white]
 		"
+      id="BlogCard"
     >
-      <img
-        className="
-					object-cover
-					rounded-lg
-
-					rounded-bl-none
-					rounded-br-none
-
-					sm:rounded-tr-none
-					sm:rounded-bl-lg
-					
-					shadow-lg
-					h-40 w-full
-				"
-        src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-        alt=""
-      />
-
-      <div
-        className="
-				h-full
-			grid grid-rows-[auto_3ch_1fr] gap-4 
-			p-2
-			
-			"
+      <a
+        className="text-2xl leading-5 w-max no-underline hover:underline"
+        id="Title"
       >
-        <a href="#" className="text-xl no-underline text-kanit">
-          How to use sticky note for problem solving
-        </a>
-
-        <div className="description text-ellipsis ">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
-          assumenda nesciunt laudantium itaque dolores reiciendis amet explicabo
-          illo nobis, fuga vel quo repellat ratione, ex veritatis! Odio
-          repudiandae provident aliquid.
-        </div>
-
-        <span className="text-sm opacity-40 text-right">
-          On: 20 October 2019
-        </span>
+        <b className="hover:cursor-pointer w-min">{title}</b>
+      </a>
+      <p className="text-right text-primary opacity-60 text-kanit" id="Date">
+        {formattedDate}
+      </p>
+      <p className="text-end" id="Description">
+        {description}
+      </p>
+      <div className="flex gap-2 flex-wrap" id="Tags">
+        {tags.map((tag, i) => (
+          <Tag title={tag.title} href={tag.href} key={i} />
+        ))}
       </div>
     </article>
   );
