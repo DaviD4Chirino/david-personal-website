@@ -6,6 +6,7 @@ import About from "./components/organisms/About";
 import Hero from "./components/organisms/Hero";
 import { getGistFile } from "./database";
 import Updates from "./components/organisms/Updates";
+import BlogCard from "./components/molecules/BlogCard";
 
 function App() {
   console.log(getGistFile("library.json"));
@@ -15,6 +16,17 @@ function App() {
       <Hero />
       <About />
       <Updates />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+      </div>
     </section>
   );
 }

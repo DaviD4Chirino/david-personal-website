@@ -10,14 +10,11 @@
   --secondary: #b6b6b6;
   --accent: #141414;
 }
-.kanit-thin {
-  font-family: "Kanit", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
+
 body {
   font-family: "Urbanist";
   font-weight: 400;
+  background: whitesmoke;
 }
 
 h1,
