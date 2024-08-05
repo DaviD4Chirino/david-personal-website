@@ -5,26 +5,16 @@ import "./fonts.css";
 import About from "./components/organisms/About";
 import Hero from "./components/organisms/Hero";
 import { getGistFile } from "./database";
+import Updates from "./components/organisms/Updates";
 
 function App() {
   console.log(getGistFile("library.json"));
 
-  // const [library, setLibrary] = useState();
-
-  /* useEffect(() => {
-    async function getting() {
-      const res = await getDataFromApi();
-      setLibrary(JSON.parse(res.files["library.json"].content)[0]);
-    }
-    getting();
-
-    return () => {};
-  }, []); */
-
   return (
-    <section>
+    <section className="grid gap-8">
       <Hero />
       <About />
+      <Updates />
     </section>
   );
 }

@@ -7,9 +7,9 @@ export default function About() {
       id="About"
     >
       <h2>Who I am</h2>
-      <section
+      <article
         id="Presentation"
-        className="grid grid-cols-1 sm:grid-cols-[.5fr_1fr] flex-wrap-reverse gap-2"
+        className="grid grid-cols-1 sm:grid-cols-[.5fr_1fr] gap-2"
       >
         <FigureImg
           src="/sigilPixelFanart.jpg"
@@ -50,17 +50,7 @@ export default function About() {
             experienced, so be my guest.
           </p>
         </div>
-      </section>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      </article>
     </section>
   );
 }

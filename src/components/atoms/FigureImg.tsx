@@ -22,7 +22,7 @@ export default function FigureImg({
       {...props}
       className={`
    grid grid-rows-[1fr_auto] gap-2
-   justify-center
+   justify-center 
   ${props.className ? props.className : ""}
    `}
     >
@@ -32,10 +32,10 @@ export default function FigureImg({
           alt={alt}
           className={`
 							mx-auto 
-							shadow-lg
 							w-max
-							p-5
+							p-3 
 							rounded-xl
+							shadow-lg
 							${imgClassName}
 						`}
           title={caption || alt}
