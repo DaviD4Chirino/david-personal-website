@@ -10,7 +10,7 @@ export default {
       accent: "#141414",
     },
     fontFamily: {
-      heading: "Urbanist",
+      heading: "Lunasima",
       body: "Urbanist",
     },
     fontSize: {

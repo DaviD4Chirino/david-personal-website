@@ -1,4 +1,4 @@
-import SongCard from "../molecules/SongCard";
+import FigureImg from "../atoms/FigureImg";
 
 export default function About() {
   return (
@@ -6,6 +6,10 @@ export default function About() {
       className=" mx-auto max-w-[60rem] grid gap-5 px-5 mt-5 "
       id="About"
     >
+      <FigureImg
+        src="/sigilPixelFanart.jpg"
+        alt="A badly preserved pixel fanart of a sigil from shadow of the colossus"
+      />
       <h2>Who I am</h2>
       <section
         id="Presentation"
@@ -16,7 +20,7 @@ export default function About() {
           alt="A badly preserved pixel fanart of a sigil from shadow of the colossus"
           className="tooltip-alt max-h-[30rem] place-self-center rounded-xl shadow-lg"
         />
-        <div className="text-lg max-w-[60ch] grid gap-3 h-min">
+        <div className=" max-w-[60ch] grid gap-3 h-min">
           <p>
             Im a programer, a bit of a web developer and game developer, tho i
             made a grand total of 2 playable games. I also hold the record of
