@@ -6,19 +6,15 @@ export default function About() {
       className=" mx-auto max-w-[60rem] grid gap-5 px-5 mt-5 "
       id="About"
     >
-      <FigureImg
-        src="/sigilPixelFanart.jpg"
-        alt="A badly preserved pixel fanart of a sigil from shadow of the colossus"
-      />
       <h2>Who I am</h2>
       <section
         id="Presentation"
         className="grid grid-cols-1 sm:grid-cols-[.5fr_1fr] flex-wrap-reverse gap-2"
       >
-        <img
+        <FigureImg
           src="/sigilPixelFanart.jpg"
           alt="A badly preserved pixel fanart of a sigil from shadow of the colossus"
-          className="tooltip-alt max-h-[30rem] place-self-center rounded-xl shadow-lg"
+          imgClassName="max-h-[30rem]"
         />
         <div className=" max-w-[60ch] grid gap-3 h-min">
           <p>
