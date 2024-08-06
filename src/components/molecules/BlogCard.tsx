@@ -1,5 +1,13 @@
 import Tag, { TagProps } from "../atoms/Tag";
 
+const borders = {
+  article: "solid",
+  project: "dashed",
+  personal: "dotted",
+  story: "double",
+  "game-development": "sketchy",
+};
+
 // TODO: Add diferent border by the type of blog, no idea how many yet,
 // TODO: but at least: Article, Project, Personal, Story, Game Development,
 // TODO: With special conditions like Project release the diferent kinds of update
@@ -11,6 +19,7 @@ export type BlogCardProps = {
   title: string;
   date: string;
   description: string;
+  type: "article" | "project" | "personal" | "story" | "game-development";
   tags: TagProps[];
 };
 
@@ -18,6 +27,7 @@ export default function BlogCard({
   title,
   date,
   description,
+  type = "article",
   tags,
 }: BlogCardProps) {
   const formattedDate = new Date(date).toLocaleString("en", {
@@ -27,19 +37,18 @@ export default function BlogCard({
   });
   return (
     <article
-      className="
+      className={`
       grid grid-rows-[.1fr_.1fr_1fr_.2fr] gap-2
       aspect-auto md:aspect-square
-      outline-dashed
+      outline-${borders[type]}
+      outline
+      rounded-xl
       p-3
       bg-[white]
-		"
+  `}
       id="BlogCard"
     >
-      <a
-        className="text-2xl leading-5 w-max no-underline hover:underline"
-        id="Title"
-      >
+      <a className="text-2xl leading-5 no-underline hover:underline" id="Title">
         <b className="hover:cursor-pointer w-min">{title}</b>
       </a>
       <p className="text-right text-primary opacity-60 text-kanit" id="Date">
