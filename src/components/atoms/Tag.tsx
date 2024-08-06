@@ -13,6 +13,7 @@ export default function Tag({ title, href }: TagProps) {
       label={title}
       color="primary"
       variant="outlined"
+      className="no_underline"
       clickable
     />
   );
