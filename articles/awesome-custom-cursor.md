@@ -28,7 +28,7 @@ And Godot has 17 of them, and I got really fed up with the 1-frame delay. So ins
 
 Now, Godot does not have animated cursors, its just static images so what I took the animation system of v1.x and made is so on every shape change you play an invisible animation, and i project the current animation image into the mouse. In other words **We force the engine to be animated by changing the frames mannually.**
 
-There's still the drawback of only having 17 shapes, if you're making an app or just want more shapes, tough luck, but i still have v1.x avalible if you're in the need of more shapes.
+There's still the drawback of only having 17 shapes, if you're making an app or just want more shapes, tough luck, but i still have v1.x available if you're in the need of more shapes.
 
 You can get these versions:
 
