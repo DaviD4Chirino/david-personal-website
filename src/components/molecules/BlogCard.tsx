@@ -16,6 +16,7 @@ export type BlogCardProps = {
   description: string;
   category: "article" | "project" | "personal" | "game-development";
   tags: string;
+  compact?: boolean;
 };
 
 export default function BlogCard({
@@ -23,6 +24,7 @@ export default function BlogCard({
   date,
   description,
   category = "article",
+  compact = false,
   tags,
 }: BlogCardProps) {
   const formattedDate = new Date(date).toLocaleString("en", {
@@ -33,15 +35,16 @@ export default function BlogCard({
 
   const tagsArray: string[] = breakText(tags, ",");
 
+  const compactStyle = "grid grid-cols-1";
+  const normalStyle = "grid grid-rows-[auto_1fr_auto] ";
+
   return (
     <article
       className={`
-      
       ${borders[category]}
-     
       rounded-xl
       transition-transform
-      hover:rotate-3
+      hover:rotate-2
       p-3
       bg-[white]
       no-underline
@@ -50,36 +53,49 @@ export default function BlogCard({
     >
       <Link
         to={`${routes.blogs.path}/article/${toKebabCase(title)}`}
-        className="
-        grid grid-rows-[.1fr_.1fr_1fr_.2fr] gap-2
-      no_underline
-      "
+        className={`
+        ${compact ? compactStyle : normalStyle}
+        gap-3
+        no_underline
+      `}
       >
-        <b className="hover:cursor-pointer  text-2xl leading-5 no-underline">
-          {title}
-        </b>
-        <p className="text-right text-primary opacity-60 text-kanit" id="Date">
-          {formattedDate}
-        </p>
-        <p className="text-end" id="Description">
-          {description}
-        </p>
-        <div className="flex gap-2 flex-wrap" id="Tags">
-          <Tag
-            title={capitalize(cleanString(category))}
-            href={`${routes.blogs.path}?tags=${toKebabCase(
-              cleanString(category)
-            )}`}
-            chipProps={{ variant: "filled" }}
-          />
-          {tagsArray.map((tag, i) => (
-            <Tag
-              title={tag}
-              href={`${routes.blogs.path}?tags=${toKebabCase(tag)}`}
-              key={i}
-            />
-          ))}
+        <div className="flex gap-3 flex-wrap justify-between w-full">
+          <b className="hover:cursor-pointer  text-2xl leading-5 no-underline [align-self:baseline]">
+            {title}
+          </b>
+          <p
+            className="text-right text-primary opacity-50 text-sm text-kanit"
+            id="Date"
+          >
+            {formattedDate}
+          </p>
         </div>
+        {!compact && (
+          <>
+            <p className="" id="Description">
+              {description}
+            </p>
+            <div className="flex gap-2 flex-wrap" id="Tags">
+              <Tag
+                title={capitalize(cleanString(category))}
+                href={`${routes.blogs.path}?tags=${toKebabCase(
+                  cleanString(category)
+                )}`}
+                chipProps={{ variant: "filled" }}
+              />
+              {tagsArray.map(
+                (tag, i) =>
+                  tag && (
+                    <Tag
+                      title={tag}
+                      href={`${routes.blogs.path}?tags=${toKebabCase(tag)}`}
+                      key={i}
+                    />
+                  )
+              )}
+            </div>
+          </>
+        )}
       </Link>
     </article>
   );
