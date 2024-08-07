@@ -2,7 +2,7 @@
   "routes": {
     "homepage": "/",
     "library": "/library",
-    "blogs": "/blogs",
+    "blogs": { "path": "/blogs", "children": { "article": "article/:title" } },
     "projects": "/projects"
   }
 }

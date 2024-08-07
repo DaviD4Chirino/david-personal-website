@@ -1,20 +1,22 @@
-import { Chip } from "@mui/material";
+import { Chip, ChipProps } from "@mui/material";
 
 export type TagProps = {
   title: string;
   href: string;
+  chipProps?: ChipProps;
 };
 
-export default function Tag({ title, href }: TagProps) {
+export default function Tag({ title, href, chipProps }: TagProps) {
   return (
     <Chip
       component="a"
       href={href}
       label={title}
       color="primary"
-      variant="outlined"
+      variant={chipProps?.variant || "outlined"}
       className="no_underline"
       clickable
+      {...chipProps}
     />
   );
 }

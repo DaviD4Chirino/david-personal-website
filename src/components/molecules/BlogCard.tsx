@@ -1,19 +1,20 @@
-import { breakText } from "../../utils";
+import { breakText, capitalize, cleanString, toKebabCase } from "../../utils";
 import Tag from "../atoms/Tag";
+import { routes } from "../../staticData/pages.json";
+import { Link } from "react-router-dom";
 
 const borders = {
   article: "outline",
   project: "outline-dashed",
   personal: "outline-dotted",
-  story: "outline-double",
-  "game-development": "outline-sketchy",
+  "game-development": "outline-double",
 };
 
 export type BlogCardProps = {
   title: string;
   date: string;
   description: string;
-  type: "article" | "project" | "personal" | "story" | "game-development";
+  category: "article" | "project" | "personal" | "game-development";
   tags: string;
 };
 
@@ -21,7 +22,7 @@ export default function BlogCard({
   title,
   date,
   description,
-  type = "article",
+  category = "article",
   tags,
 }: BlogCardProps) {
   const formattedDate = new Date(date).toLocaleString("en", {
@@ -36,22 +37,21 @@ export default function BlogCard({
     <article
       className={`
       
-      ${borders[type]}
+      ${borders[category]}
      
       rounded-xl
       transition-transform
-      hover:rotate-6
+      hover:rotate-3
       p-3
       bg-[white]
       no-underline
   `}
       id="BlogCard"
     >
-      <a
-        href="#"
+      <Link
+        to={`${routes.blogs.path}/article/${toKebabCase(title)}`}
         className="
         grid grid-rows-[.1fr_.1fr_1fr_.2fr] gap-2
-      aspect-auto md:aspect-square
       no_underline
       "
       >
@@ -65,15 +65,22 @@ export default function BlogCard({
           {description}
         </p>
         <div className="flex gap-2 flex-wrap" id="Tags">
+          <Tag
+            title={capitalize(cleanString(category))}
+            href={`${routes.blogs.path}?tags=${toKebabCase(
+              cleanString(category)
+            )}`}
+            chipProps={{ variant: "filled" }}
+          />
           {tagsArray.map((tag, i) => (
             <Tag
               title={tag}
-              href={`/article?tags=${tag.toLowerCase().replaceAll(" ", "_")}`}
+              href={`${routes.blogs.path}?tags=${toKebabCase(tag)}`}
               key={i}
             />
           ))}
         </div>
-      </a>
+      </Link>
     </article>
   );
 }

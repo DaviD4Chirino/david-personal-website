@@ -1,11 +1,10 @@
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 
 export default function Updates() {
-  const types: BlogCardProps["type"][] = [
+  const types: BlogCardProps["category"][] = [
     "article",
     "project",
     "personal",
-    "story",
     "game-development",
   ];
   return (
@@ -16,7 +15,7 @@ export default function Updates() {
           title="The man who sold the world"
           description="One upon a time a man sold the entire world"
           date={new Date().toDateString()}
-          type={el}
+          category={el}
           tags={"One Tag, Two tags, a very very long tag"}
           key={index}
         />

@@ -4,7 +4,7 @@ import RandomQuote from "../atoms/RandomQuote";
 
 export default function Hero() {
   const textClassNames: string =
-    " text-[3.8rem] md:text-[6rem] leading-8 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-white text-stroke-outside ";
+    " text-[3.8rem] md:text-[6rem] leading-8 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-white text-stroke-outside  ";
   return (
     <header
       className="
@@ -52,7 +52,7 @@ export default function Hero() {
           <Link to={routes.projects}>Developer</Link>
         </li>
         <li>
-          <Link to={routes.blogs}>Yapper</Link>
+          <Link to={routes.blogs.path}>Yapper</Link>
         </li>
       </ul>
     </header>
