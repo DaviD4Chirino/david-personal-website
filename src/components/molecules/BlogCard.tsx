@@ -1,20 +1,26 @@
-import { breakText, capitalize, cleanString, toKebabCase } from "../../utils";
+import {
+  breakText,
+  capitalize,
+  cleanString,
+  getRandomInArray,
+  toKebabCase,
+} from "../../utils";
 import Tag from "../atoms/Tag";
 import { routes } from "../../staticData/pages.json";
 import { Link } from "react-router-dom";
 
-const borders = {
-  article: "outline",
-  project: "outline-dashed",
-  personal: "outline-dotted",
-  "game-development": "outline-double",
-};
+const borders = [
+  "outline",
+  "outline-dashed",
+  "outline-dotted",
+  "outline-double",
+];
 
 export type BlogCardProps = {
   title: string;
   date: string;
   description: string;
-  category: "article" | "project" | "personal" | "game-development";
+  category: string;
   tags: string;
   compact?: boolean;
 };
@@ -37,10 +43,11 @@ export default function BlogCard({
 
   const compactStyle = "grid grid-cols-1";
   const normalStyle = "grid grid-rows-[auto_1fr_auto] ";
+  const randomBorder = getRandomInArray(borders);
 
   return (
     <article
-      className={`p-3 no-underline rounded-xl transition-transform ${borders[category]} hover:rotate-2 bg-[white]`}
+      className={`p-3 no-underline rounded-xl transition-transform ${randomBorder} hover:rotate-2 bg-[white]`}
       id="BlogCard"
     >
       <Link
@@ -66,7 +73,6 @@ export default function BlogCard({
           <>
             <p className="line-clamp-3" id="Description">
               {description}
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni explicabo corporis consectetur totam ipsum perferendis velit dicta similique nihil sit sint asperiores tempora nam sapiente odit, exercitationem hic numquam doloribus?
             </p>
             <div className="flex flex-wrap gap-2" id="Tags">
               <Tag

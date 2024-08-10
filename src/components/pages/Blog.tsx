@@ -1,16 +1,27 @@
-
-import Tag from "../atoms/Tag";
-import BlogCard from "../molecules/BlogCard";
+import { useQuery } from "@tanstack/react-query";
+import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
+import { getAllArticles } from "../../database/getArticles";
+import { useEffect } from "react";
 
 export default function Blog() {
+  const { data: articles } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: () =>
+      getAllArticles().then((res) => {
+        return Object.values(res as Articles);
+      }),
+  });
+
+  // useEffect(() => {
+  //   getAllArticles();
+
+  //   return () => {};
+  // }, []);
+
   return (
     <section id="Blog" className="isolate relative">
-      <header
-        className="isolate relative h-44"
-      >
-        <div
-          className="container grid content-center h-full"
-        >
+      <header className="isolate relative h-44">
+        <div className="container grid content-center h-full">
           <h1>Blogs</h1>
         </div>
       </header>
@@ -40,35 +51,16 @@ export default function Blog() {
               placeholder="Search..."
             />
           </div>
-          {/* <div id="Tags" className="flex flex-wrap gap-1">
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-            <Tag title="A tag" href="#" />
-          </div> */}
         </div>
         <div className="grid grid-cols-1 gap-y-12">
-          {new Array(25).fill("").map((_el, i) => (
+          {articles?.map((article, i) => (
             <BlogCard
-              title="The Man Who Sold the World"
-              tags=""
-              date={"10/10/24"}
-              description={
-                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima sunt corporis itaque suscipit illo "
-              }
-              category={"article"}
-              key={i}
+              title={article.title}
+              tags={article.tags}
+              date={article.date}
+              description={article.description}
+              category={article.category as BlogCardProps["category"]}
+              key={article.id}
             />
           ))}
         </div>
