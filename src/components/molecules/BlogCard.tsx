@@ -40,15 +40,7 @@ export default function BlogCard({
 
   return (
     <article
-      className={`
-      ${borders[category]}
-      rounded-xl
-      transition-transform
-      hover:rotate-2
-      p-3
-      bg-[white]
-      no-underline
-  `}
+      className={`p-3 no-underline rounded-xl transition-transform ${borders[category]} hover:rotate-2 bg-[white]`}
       id="BlogCard"
     >
       <Link
@@ -59,12 +51,12 @@ export default function BlogCard({
         no_underline
       `}
       >
-        <div className="flex gap-3 flex-wrap justify-between w-full">
-          <b className="hover:cursor-pointer  text-2xl leading-5 no-underline [align-self:baseline]">
+        <div className="flex flex-wrap gap-3 justify-between w-full">
+          <b className="hover:cursor-pointer  text-xl leading-5 no-underline [align-self:baseline]">
             {title}
           </b>
           <p
-            className="text-right text-primary opacity-50 text-sm text-kanit"
+            className="text-sm text-right opacity-50 text-primary text-kanit"
             id="Date"
           >
             {formattedDate}
@@ -72,10 +64,11 @@ export default function BlogCard({
         </div>
         {!compact && (
           <>
-            <p className="" id="Description">
+            <p className="line-clamp-3" id="Description">
               {description}
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni explicabo corporis consectetur totam ipsum perferendis velit dicta similique nihil sit sint asperiores tempora nam sapiente odit, exercitationem hic numquam doloribus?
             </p>
-            <div className="flex gap-2 flex-wrap" id="Tags">
+            <div className="flex flex-wrap gap-2" id="Tags">
               <Tag
                 title={capitalize(cleanString(category))}
                 href={`${routes.blogs.path}?tags=${toKebabCase(

@@ -14,7 +14,7 @@ In summary, you make an animation with your frames matching the name of the shap
 2. busy
 3. can_drop
 
-And i look at the current shape and play the animation with the same name _(with a bit of parsin on my end)_. And thats it, you have an animation of a cursor stuck to your real cursor.
+And i look at the current shape and play the animation with the same name _(with a bit of parsing on my end)_. And thats it, you have an animation of a cursor stuck to your real cursor.
 
 However i realized we use at most 5 cursor shapes, those being:
 
@@ -26,7 +26,7 @@ However i realized we use at most 5 cursor shapes, those being:
 
 And Godot has 17 of them, and I got really fed up with the 1-frame delay. So instead of making a image following the mouse, so i made a "native" one with is version 2.x and the one you are seeing.
 
-Now, Godot does not have animated cursors, its just static images so what I took the animation system of v1.x and made is so on every shape change you play an invisible animation, and i project the current animation image into the mouse. In other words **We force the engine to be animated by changing the frames mannually.**
+Now, Godot does not have animated cursors, its just static images so what I took the animation system of v1.x and made is so on every shape change you play an invisible animation, and i project the current animation image into the mouse. In other words **We force the engine to be animated by changing the frames manually.**
 
 There's still the drawback of only having 17 shapes, if you're making an app or just want more shapes, tough luck, but i still have v1.x available if you're in the need of more shapes.
 

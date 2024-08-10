@@ -5,9 +5,11 @@ import axios from "axios";
  * @example getGistFile("library.json")
  * @returns The file or null if it doesn't have it
  */
-export async function getGistFile(fileName: string): Promise<File | null> {
-  const files = await getGistFiles();
-
+export async function getGistFile(
+  fileName: string,
+  gistID = "63162440f99c217310eb27ae5b2fb427"
+): Promise<File | null> {
+  const files = await getGistFiles(gistID);
   if (!files) {
     return null;
   }
@@ -18,9 +20,11 @@ export async function getGistFile(fileName: string): Promise<File | null> {
   return files[fileName];
 }
 
-export async function getGistFiles() {
+export async function getGistFiles(
+  gistID: string = "63162440f99c217310eb27ae5b2fb427"
+) {
   const res = await axios
-    .get<Gist>("https://api.github.com/gists/63162440f99c217310eb27ae5b2fb427")
+    .get<Gist>(`https://api.github.com/gists/${gistID}`)
     .then((res) => res)
     .catch(() => null);
 
