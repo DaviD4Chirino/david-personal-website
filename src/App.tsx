@@ -4,12 +4,9 @@ import "./App.css";
 import "./fonts.css";
 import About from "./components/organisms/About";
 import Hero from "./components/organisms/Hero";
-import { getGistFile } from "./database";
 import Updates from "./components/organisms/Updates";
 
 function App() {
-  console.log(getGistFile("library.json"));
-
   return (
     <section className="grid gap-8 ">
       <Hero />

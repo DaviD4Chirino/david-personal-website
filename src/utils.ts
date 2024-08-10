@@ -20,3 +20,7 @@ export function toKebabCase(text: string): string {
 export function capitalize(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function getRandomInArray(arr: any[]) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
