@@ -1,22 +1,24 @@
-import { Chip, ChipProps } from "@mui/material";
-
 export type TagProps = {
   title: string;
   href: string;
-  chipProps?: ChipProps;
+  variant?: "filled" | "outlined";
 };
 
-export default function Tag({ title, href, chipProps }: TagProps) {
+export default function Tag({ title, href, variant }: TagProps) {
+  const variantFilled: string = "bg-primary text-[white]";
+  const variantOutlined: string = "outline outline-1 outline-primary ";
   return (
-    <Chip
-      component="a"
+    <a
       href={href}
-      label={title}
-      color="primary"
-      variant={chipProps?.variant || "outlined"}
-      className="no_underline"
-      clickable
-      {...chipProps}
-    />
+      className={`
+        ${variant == "filled" ? variantFilled : variantOutlined}
+        px-2.5 py-1 
+        rounded-full
+        no_underline hover:underline
+        text-sm
+        `}
+    >
+      {title}
+    </a>
   );
 }

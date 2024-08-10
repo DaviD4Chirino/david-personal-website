@@ -41,8 +41,8 @@ export default function BlogCard({
 
   const tagsArray: string[] = breakText(tags, ",");
 
-  const compactStyle = "grid grid-cols-1";
-  const normalStyle = "grid grid-rows-[auto_1fr_auto] ";
+  const compactStyle = "grid grid-cols-1 ";
+  const normalStyle = "grid grid-rows-[auto_1fr_auto]  ";
   const randomBorder = getRandomInArray(borders);
 
   return (
@@ -54,7 +54,7 @@ export default function BlogCard({
         to={`${routes.blogs.path}/article/${toKebabCase(title)}`}
         className={`
         ${compact ? compactStyle : normalStyle}
-        gap-3
+        gap-5
         no_underline
       `}
       >
@@ -80,7 +80,7 @@ export default function BlogCard({
                 href={`${routes.blogs.path}?tags=${toKebabCase(
                   cleanString(category)
                 )}`}
-                chipProps={{ variant: "filled" }}
+                variant="filled"
               />
               {tagsArray.map(
                 (tag, i) =>

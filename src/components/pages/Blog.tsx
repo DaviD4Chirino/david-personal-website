@@ -1,13 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { getAllArticles } from "../../database/getArticles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Blog() {
-  const { data: articles } = useQuery({
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>(articles);
+
+  useQuery({
     queryKey: ["blogs"],
     queryFn: () =>
       getAllArticles().then((res) => {
+        const _articles: Article[] = Object.values(res as Articles);
+        setArticles(_articles);
+        setFilteredArticles(_articles);
         return Object.values(res as Articles);
       }),
   });
@@ -40,20 +46,10 @@ export default function Blog() {
         align-middle
         outline outline-1 rounded-sm p-4"
         >
-          <div className=" grid-rows-[auto_1fr] gap-2 grid h-max">
-            <label htmlFor="first_name" className="block">
-              Filter
-            </label>
-            <input
-              type="text"
-              id="first_name"
-              className="p-2 rounded-full transition-all outline outline-2 outline-offset-0 outline-secondary hover:outline-offset-2 focus:outline-offset-4"
-              placeholder="Search..."
-            />
-          </div>
+          <Filter list={articles} setFilteredList={setFilteredArticles} />
         </div>
         <div className="grid grid-cols-1 gap-y-12">
-          {articles?.map((article, i) => (
+          {filteredArticles?.map((article) => (
             <BlogCard
               title={article.title}
               tags={article.tags}
@@ -66,5 +62,43 @@ export default function Blog() {
         </div>
       </section>
     </section>
+  );
+}
+function Filter({
+  list,
+  setFilteredList,
+}: {
+  list: Article[];
+  setFilteredList: React.Dispatch<React.SetStateAction<Article[]>>;
+}) {
+  const [searchQuery, setSearchQuery] = useState("");
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchQuery(e.currentTarget.value);
+  }
+
+  useEffect(() => {
+    const newList = list.filter(
+      (art) =>
+        art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        art.tags.toLocaleLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredList(newList);
+    return () => {};
+  }, [searchQuery]);
+
+  return (
+    <div className=" grid-rows-[auto_1fr] gap-2 grid h-max">
+      <label htmlFor="article_search" className="block">
+        Filter
+      </label>
+      <input
+        type="text"
+        id="article_search"
+        className="p-2 rounded-full transition-all outline outline-2 outline-offset-0 outline-secondary hover:outline-offset-2 focus:outline-offset-4"
+        placeholder="Search both Titles and Tags"
+        onChange={handleOnChange}
+        value={searchQuery}
+      />
+    </div>
   );
 }
