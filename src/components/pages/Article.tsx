@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getAllArticles } from "../../database/getArticles";
 import { getGistFile } from "../../database";
 import { routes } from "../../staticData/pages.json";
@@ -33,13 +33,12 @@ export default function Article() {
       }),
   });
   return (
-    <section
-      className="
-    max-w-[75ch] mx-auto p-5
-    grid gap-5
-    "
-    >
-      <Markdown remarkPlugins={[remarkGfm]} children={data?.content}></Markdown>
+    <section className="max-w-[75ch] mx-auto my-10">
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        className="grid gap-5 px-5 md:px-10 py-5  shadow-2xl bg-[white]"
+        children={data?.content}
+      ></Markdown>
     </section>
   );
 }
