@@ -11,7 +11,7 @@ export default function Tag({ title, href, variant }: TagProps) {
     <a
       href={href}
       className={`
-        ${variant == "filled" ? variantFilled : variantOutlined}
+        ${variant === "filled" ? variantFilled : variantOutlined}
         px-2.5 py-1 
         rounded-full
         no_underline hover:underline

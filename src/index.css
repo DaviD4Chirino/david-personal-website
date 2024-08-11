@@ -10,7 +10,12 @@
   --secondary: #b6b6b6;
   --accent: #141414;
 }
-
+@layer base {
+  ul, ol {
+    list-style: revert;
+    transform: translateX(2rem);
+  }
+}
 body {
   font-family: "Urbanist";
   font-weight: 400;

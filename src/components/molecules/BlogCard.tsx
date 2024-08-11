@@ -51,7 +51,7 @@ export default function BlogCard({
       id="BlogCard"
     >
       <Link
-        to={`${routes.blogs.path}/article/${toKebabCase(title)}`}
+        to={`/blogs/article/${toKebabCase(title)}`}
         className={`
         ${compact ? compactStyle : normalStyle}
         gap-5

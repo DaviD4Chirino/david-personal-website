@@ -1,9 +1,11 @@
-import { createHashRouter } from "react-router-dom";
+import { createBrowserRouter, createHashRouter } from "react-router-dom";
 import { routes } from "../staticData/pages.json";
 import App from "../App";
 import Blog from "../components/pages/Blog";
+import Article from "../components/pages/Article";
+import Article404 from "../components/pages/Article404";
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
   {
     path: routes.homepage,
     element: <App />,
@@ -11,6 +13,13 @@ export const router = createHashRouter([
   {
     path: routes.blogs.path,
     element: <Blog />,
-    children: [{ path: routes.blogs.children.article, element: <Blog /> }],
+  },
+  {
+    path: routes.article,
+    element: <Article />,
+  },
+  {
+    path: routes.articleNonExistent,
+    element: <Article404 />,
   },
 ]);
