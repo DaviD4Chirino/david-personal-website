@@ -10,7 +10,7 @@ export default function Article() {
   const navigate = useNavigate();
 
   const { title } = useParams();
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: () =>
       getAllArticles().then((res) => {
@@ -33,12 +33,12 @@ export default function Article() {
       }),
   });
   return (
-    <section className="max-w-[75ch] mx-auto my-10" id="Article">
+    <section className="max-w-[80ch] mx-auto my-10" id="Article">
       <Markdown
         remarkPlugins={[remarkGfm]}
-        className="grid gap-5 px-5 md:px-10 py-5  shadow-2xl bg-[white]"
-        children={data?.content}
-      ></Markdown>
+        className="grid gap-5 px-5 md:px-10 py-5  shadow-2xl bg-[white] leading-8"
+        children={isLoading ? `# Loading Article...` : data?.content}
+      />
     </section>
   );
 }

@@ -2,42 +2,34 @@ import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { getAllArticles } from "../../database/getArticles";
 import { useEffect, useState } from "react";
+import Articles from "../organisms/Articles";
 
 export default function Blog() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>(articles);
-
-  useQuery({
+  const [query, setQuery] = useState("");
+  const { isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: () =>
       getAllArticles().then((res) => {
-        const _articles: Article[] = Object.values(res as Articles);
-        setArticles(_articles);
-        setFilteredArticles(_articles);
         return Object.values(res as Articles);
       }),
   });
-
-  // useEffect(() => {
-  //   getAllArticles();
-
-  //   return () => {};
-  // }, []);
-
   return (
-    <section id="Blog" className="isolate relative">
+    <section id="Blog" className="grid isolate relative gap-16 pb-3">
       <header className="isolate relative h-44">
+        <div className="w-full opacity-60 bg-pattern-noisy"></div>
         <div className="container grid content-center h-full">
           <h1>Blogs</h1>
         </div>
       </header>
+
       <section
         className="
           container
           grid-rows-none md:grid-rows-[.5fr_1fr] 
           grid grid-cols-1 md:grid-cols-[.5fr_1fr] 
-          gap-x-24 gap-y-16
+          gap-10
         "
+        id="ArticlesContainer"
       >
         <div
           id="search"
@@ -46,45 +38,25 @@ export default function Blog() {
         align-middle
         outline outline-1 rounded-sm p-4"
         >
-          <Filter list={articles} setFilteredList={setFilteredArticles} />
+          <Filter setQuery={setQuery} />
         </div>
-        <div className="grid grid-cols-1 gap-y-12">
-          {filteredArticles?.map((article) => (
-            <BlogCard
-              title={article.title}
-              tags={article.tags}
-              date={article.date}
-              description={article.description}
-              category={article.category as BlogCardProps["category"]}
-              key={article.id}
-            />
-          ))}
+        <div className="grid grid-cols-1 gap-8">
+          {isLoading ? <h1>Loading...</h1> : <Articles filter={query} />}
         </div>
       </section>
     </section>
   );
 }
 function Filter({
-  list,
-  setFilteredList,
+  setQuery,
 }: {
-  list: Article[];
-  setFilteredList: React.Dispatch<React.SetStateAction<Article[]>>;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchQuery(e.currentTarget.value);
+    setQuery(e.currentTarget.value);
   }
-
-  useEffect(() => {
-    const newList = list.filter(
-      (art) =>
-        art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        art.tags.toLocaleLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredList(newList);
-    return () => {};
-  }, [searchQuery]);
 
   return (
     <div className=" grid-rows-[auto_1fr] gap-2 grid h-max">
