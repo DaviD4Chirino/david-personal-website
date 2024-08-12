@@ -1,4 +1,4 @@
-import { createBrowserRouter, createHashRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { routes } from "../staticData/pages.json";
 import App from "../App";
 import Blog from "../components/pages/Blog";

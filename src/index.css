@@ -11,10 +11,13 @@
   --accent: #141414;
 }
 @layer base {
-  ul, ol {
-    list-style: revert;
-    transform: translateX(2rem);
+  #Article{
+    ul, ol {
+      list-style: revert;
+      margin-inline-start: 2rem;
+    }
   }
+  
 }
 body {
   font-family: "Urbanist";
