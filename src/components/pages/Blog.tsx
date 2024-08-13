@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/getArticles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Articles from "../organisms/Articles";
 
 export default function Blog() {
