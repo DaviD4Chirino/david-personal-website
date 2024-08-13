@@ -60,6 +60,7 @@ export default function Articles({
   }, [filter]);
 
   useUpdateEffect(() => {
+    if (count <= 0) return;
     const newArticles: Article[] = paginateArray(data || articles, count, page);
     setArticles(newArticles);
   }, [count, page]);
