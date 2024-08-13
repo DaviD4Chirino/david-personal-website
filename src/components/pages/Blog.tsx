@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { getAllArticles } from "../../database/getArticles";
 import { useEffect, useState } from "react";
 import Articles from "../organisms/Articles";
@@ -41,7 +40,11 @@ export default function Blog() {
           <Filter setQuery={setQuery} />
         </div>
         <div className="grid grid-cols-1 gap-8">
-          {isLoading ? <h1>Loading...</h1> : <Articles filter={query} />}
+          {isLoading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <Articles filter={query} count={10} page={1} />
+          )}
         </div>
       </section>
     </section>

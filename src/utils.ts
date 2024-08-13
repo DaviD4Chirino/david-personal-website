@@ -24,3 +24,8 @@ export function capitalize(string: string): string {
 export function getRandomInArray(arr: any[]) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
+export function paginateArray(arr: any[], count: number, page: number): any[] {
+  const newArr: any[] = arr.slice((page - 1) * count, page * count);
+  return newArr;
+}
