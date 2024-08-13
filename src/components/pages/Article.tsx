@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getAllArticles } from "../../database/getArticles";
 import { getGistFile } from "../../database";
 import { routes } from "../../staticData/pages.json";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import Markdown from "../atoms/Markdown";
 
 export default function Article() {
   const navigate = useNavigate();
@@ -35,10 +34,14 @@ export default function Article() {
   return (
     <section className="max-w-[80ch] mx-auto my-10" id="Article">
       <Markdown
-        remarkPlugins={[remarkGfm]}
         className="grid gap-5 px-5 md:px-10 py-5  shadow-2xl bg-[white] leading-8"
         children={isLoading ? `# Loading Article...` : data?.content}
       />
+      {/* <Markdown
+        remarkPlugins={[remarkGfm]}
+        className="grid gap-5 px-5 md:px-10 py-5  shadow-2xl bg-[white] leading-8"
+        children={isLoading ? `# Loading Article...` : data?.content}
+      /> */}
     </section>
   );
 }

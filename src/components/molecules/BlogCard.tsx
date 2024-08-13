@@ -6,8 +6,8 @@ import {
   toKebabCase,
 } from "../../utils";
 import Tag from "../atoms/Tag";
-import { routes } from "../../staticData/pages.json";
 import { Link } from "react-router-dom";
+import Markdown from "../atoms/Markdown";
 
 const borders = [
   "outline",
@@ -71,10 +71,8 @@ export default function BlogCard({
         </div>
         {!compact && (
           <>
-            <p className="line-clamp-3" id="Description">
-              {description}
-            </p>
-            <div className="flex flex-wrap gap-2" id="Tags">
+            <Markdown className="line-clamp-3" children={description} />
+            <div className="flex overflow-x-auto gap-2 py-1 h-max" id="Tags">
               <Tag title={capitalize(cleanString(category))} variant="filled" />
               {tagsArray.map((tag, i) => tag && <Tag title={tag} key={i} />)}
             </div>
