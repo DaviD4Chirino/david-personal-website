@@ -75,23 +75,8 @@ export default function BlogCard({
               {description}
             </p>
             <div className="flex flex-wrap gap-2" id="Tags">
-              <Tag
-                title={capitalize(cleanString(category))}
-                href={`${routes.blogs.path}?tags=${toKebabCase(
-                  cleanString(category)
-                )}`}
-                variant="filled"
-              />
-              {tagsArray.map(
-                (tag, i) =>
-                  tag && (
-                    <Tag
-                      title={tag}
-                      href={`${routes.blogs.path}?tags=${toKebabCase(tag)}`}
-                      key={i}
-                    />
-                  )
-              )}
+              <Tag title={capitalize(cleanString(category))} variant="filled" />
+              {tagsArray.map((tag, i) => tag && <Tag title={tag} key={i} />)}
             </div>
           </>
         )}
