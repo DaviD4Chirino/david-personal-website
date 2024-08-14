@@ -9,7 +9,7 @@ export async function getGistFile(
   fileName: string,
   gistID = "63162440f99c217310eb27ae5b2fb427"
 ): Promise<File | null> {
-  const files = await getGistFiles(gistID);
+  const files: Files | null = await getGistFiles(gistID);
   if (!files) {
     return null;
   }
@@ -23,7 +23,7 @@ export async function getGistFile(
 export async function getGistFiles(
   gistID: string = "63162440f99c217310eb27ae5b2fb427"
 ) {
-  const res = await axios
+  const res: Gist | any | null = await axios
     .get<Gist>(`https://api.github.com/gists/${gistID}`)
     .then((res) => res)
     .catch(() => null);
