@@ -16,18 +16,8 @@ export default function Hero() {
     relative
     "
     >
-      <div className="w-full bg-pattern-noisy opacity-60"></div>
-      <div
-        className="
-      grid grid-rows-2  
-      w-full
-      max-w-56
-      md:max-w-md
-
-      relative
-      
-      "
-      >
+      <div className="w-full opacity-60 bg-pattern-noisy"></div>
+      <div className="grid relative grid-rows-2 w-full max-w-56 md:max-w-md">
         <h1 className={textClassNames + "text-left"}>David</h1>
         <h1 className={textClassNames + "text-right "}>Space</h1>
         <RandomQuote
@@ -37,19 +27,18 @@ export default function Hero() {
         "
         />
       </div>
-      <ul
-        className="
-      w-full
-      flex gap-2 
-      place-content-center
-      text-xl
-      "
-      >
+      <ul className="flex gap-2 place-content-center w-full text-xl">
         <li>
-          <Link to={routes.library}>Writer</Link>
+          Writer
+          {/* <Link to={routes.library} aria-disabled>
+            Writer
+          </Link> */}
         </li>
         <li>
-          <Link to={routes.projects}>Developer</Link>
+          <p aria-disabled>Developer</p>
+          {/* <Link to={routes.projects} aria-disabled>
+            Developer
+          </Link> */}
         </li>
         <li>
           <Link to={routes.blogs.path}>Yapper</Link>
