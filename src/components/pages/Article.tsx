@@ -3,10 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getAllArticles } from "../../database/getArticles";
 import { getGistFile } from "../../database";
 import { routes } from "../../staticData/pages.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toPascalCase } from "../../utils";
 import Articles from "../organisms/Articles";
 import Markdown from "../atoms/Markdown";
+import SectionHeader from "../templates/SectionHeader";
 
 export default function Article() {
   const [article, setArticle] = useState<Article>();
@@ -34,8 +35,12 @@ export default function Article() {
       }),
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [title]);
+
   return (
-    <section className="container grid gap-10 mx-auto my-5" id="Article">
+    <section className="container grid gap-y-20 mx-auto my-5" id="Article">
       <article
         id={`${toPascalCase(title || "unknown")}`}
         className="grid gap-5 px-5 py-5 leading-relaxed max-w-[80ch] mx-auto min-h-screen "
@@ -44,15 +49,13 @@ export default function Article() {
           children={isLoading ? `# Loading Article...` : data?.content}
         />
       </article>
-      <footer className="grid gap-5">
-        <section>
-          <h3>Read More</h3>
-          <Articles count={4} />
-        </section>
-        <section>
-          <h3>Same category</h3>
+      <footer className="grid gap-10">
+        <SectionHeader sectionTitle="Same Category">
           <Articles count={4} filter={`${article?.category}`} />
-        </section>
+        </SectionHeader>
+        {/* <SectionHeader sectionTitle="Read More">
+          <Articles count={4} />
+        </SectionHeader> */}
       </footer>
       {/* <footer className="flex gap-3 justify-between">
         {prevArticle ? (
