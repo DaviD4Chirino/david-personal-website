@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/getArticles";
 import { useState } from "react";
 import Articles from "../organisms/Articles";
+import Navlinks from "../molecules/Navlinks";
 
 export default function Blog() {
   const [query, setQuery] = useState("");
@@ -13,10 +14,11 @@ export default function Blog() {
       }),
   });
   return (
-    <section id="Blog" className="grid isolate relative gap-16 pb-3">
-      <header className="isolate relative h-44">
-        <div className="w-full opacity-60 bg-pattern-noisy"></div>
-        <div className="container grid content-center h-full">
+    <section id="Blog" className="grid isolate relative gap-16 mb-3">
+      <header className="container isolate relative h-44">
+        <Navlinks className="flex absolute top-5 right-5 gap-1" />
+        {/* <div className="w-full opacity-60 bg-pattern-noisy"></div> */}
+        <div className="grid content-center h-full">
           <h1>Blogs</h1>
         </div>
       </header>

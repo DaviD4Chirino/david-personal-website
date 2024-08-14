@@ -8,6 +8,7 @@ import { toPascalCase } from "../../utils";
 import Articles from "../organisms/Articles";
 import Markdown from "../atoms/Markdown";
 import SectionHeader from "../templates/SectionHeader";
+import Navlinks from "../molecules/Navlinks";
 
 export default function Article() {
   const [article, setArticle] = useState<Article>();
@@ -40,10 +41,14 @@ export default function Article() {
   }, [title]);
 
   return (
-    <section className="container grid gap-y-20 mx-auto my-5" id="Article">
+    <section
+      className="container grid relative gap-y-20 mx-auto mb-3"
+      id="Article"
+    >
+      <Navlinks className="flex absolute top-5 right-5 gap-1" />
       <article
         id={`${toPascalCase(title || "unknown")}`}
-        className="grid gap-5 px-5 py-5 leading-relaxed max-w-[80ch] mx-auto min-h-screen "
+        className="grid gap-5 px-5 py-5 my-10 leading-relaxed max-w-[80ch] mx-auto min-h-screen "
       >
         <Markdown
           children={isLoading ? `# Loading Article...` : data?.content}
