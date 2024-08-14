@@ -47,7 +47,7 @@ export default function BlogCard({
 
   return (
     <article
-      className={`p-3 no-underline rounded-xl transition-transform ${randomBorder} hover:rotate-2 bg-[white]`}
+      className={`p-3 no-underline rounded-xl transition-transform ${randomBorder} hover:rotate-2 motion-reduce:hover:rotate-0 bg-[white]`}
       id="BlogCard"
     >
       <Link
@@ -55,12 +55,12 @@ export default function BlogCard({
         className={`
         ${compact ? compactStyle : normalStyle}
         gap-5
-        no_underline
+        no-underline
       `}
       >
         <div className="flex flex-wrap gap-3 justify-between w-full">
-          <b className="hover:cursor-pointer  text-xl leading-5 no-underline [align-self:baseline]">
-            {title}
+          <b className="hover:cursor-pointer  leading-5 no-underline [align-self:baseline]">
+            <h5>{title}</h5>
           </b>
           <p
             className="text-sm text-right opacity-50 text-primary text-kanit"
@@ -72,6 +72,7 @@ export default function BlogCard({
         {!compact && (
           <>
             <Markdown className="line-clamp-3" children={description} />
+
             <div className="flex overflow-x-auto gap-2 py-1 h-max" id="Tags">
               <Tag title={capitalize(cleanString(category))} variant="filled" />
               {tagsArray.map((tag, i) => tag && <Tag title={tag} key={i} />)}

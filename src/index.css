@@ -1,5 +1,6 @@
 /* @import url("https://fonts.googleapis.com/css?family=Familjen%20Grotesk:700|Noto%20Sans%20Multani:400"); */
 @import url("https://fonts.googleapis.com/css?family=Lunasima:700|Urbanist:400");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,16 +12,16 @@
   --accent: #141414;
 }
 @layer base {
-  #Article{
-    ul, ol {
+  #Article {
+    ul,
+    ol {
       list-style: revert;
       margin-inline-start: 2rem;
     }
   }
-  
 }
 body {
-  font-family: "Urbanist";
+  font-family: "Josefin Sans", "Urbanist";
   font-weight: 400;
   background: whitesmoke;
 }

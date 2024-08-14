@@ -42,7 +42,7 @@
   }
 }
 
-a:not(.no_underline) {
+a:not(.no-underline) {
   text-decoration: underline;
   &:hover {
     text-decoration: none;

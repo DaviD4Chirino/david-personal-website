@@ -6,7 +6,7 @@ import { useUpdateEffect } from "react-use";
 import { paginateArray } from "../../utils";
 
 type ArticlesProps = {
-  /** A string to filter the articles by their title or tag */
+  /** A string to filter the articles by their title, tag or category */
   filter?: string;
   /** How many articles you want */
   count?: number;
@@ -14,6 +14,7 @@ type ArticlesProps = {
    *  @eg the page 2 with a count of 10 will be starting from the 20th element
    */
   page?: number;
+  compact?: BlogCardProps["compact"];
 };
 
 /**
@@ -24,10 +25,11 @@ export default function Articles({
   filter = "",
   count = -1,
   page = 1,
+  compact,
 }: ArticlesProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const { isLoading, data } = useQuery({
-    queryKey: ["blogs"],
+    queryKey: ["articles"],
     queryFn: () =>
       getAllArticles().then((res) => {
         const _articles: Article[] = Object.values(res as Articles);
@@ -54,7 +56,8 @@ export default function Articles({
     const newList = data?.filter(
       (art) =>
         art.title.toLowerCase().includes(filter.toLowerCase()) ||
-        art.tags.toLocaleLowerCase().includes(filter.toLowerCase())
+        art.tags.toLocaleLowerCase().includes(filter.toLowerCase()) ||
+        art.category.toLocaleLowerCase().includes(filter.toLowerCase())
     );
     setArticles(newList || []);
   }, [filter]);
@@ -81,6 +84,7 @@ export default function Articles({
           description={article.description}
           category={article.category as BlogCardProps["category"]}
           key={article.id}
+          compact={compact}
         />
       ))}
     </>
