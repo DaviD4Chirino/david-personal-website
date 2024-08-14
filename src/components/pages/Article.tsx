@@ -46,6 +46,7 @@ export default function Article() {
       id="Article"
     >
       <Navlinks className="flex absolute top-5 right-5 gap-1" />
+
       <article
         id={`${toPascalCase(title || "unknown")}`}
         className="grid gap-5 px-5 py-5 my-10 leading-relaxed max-w-[80ch] mx-auto min-h-screen "
@@ -54,6 +55,7 @@ export default function Article() {
           children={isLoading ? `# Loading Article...` : data?.content}
         />
       </article>
+
       <footer className="grid gap-10">
         <SectionHeader sectionTitle="Same Category">
           <Articles count={4} filter={`${article?.category}`} />
