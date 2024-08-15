@@ -3225,7 +3225,12 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-tailwindcss@^3.4.7, "tailwindcss@>=3.0.0 || >=3.0.0-alpha.1":
+tailwindcss-animated@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/tailwindcss-animated/-/tailwindcss-animated-1.1.2.tgz"
+  integrity sha512-SI4owS5ojserhgEYIZA/uFVdNjU2GMB2P3sjtjmFA52VxoUi+Hht6oR5+RdT+CxrX9cNNYEa+vbTWHvN9zbj3w==
+
+tailwindcss@^3.4.7, "tailwindcss@>=3.0.0 || >=3.0.0-alpha.1", tailwindcss@>=3.1.0:
   version "3.4.7"
   resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.7.tgz"
   integrity sha512-rxWZbe87YJb4OcSopb7up2Ba4U82BoiSGUdoDr3Ydrg9ckxFS/YWsvhN323GMcddgU65QRy7JndC7ahhInhvlQ==

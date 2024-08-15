@@ -9,9 +9,12 @@ import Markdown from "../atoms/Markdown";
 import SectionHeader from "../templates/SectionHeader";
 import Navlinks from "../molecules/Navlinks";
 import { useUpdateEffect } from "react-use";
+import ContinueReadingLink from "../organisms/ContinueReadingLink";
 
 export default function Article() {
   const [article, setArticle] = useState<Article>();
+  const [prevArticle, setPrevArticle] = useState<Article>();
+  const [nextArticle, setNextArticle] = useState<Article>();
 
   const navigate = useNavigate();
   const { title } = useParams();
@@ -47,20 +50,28 @@ export default function Article() {
     }
   }, [error, documentError]);
 
-  // useUpdateEffect(() => {
-  //   if (!documentIsLoading && (!title || !document)) {
-  //     navigate(routes.articleNonExistent);
-  //     return;
-  //   }
-  // }, [title, document]);
+  useUpdateEffect(() => {
+    if (!data || !title) {
+      return;
+    }
+    const articlesArray: Article[] = Object.values(data);
+    const currentArticleIndex: number = Object.keys(data).findIndex(
+      (art) => art == title
+    );
 
-  // useUpdateEffect(() => {
-  //   if (!data) {
-  //     navigate(routes.articleNonExistent);
-  //     return;
-  //   }
-  // }, [data]);
+    setNextArticle(articlesArray[currentArticleIndex + 1]);
+    setPrevArticle(articlesArray[currentArticleIndex - 1]);
+    console.log(
+      articlesArray[currentArticleIndex + 1],
+      articlesArray[currentArticleIndex - 1]
+    );
+  }, [article]);
 
+  useUpdateEffect(() => {
+    if (title) {
+      window.scrollTo({ top: 0 });
+    }
+  }, [title]);
   return (
     <section
       className="container grid relative gap-y-20 mx-auto mb-3"
@@ -79,31 +90,26 @@ export default function Article() {
         />
       </article>
 
-      <footer className="grid gap-10">
+      {/*  <footer className="grid gap-10">
         <SectionHeader sectionTitle="Same Category">
           <Articles count={4} filter={`${article?.category}`} />
         </SectionHeader>
         {/* <SectionHeader sectionTitle="Read More">
           <Articles count={4} />
-        </SectionHeader> */}
-      </footer>
-      {/* <footer className="flex gap-3 justify-between">
+        </SectionHeader> 
+      </footer> */}
+      <footer className="flex gap-3 justify-between">
         {prevArticle ? (
-          <ContinueReadingLink article={prevArticle} key={"prevArticle"} />
+          <ContinueReadingLink article={prevArticle} />
         ) : (
-          <div>prev</div>
+          <div></div>
         )}
         {nextArticle ? (
-          <ContinueReadingLink
-            article={nextArticle}
-            title="Next"
-            right
-            key={"nextArticle"}
-          />
+          <ContinueReadingLink article={nextArticle} title="Next" right />
         ) : (
-          <div>NExt</div>
+          <div></div>
         )}
-      </footer> */}
+      </footer>
     </section>
   );
 }
