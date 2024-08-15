@@ -13,6 +13,7 @@ export async function getAllArticles(): Promise<Articles | null> {
 
   return articlesObject;
 }
+
 export async function getArticleFile(
   articleTitle: string
 ): Promise<File | undefined> {

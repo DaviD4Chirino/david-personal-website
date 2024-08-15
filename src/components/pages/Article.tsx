@@ -1,42 +1,65 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllArticles, getArticleFile } from "../../database/getArticles";
-import { getGistFile } from "../../database";
 import { routes } from "../../staticData/pages.json";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toPascalCase } from "../../utils";
 import Articles from "../organisms/Articles";
 import Markdown from "../atoms/Markdown";
 import SectionHeader from "../templates/SectionHeader";
 import Navlinks from "../molecules/Navlinks";
+import { useUpdateEffect } from "react-use";
 
 export default function Article() {
   const [article, setArticle] = useState<Article>();
+
   const navigate = useNavigate();
-
   const { title } = useParams();
-  const { data, isLoading } = useQuery({
-    queryKey: [`article-${title}`],
-    queryFn: () =>
-      getAllArticles().then((res: Articles | null) => {
-        if (!res || !title) {
-          navigate(routes.articleNonExistent);
-          return;
-        }
-        const currentArticle = res[title];
-        if (!currentArticle) {
-          navigate(routes.articleNonExistent);
-        }
-        setArticle(currentArticle);
 
-        return getGistFile(currentArticle.file, "articles_files");
-      }),
+  // * Document Query
+  const {
+    data: document,
+    isLoading: documentIsLoading,
+    isError: documentError,
+  } = useQuery({
+    queryKey: [`document-${title || "404"}`],
+    queryFn: () => getArticleFile(title || ""),
   });
 
-  useEffect(() => {
-    getArticleFile(title || "");
-    window.scrollTo({ top: 0 });
-  }, [title]);
+  // * Article Query
+  const { data, error, isError } = useQuery({
+    queryKey: [`article-${title || "404"}`],
+    queryFn: () => getAllArticles(),
+  });
+
+  useUpdateEffect(() => {
+    const newArticle: Article | undefined = data
+      ? data[title || ""]
+      : undefined;
+
+    setArticle(newArticle);
+  }, [data]);
+
+  useUpdateEffect(() => {
+    if (isError || documentError) {
+      console.error("document or data returned an error");
+      navigate(routes.articleNonExistent);
+    }
+  }, [error, documentError]);
+
+  // useUpdateEffect(() => {
+  //   if (!documentIsLoading && (!title || !document)) {
+  //     navigate(routes.articleNonExistent);
+  //     return;
+  //   }
+  // }, [title, document]);
+
+  // useUpdateEffect(() => {
+  //   if (!data) {
+  //     navigate(routes.articleNonExistent);
+  //     return;
+  //   }
+  // }, [data]);
 
   return (
     <section
@@ -50,7 +73,9 @@ export default function Article() {
         className="grid gap-5 px-5 py-5 my-10 leading-relaxed max-w-[80ch] mx-auto min-h-screen "
       >
         <Markdown
-          children={isLoading ? `# Loading Article...` : data?.content}
+          children={
+            documentIsLoading ? `# Loading Article...` : document?.content
+          }
         />
       </article>
 
