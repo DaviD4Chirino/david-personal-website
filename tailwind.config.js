@@ -1,4 +1,5 @@
-/** @type {import('tailwindcss').Config} */
+ /** @type {Config} */ 
+/** @typedef {import('tailwindcss').Config} Config */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -26,5 +27,5 @@ export default {
     extend: {},
   },
   // eslint-disable-next-line no-undef
-  plugins: [require("@designbycode/tailwindcss-text-stroke")],
+  plugins: [require('tailwindcss-animated')],
 };
