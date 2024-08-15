@@ -15,7 +15,7 @@ export default function RandomQuote(
   const { data } = useQuery({
     queryKey: ["heroQuote"],
     queryFn: () =>
-      getGistFile("quotes.json").then((res) => {
+      getGistFile("quotes.json", "database").then((res) => {
         const content: string[] = JSON.parse(res?.content || "[]");
         return getRandomInArray(content);
       }),

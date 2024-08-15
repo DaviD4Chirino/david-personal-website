@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAllArticles } from "../../database/getArticles";
+import { getAllArticles, getArticleFile } from "../../database/getArticles";
 import { getGistFile } from "../../database";
 import { routes } from "../../staticData/pages.json";
 import { useEffect, useState } from "react";
@@ -29,14 +29,12 @@ export default function Article() {
         }
         setArticle(currentArticle);
 
-        return getGistFile(
-          currentArticle.file,
-          "4ada55ee93a94b48c96d472cbd58640d"
-        );
+        return getGistFile(currentArticle.file, "articles_files");
       }),
   });
 
   useEffect(() => {
+    getArticleFile(title || "");
     window.scrollTo({ top: 0 });
   }, [title]);
 
