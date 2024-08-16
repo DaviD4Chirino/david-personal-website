@@ -37,20 +37,20 @@ export default function Article() {
   }, [title]);
   return (
     <section
-      className="container grid relative gap-y-20 mb-12"
+      className="container grid relative gap-y-24 mb-12"
       id="Article"
       key={title}
     >
       <Navlinks className="flex absolute top-5 right-5 gap-1" />
       <Document title={title || ""} />
 
-      <footer className="grid gap-y-16">
+      <footer className="grid gap-y-20">
+        {data && <ContinueReading articles={data} />}
         <SharePage
           title={data ? data[title || ""].title : ""}
-          className="flex flex-wrap gap-3 mx-auto sm:mx-0"
+          className="flex flex-wrap gap-x-3 -mb-20"
+          iconSize={40}
         />
-        {data && <ContinueReading articles={data} />}
-
         <DiscussionEmbed
           shortname="david-space"
           config={{

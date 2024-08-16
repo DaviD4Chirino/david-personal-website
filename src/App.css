@@ -6,7 +6,7 @@
   paint-order: stroke fill;
 }
 .container {
-  padding-inline: 2rem;
+  padding-inline: 1.5rem;
   margin-inline: auto;
 }
 .bg-pattern-noisy {
