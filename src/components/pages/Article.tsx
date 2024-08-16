@@ -80,12 +80,14 @@ export default function Article() {
           <Articles count={4} />
         </SectionHeader> 
       </footer> */}
-      <Footer prevArticle={prevArticle} nextArticle={nextArticle} />
+      {data && <Footer articles={data} />}
     </section>
   );
 }
 
 function Document({ title }: { title: string }) {
+  renders++;
+  console.log("Total Renders:", renders);
   const navigate = useNavigate();
   // * Document Query
   const { data, isLoading, isError, error } = useQuery({
@@ -101,26 +103,27 @@ function Document({ title }: { title: string }) {
       return;
     }
   }, [isError]);
+
   return (
     <article
       id={toPascalCase(title)}
-      className={`grid gap-5 px-5 py-5 my-10 leading-relaxed max-w-[80ch] mx-auto min-h-screen ${
-        isLoading ? "":"animate-fade-up"}`}
+      className={`grid gap-5 px-5 py-5 mx-auto my-10 min-h-screen leading-relaxed max-w-[80ch] animate-fade-up`}
     >
       <Markdown children={isLoading ? `# Loading Article...` : data?.content} />
     </article>
   );
 }
 
-function Footer({
-  prevArticle,
-  nextArticle,
-}: {
-  nextArticle?: Article;
-  prevArticle?: Article;
-}) {
-  renders++;
-  console.log("Total Renders:", renders);
+function Footer({ articles }: { articles: Articles }) {
+  const { title } = useParams();
+  const articlesArray = Object.values(articles);
+  const currentArticleIndex: number = Object.keys(articles).findIndex(
+    (art) => art == title
+  );
+
+  const nextArticle = articlesArray[currentArticleIndex + 1];
+  const prevArticle = articlesArray[currentArticleIndex - 1];
+
   return (
     <footer className="flex gap-3 justify-between">
       {prevArticle ? (
@@ -128,8 +131,8 @@ function Footer({
       ) : (
         <div></div>
       )}
-      {nextArticle ? (
-        <ContinueReadingLink article={nextArticle} title="Next" right />
+      {prevArticle ? (
+        <ContinueReadingLink article={prevArticle} title="Next" right />
       ) : (
         <div></div>
       )}

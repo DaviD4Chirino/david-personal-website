@@ -17,12 +17,17 @@ export default function ContinueReadingLink({
   return (
     <Link
       to={`/blogs/article/${toKebabCase(article.title)}`}
-      className="grid grid-rows-[auto_auto] h-max no-underline group gap-2"
+      className="grid grid-rows-[auto_auto] h-max no-underline group leading-3"
       id={`ContinueReading-${right ? "Right" : "Left"}`}
     >
-      <p className={`${right ? rightClassNames : ""}`}>{title}</p>
+      <p
+        className={` text-sm
+        ${right ? rightClassNames : ""}`}
+      >
+        {title}
+      </p>
       <h5
-        className={`underline group-hover:no-underline ${
+        className={`underline group-hover:no-underline leading-5 ${
           right ? rightClassNames : ""}`}
       >
         {article.title}
