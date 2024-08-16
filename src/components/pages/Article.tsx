@@ -51,7 +51,7 @@ export default function Article() {
           url: import.meta.url + "/" + title,
           identifier: title,
           title: title,
-          language: "en", //e.g. for Traditional Chinese (Taiwan)
+          language: "en",
         }}
       />
 
