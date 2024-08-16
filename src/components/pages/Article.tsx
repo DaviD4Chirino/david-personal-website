@@ -80,25 +80,12 @@ export default function Article() {
           <Articles count={4} />
         </SectionHeader> 
       </footer> */}
-      <footer className="flex gap-3 justify-between">
-        {prevArticle ? (
-          <ContinueReadingLink article={prevArticle} />
-        ) : (
-          <div></div>
-        )}
-        {nextArticle ? (
-          <ContinueReadingLink article={nextArticle} title="Next" right />
-        ) : (
-          <div></div>
-        )}
-      </footer>
+      <Footer prevArticle={prevArticle} nextArticle={nextArticle} />
     </section>
   );
 }
 
 function Document({ title }: { title: string }) {
-  renders++;
-  console.log("Total Renders:", renders);
   const navigate = useNavigate();
   // * Document Query
   const { data, isLoading, isError, error } = useQuery({
@@ -122,5 +109,30 @@ function Document({ title }: { title: string }) {
     >
       <Markdown children={isLoading ? `# Loading Article...` : data?.content} />
     </article>
+  );
+}
+
+function Footer({
+  prevArticle,
+  nextArticle,
+}: {
+  nextArticle?: Article;
+  prevArticle?: Article;
+}) {
+  renders++;
+  console.log("Total Renders:", renders);
+  return (
+    <footer className="flex gap-3 justify-between">
+      {prevArticle ? (
+        <ContinueReadingLink article={prevArticle} />
+      ) : (
+        <div></div>
+      )}
+      {nextArticle ? (
+        <ContinueReadingLink article={nextArticle} title="Next" right />
+      ) : (
+        <div></div>
+      )}
+    </footer>
   );
 }
