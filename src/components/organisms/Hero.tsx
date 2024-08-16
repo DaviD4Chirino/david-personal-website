@@ -23,8 +23,9 @@ export default function Hero() {
         <RandomQuote
           className="
         absolute top-[140%] md:top-36 right-0 
-        text-xs text-right
+        text-xs text-right animate-fade
         "
+          key={`${new Date().getMilliseconds}`}
         />
       </div>
       <ul className="flex gap-2 place-content-center w-full text-xl">
@@ -35,7 +36,7 @@ export default function Hero() {
           </Link> */}
         </li>
         <li>
-          <p aria-disabled>Developer</p>
+          Developer
           {/* <Link to={routes.projects} aria-disabled>
             Developer
           </Link> */}

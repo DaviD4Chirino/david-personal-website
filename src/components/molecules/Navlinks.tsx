@@ -7,12 +7,12 @@ export default function Navlinks(props: JSX.IntrinsicElements["ul"]) {
       <li className="list-none">
         <Link to={routes.homepage} title="Home" />
       </li>
-      <li className="list-none">
+      {/* <li className="list-none">
         <Link to={routes.library} title="Library" />
       </li>
       <li className="list-none">
         <Link to={routes.projects} title="Projects" />
-      </li>
+      </li> */}
       <li className="list-none">
         <Link to={routes.blogs.path} title="Blogs" />
       </li>
