@@ -11,8 +11,6 @@ import ContinueReadingLink from "../organisms/ContinueReadingLink";
 
 //? this reload 4 times, guess why
 export default function Article() {
-  const [setArticle] = useState<Article>();
-
   const navigate = useNavigate();
   const { title } = useParams();
 
