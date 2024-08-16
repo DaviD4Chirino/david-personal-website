@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllArticles, getArticleFile } from "../../database/getArticles";
 import { routes } from "../../staticData/pages.json";
-import { useState } from "react";
 import { toPascalCase } from "../../utils";
 import Markdown from "../atoms/Markdown";
 import Navlinks from "../molecules/Navlinks";
