@@ -8,12 +8,12 @@ import Navlinks from "../molecules/Navlinks";
 import { useUpdateEffect } from "react-use";
 import ContinueReadingLink from "../organisms/ContinueReadingLink";
 import { DiscussionEmbed } from "disqus-react";
+import SharePage from "../molecules/SharePage";
 
 //? this reload 4 times, guess why
 export default function Article() {
   const navigate = useNavigate();
   const { title } = useParams();
-
   // * Article Query
   const { data, error, isError } = useQuery({
     queryKey: [`article-${title || "404"}`],
@@ -30,9 +30,10 @@ export default function Article() {
   // const {[refresh,]}=useCounter(0)
 
   useUpdateEffect(() => {
-    if (title) {
+    /* if (title) {
       window.scrollTo({ top: 0 });
-    }
+    } */
+    console.log(window.location.href);
   }, [title]);
   return (
     <section
@@ -43,17 +44,23 @@ export default function Article() {
       <Navlinks className="flex absolute top-5 right-5 gap-1" />
       <Document title={title || ""} />
 
-      {data && <Footer articles={data} />}
+      <footer className="grid gap-y-16">
+        <SharePage
+          title={data ? data[title || ""].title : ""}
+          className="flex flex-wrap gap-3 mx-auto sm:mx-0"
+        />
+        {data && <ContinueReading articles={data} />}
 
-      <DiscussionEmbed
-        shortname="david-space"
-        config={{
-          url: import.meta.url + "/" + title,
-          identifier: title,
-          title: title,
-          language: "en",
-        }}
-      />
+        <DiscussionEmbed
+          shortname="david-space"
+          config={{
+            url: `${window.location.href}/${title}`,
+            identifier: title,
+            title: title,
+            language: "en",
+          }}
+        />
+      </footer>
 
       {/* ? Maybe */}
       {/* <SectionHeader sectionTitle="Same Category">
@@ -88,6 +95,8 @@ function Document({ title }: { title: string }) {
         leading-relaxed 
         max-w-[80ch] min-h-screen
         animate-fade-up
+
+        article-md
       "
     >
       <Markdown children={isLoading ? `# Loading Article...` : data?.content} />
@@ -95,7 +104,7 @@ function Document({ title }: { title: string }) {
   );
 }
 
-function Footer({ articles }: { articles: Articles }) {
+function ContinueReading({ articles }: { articles: Articles }) {
   const { title } = useParams();
   const articlesArray = Object.values(articles);
   const currentArticleIndex: number = Object.keys(articles).findIndex(
@@ -106,7 +115,7 @@ function Footer({ articles }: { articles: Articles }) {
   const prevArticle = articlesArray[currentArticleIndex - 1];
 
   return (
-    <footer className="flex gap-3 justify-between">
+    <section className="flex gap-3 justify-between">
       {prevArticle ? (
         <ContinueReadingLink article={prevArticle} />
       ) : (
@@ -117,6 +126,6 @@ function Footer({ articles }: { articles: Articles }) {
       ) : (
         <div></div>
       )}
-    </footer>
+    </section>
   );
 }

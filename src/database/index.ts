@@ -38,8 +38,6 @@ export async function getGistFiles(gistID: string = GIST_IDS.database) {
     .then((res) => res)
     .catch(() => null);
 
-  console.log(res);
-
   if (res) {
     return res.data.files;
   }
