@@ -8,7 +8,7 @@ import Updates from "./components/organisms/Updates";
 
 function App() {
   return (
-    <section className="grid gap-8 ">
+    <section className="grid gap-8">
       <Hero />
       <Updates />
       <About />
