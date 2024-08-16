@@ -7,6 +7,7 @@ import Markdown from "../atoms/Markdown";
 import Navlinks from "../molecules/Navlinks";
 import { useUpdateEffect } from "react-use";
 import ContinueReadingLink from "../organisms/ContinueReadingLink";
+import { DiscussionEmbed } from "disqus-react";
 
 //? this reload 4 times, guess why
 export default function Article() {
@@ -43,6 +44,17 @@ export default function Article() {
       <Document title={title || ""} />
 
       {data && <Footer articles={data} />}
+
+      <DiscussionEmbed
+        shortname="david-space"
+        config={{
+          url: import.meta.url + "/" + title,
+          identifier: title,
+          title: title,
+          language: "en", //e.g. for Traditional Chinese (Taiwan)
+        }}
+      />
+
       {/* ? Maybe */}
       {/* <SectionHeader sectionTitle="Same Category">
         <Articles count={4} filter={`${article?.category}`} />
