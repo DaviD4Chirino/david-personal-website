@@ -9,6 +9,8 @@ import Navlinks from "../molecules/Navlinks";
 import { useUpdateEffect } from "react-use";
 import ContinueReadingLink from "../organisms/ContinueReadingLink";
 
+let renders = 0;
+
 //? this reload 4 times, guess why
 export default function Article() {
   const [article, setArticle] = useState<Article>();
@@ -17,16 +19,6 @@ export default function Article() {
 
   const navigate = useNavigate();
   const { title } = useParams();
-
-  // * Document Query
-  const {
-    data: document,
-    isLoading: documentIsLoading,
-    isError: documentError,
-  } = useQuery({
-    queryKey: [`document-${title || "404"}`],
-    queryFn: () => getArticleFile(title || ""),
-  });
 
   // * Article Query
   const { data, error, isError } = useQuery({
@@ -43,11 +35,11 @@ export default function Article() {
   }, [data]);
 
   useUpdateEffect(() => {
-    if (isError || documentError) {
+    if (isError) {
       console.error("document or data returned an error");
       navigate(routes.articleNonExistent);
     }
-  }, [error, documentError]);
+  }, [error]);
 
   useUpdateEffect(() => {
     if (!data || !title) {
@@ -60,11 +52,12 @@ export default function Article() {
 
     setNextArticle(articlesArray[currentArticleIndex + 1]);
     setPrevArticle(articlesArray[currentArticleIndex - 1]);
-    console.log(
+    /*  console.log(
       articlesArray[currentArticleIndex + 1],
       articlesArray[currentArticleIndex - 1]
-    );
+    ); */
   }, [article]);
+  // const {[refresh,]}=useCounter(0)
 
   useUpdateEffect(() => {
     if (title) {
@@ -78,17 +71,7 @@ export default function Article() {
       key={title}
     >
       <Navlinks className="flex absolute top-5 right-5 gap-1" />
-      <article
-        id={`${toPascalCase(title || "unknown")}`}
-        className={`grid gap-5 px-5 py-5 my-10 leading-relaxed max-w-[80ch] mx-auto min-h-screen ${
-          documentIsLoading ? "":"animate-fade-up"}`}
-      >
-        <Markdown
-          children={
-            documentIsLoading ? `# Loading Article...` : document?.content
-          }
-        />
-      </article>
+      <Document title={title || ""} />
       {/*  <footer className="grid gap-10">
         <SectionHeader sectionTitle="Same Category">
           <Articles count={4} filter={`${article?.category}`} />
@@ -110,5 +93,34 @@ export default function Article() {
         )}
       </footer>
     </section>
+  );
+}
+
+function Document({ title }: { title: string }) {
+  renders++;
+  console.log("Total Renders:", renders);
+  const navigate = useNavigate();
+  // * Document Query
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [`document-${title || "404"}`],
+    queryFn: () => getArticleFile(title),
+  });
+
+  useUpdateEffect(() => {
+    if (isError) {
+      console.error("Document query returned an error: " + error);
+      navigate(routes.articleNonExistent);
+
+      return;
+    }
+  }, [isError]);
+  return (
+    <article
+      id={toPascalCase(title)}
+      className={`grid gap-5 px-5 py-5 my-10 leading-relaxed max-w-[80ch] mx-auto min-h-screen ${
+        isLoading ? "":"animate-fade-up"}`}
+    >
+      <Markdown children={isLoading ? `# Loading Article...` : data?.content} />
+    </article>
   );
 }
