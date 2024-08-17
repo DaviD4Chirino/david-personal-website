@@ -1,10 +1,4 @@
-import {
-  breakText,
-  capitalize,
-  cleanString,
-  getRandomInArray,
-  toKebabCase,
-} from "../../utils";
+import { breakText, capitalize, cleanString, toKebabCase } from "../../utils";
 import Tag from "../atoms/Tag";
 import { Link } from "react-router-dom";
 import Markdown from "../atoms/Markdown";
