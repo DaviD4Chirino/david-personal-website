@@ -1,19 +1,32 @@
 import RNG from "rand-seed";
-import { lerp } from "../../utils";
+import { getContrastHex, lerp } from "../../utils";
 
 export type TagProps = {
   title: string;
   variant?: "filled" | "outlined";
 };
-
+const colorPallettes = {
+  Godot: "#478cbf",
+};
 export default function Tag({ title, variant }: TagProps) {
-  const rand: number = new RNG(title).next();
-  const randomHue = `hsl(${lerp(0, 360, rand)}deg,100%,80%`;
+  const hasPallette = Object.keys(colorPallettes).findIndex((i) => i == title);
 
-  console.log(title, randomHue);
+  let color = "";
+  let textColor = "";
 
-  const variantFilled: string = `${randomHue}`;
-  const variantOutlined: string = `outline  outline-1 outline-primary `;
+  if (hasPallette > -1) {
+    const c = Object.values(colorPallettes)[hasPallette];
+    color = c;
+    textColor = getContrastHex(c);
+  } else {
+    const rand: number = new RNG(title).next();
+    color = `hsl(${lerp(0, 360, rand)}deg,100%,70%`;
+  }
+
+  console.log(title, color);
+
+  const variantFilled: string = `${color}`;
+  const variantOutlined: string = `outline  outline-1 `;
   return (
     <div
       className={`
@@ -23,8 +36,9 @@ export default function Tag({ title, variant }: TagProps) {
         text-sm
         `}
       style={{
-        backgroundColor: variant === "filled" ? randomHue : "none",
-        outlineColor: variant === "filled" ? "none" : randomHue,
+        backgroundColor: variant === "filled" ? color : "none",
+        outlineColor: variant === "filled" ? "none" : color,
+        color: textColor ? textColor : "",
       }}
     >
       {title}

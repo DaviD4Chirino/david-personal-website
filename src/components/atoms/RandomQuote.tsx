@@ -21,5 +21,9 @@ export default function RandomQuote(
       }),
   });
 
-  return <p {...props}>{data}</p>;
+  return (
+    <p {...props} key={data}>
+      {data}
+    </p>
+  );
 }
