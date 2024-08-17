@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/getArticles";
 import { useState } from "react";
+// import {random}
+
 import Articles from "../organisms/Articles";
 import Navlinks from "../molecules/Navlinks";
 
