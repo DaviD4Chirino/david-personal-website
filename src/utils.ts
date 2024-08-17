@@ -51,3 +51,7 @@ export function paginateArray(arr: any[], count: number, page: number): any[] {
 export function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
+
+export function lerp(a: number, b: number, alpha: number) {
+  return a + alpha * (b - a);
+}
