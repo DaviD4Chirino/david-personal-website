@@ -58,13 +58,20 @@ function Filter({
   setQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
+
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchQuery(e.currentTarget.value);
     setQuery(e.currentTarget.value);
   }
 
   return (
-    <div className=" grid-rows-[auto_1fr] gap-2 grid h-max">
+    <form
+      className=" grid-rows-[auto_1fr] gap-2 grid h-max"
+      onSubmit={(e) => {
+        e.preventDefault();
+        setQuery(searchQuery);
+      }}
+    >
       <label htmlFor="article_search" className="block">
         Filter
       </label>
@@ -76,6 +83,6 @@ function Filter({
         onChange={handleOnChange}
         value={searchQuery}
       />
-    </div>
+    </form>
   );
 }

@@ -9,12 +9,19 @@ import Tag from "../atoms/Tag";
 import { Link } from "react-router-dom";
 import Markdown from "../atoms/Markdown";
 
-const borders = [
+const outlines = [
   "outline",
   "outline-dashed",
   "outline-dotted",
   "outline-double",
 ];
+
+const categoryOutlines = {
+  Godot: "outline-dotted",
+  Article: "outline",
+  Personal: "outline-double",
+  "Post-Mortem": "outline-dashed",
+};
 
 export type BlogCardProps = {
   title: string;
@@ -43,11 +50,10 @@ export default function BlogCard({
 
   const compactStyle = "grid grid-cols-1 ";
   const normalStyle = "grid grid-rows-[auto_1fr_auto]  ";
-  const randomBorder = getRandomInArray(borders);
 
   return (
     <article
-      className={`p-3 no-underline rounded-xl transition-transform ${randomBorder} hover:rotate-2 motion-reduce:hover:rotate-0 bg-[white]`}
+      className={`p-3 no-underline rounded-xl transition-transform ${getOutline( category )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-[white]`}
       id="BlogCard"
     >
       <Link
@@ -82,4 +88,17 @@ export default function BlogCard({
       </Link>
     </article>
   );
+}
+
+function getOutline(name: string): string {
+  const hasNameIndex = Object.keys(categoryOutlines).findIndex(
+    (category) =>
+      capitalize(cleanString(category)) == capitalize(cleanString(name))
+  );
+
+  if (hasNameIndex > -1) {
+    return Object.values(categoryOutlines)[hasNameIndex];
+  }
+
+  return outlines[name.length % outlines.length];
 }

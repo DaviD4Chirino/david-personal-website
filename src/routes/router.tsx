@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  ScrollRestoration,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "../staticData/pages.json";
 import App from "../App";
 import Blog from "../components/pages/Blog";
@@ -16,7 +11,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        <Route path={routes.homepage} element={<App />} />
+        <Route path={routes.homepage} index element={<App />} />
         <Route path={routes.blogs.path} element={<Blog />} />
         <Route path={routes.article} element={<Article />} />
         <Route path={routes.articleNonExistent} element={<Article404 />} />
