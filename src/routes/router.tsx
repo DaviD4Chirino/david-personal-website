@@ -1,13 +1,20 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  ScrollRestoration,
+} from "react-router-dom";
 import { routes } from "../staticData/pages.json";
 import App from "../App";
 import Blog from "../components/pages/Blog";
 import Article from "../components/pages/Article";
 import Article404 from "../components/pages/Article404";
+import ScrollToTop from "../components/atoms/ScrollToTop";
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path={routes.homepage} element={<App />} />
         <Route path={routes.blogs.path} element={<Blog />} />

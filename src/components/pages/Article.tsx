@@ -27,14 +27,6 @@ export default function Article() {
     }
   }, [error]);
 
-  // const {[refresh,]}=useCounter(0)
-
-  useUpdateEffect(() => {
-    /* if (title) {
-      window.scrollTo({ top: 0 });
-    } */
-    console.log(window.location.href);
-  }, [title]);
   return (
     <section
       className="container grid relative gap-y-24 mb-12"
