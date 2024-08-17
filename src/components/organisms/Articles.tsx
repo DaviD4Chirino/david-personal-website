@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getAllArticles } from "../../database/getArticles";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
-import { useUpdateEffect } from "react-use";
+import { useTimeoutFn, useUpdateEffect } from "react-use";
 import { paginateArray } from "../../utils";
 
 type ArticlesProps = {
@@ -28,6 +28,7 @@ export default function Articles({
   compact,
 }: ArticlesProps) {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [showLoading, setShowLoading] = useState(false);
   const { isLoading, data } = useQuery({
     queryKey: ["articles"],
     queryFn: () =>
@@ -68,11 +69,15 @@ export default function Articles({
     setArticles(newArticles);
   }, [count, page]);
 
+  useTimeoutFn(() => {
+    setShowLoading(true);
+  }, 500);
+
   if (articles.length <= 0) {
     return <h3>No articles to show</h3>;
   }
   if (isLoading) {
-    return <h3>Loading...</h3>;
+    return <>{showLoading ? <h3>Loading... </h3> : <></>}</>;
   }
   return (
     <>

@@ -41,7 +41,7 @@ export default function Blog() {
         >
           <Filter setQuery={setQuery} />
         </div>
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 gap-8 animate-fade">
           {isLoading ? (
             <h1>Loading...</h1>
           ) : (
