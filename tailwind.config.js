@@ -6,9 +6,42 @@ export default {
     colors: {
       text: "#050315",
       background: "#fbfbfe",
-      primary: "#474646",
-      secondary: "#b6b6b6",
-      accent: "#141414",
+      primary: {
+        lightest:"#f1faca",
+        light:"#e4f69f",
+        DEFAULT:"#c2d869",
+        dark:"#99b13b",
+        darkest:"#748b19"
+      },
+
+      secondary:{
+        lightest:"#ffe2ce",
+        light:"#ffcaa5",
+        DEFAULT:"#e29d6d",
+        dark:"#b9703d",
+        darkest:"#914b1a"
+       
+      },
+      
+      tertiary: {
+        lightest:"#b7badb",
+        light:"#8187ba",
+        DEFAULT:"#565d9c",
+        dark:"#363d7f",
+        darkest:"#1d2464"
+      },
+      grey:{
+        100:"#f8f9fa",
+        200:"#e9ecef",
+        300:"#dee2e6",
+        400:"#ced4da",
+        DEFAULT:"#adb5bd",
+        600:"#6c757d",
+        700:"#495057",
+        800:"#343a40",
+        900:"#212529"
+       
+      }
     },
     fontFamily: {
       heading: "Lunasima",

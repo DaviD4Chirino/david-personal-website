@@ -23,10 +23,9 @@ export default function Tag({ title, variant }: TagProps) {
     color = `hsl(${lerp(0, 360, rand)}deg,100%,70%`;
   }
 
-  console.log(title, color);
-
   const variantFilled: string = `${color}`;
   const variantOutlined: string = `outline  outline-1 `;
+
   return (
     <div
       className={`

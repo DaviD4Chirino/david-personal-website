@@ -2,7 +2,6 @@ import { breakText, capitalize, cleanString, toKebabCase } from "../../utils";
 import Tag from "../atoms/Tag";
 import { Link } from "react-router-dom";
 import Markdown from "../atoms/Markdown";
-import Rand from "rand-seed";
 
 const outlines = [
   "outline",
@@ -48,7 +47,7 @@ export default function BlogCard({
 
   return (
     <article
-      className={`p-3 no-underline rounded-xl transition-transform ${getOutline( category )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-[white]`}
+      className={`p-3 no-underline rounded-2xl transition-transform ${getOutline( category )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-100`}
       id="BlogCard"
     >
       <Link
@@ -63,10 +62,7 @@ export default function BlogCard({
           <b className="hover:cursor-pointer  leading-5 no-underline [align-self:baseline]">
             <h5>{title}</h5>
           </b>
-          <p
-            className="text-sm text-right opacity-50 text-primary text-kanit"
-            id="Date"
-          >
+          <p className="text-sm text-right text-grey-600 text-kanit" id="Date">
             {formattedDate}
           </p>
         </div>

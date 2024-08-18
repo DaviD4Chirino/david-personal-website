@@ -37,9 +37,8 @@ export default function Blog() {
         <div
           id="search"
           className="
-        grid grid-rows-[auto_auto] h-max gap-5
-        align-middle
-        outline outline-1 rounded-sm p-4"
+            grid grid-rows-[auto_auto] h-max gap-5 outline outline-1
+            rounded-sm p-4"
         >
           <Filter setQuery={setQuery} />
         </div>
@@ -80,8 +79,8 @@ function Filter({
       <input
         type="text"
         id="article_search"
-        className="p-2 rounded-full transition-all outline outline-2 outline-offset-0 outline-secondary hover:outline-offset-2 focus:outline-offset-4"
-        placeholder="Search both Titles and Tags"
+        className="p-2 rounded-full transition-all outline outline-2 outline-offset-0 outline-tertiary-light hover:outline-offset-2 focus:outline-offset-4 bg-grey-100"
+        placeholder="Search Categories, Titles and Tags"
         onChange={handleOnChange}
         value={searchQuery}
       />

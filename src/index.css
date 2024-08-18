@@ -23,7 +23,8 @@
 body {
   font-family: "Josefin Sans", "Urbanist";
   font-weight: 400;
-  background: whitesmoke;
+  background: theme(colors.grey.200);
+  color: theme(colors.grey.900);
 }
 
 h1,
