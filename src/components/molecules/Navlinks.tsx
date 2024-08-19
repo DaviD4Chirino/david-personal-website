@@ -26,7 +26,7 @@ function Link({ to, title }: { to: any; title: any }) {
       to={to}
       className={({ isActive }) =>
         ` rounded-md  px-3 py-2 ${
-          isActive ? " bg-secondary  no-underline" : ""
+          isActive ? " bg-secondary no-underline hover:underline" : ""
         }`
       }
     >

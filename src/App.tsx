@@ -8,7 +8,7 @@ import Updates from "./components/organisms/Updates";
 
 function App() {
   return (
-    <section className="grid gap-8">
+    <section className="grid gap-16 mb-3">
       <Hero />
       <Updates />
       <About />
@@ -17,21 +17,3 @@ function App() {
 }
 
 export default App;
-
-// async function getDataFromApi() {
-//   const res = await axios
-//     .get("https://api.github.com/gists/63162440f99c217310eb27ae5b2fb427")
-//     .then((res) => res)
-//     .catch((err) => err);
-
-//   /*  const head = new Headers();
-//   head.append("Access-Control-Allow-Origin", "*");
-//   const res: Response = await fetch({
-//     url: "https://facebook.github.io/react-native/movies.json",
-//     headers: head,
-//   }).catch((err) => err);
-
-//   console.log(res.data); */
-
-//   return res.data;
-// }

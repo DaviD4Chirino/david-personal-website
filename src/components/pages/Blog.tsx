@@ -8,13 +8,7 @@ import Navlinks from "../molecules/Navlinks";
 
 export default function Blog() {
   const [query, setQuery] = useState("");
-  const { isLoading } = useQuery({
-    queryKey: ["blogs"],
-    queryFn: () =>
-      getAllArticles().then((res) => {
-        return Object.values(res as Articles);
-      }),
-  });
+
   return (
     <section id="Blog" className="grid isolate relative gap-16 mb-3">
       <header className="container isolate relative h-44">
@@ -43,11 +37,7 @@ export default function Blog() {
           <Filter setQuery={setQuery} />
         </div>
         <div className="grid grid-cols-1 gap-8 animate-fade">
-          {isLoading ? (
-            <h1>Loading...</h1>
-          ) : (
-            <Articles filter={query} count={10} page={1} />
-          )}
+          <Articles filter={query} count={10} page={1} />
         </div>
       </section>
     </section>
