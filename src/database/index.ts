@@ -31,8 +31,8 @@ export async function getGistFile(
 }
 
 export async function getGistFiles(gistID: string = GIST_IDS.database) {
-  const res: Gist | any | null = await axios
-    .get<Gist>(`https://api.github.com/gists/${gistID}`, {
+  const res = await axios
+    .get(`https://api.github.com/gists/${gistID}`, {
       headers: { Authorization: `Bearer ${import.meta.env.VITE_GIST_AUTH}` },
     })
     .then((res) => res)
