@@ -46,7 +46,7 @@ export default function Article() {
         <DiscussionEmbed
           shortname="david-space"
           config={{
-            url: `${window.location}/${title}`,
+            url: `${window.location}`,
             identifier: title,
             title: title,
             language: "en",
