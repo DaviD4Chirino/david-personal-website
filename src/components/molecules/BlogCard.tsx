@@ -60,7 +60,7 @@ export default function BlogCard({
       >
         <div className="flex flex-wrap gap-3 justify-between w-full">
           <b className="hover:cursor-pointer  leading-5 no-underline [align-self:baseline]">
-            <h5>{title}</h5>
+            <h5 id="Title">{title}</h5>
           </b>
           <p className="text-sm text-right text-grey-600 text-kanit" id="Date">
             {formattedDate}
