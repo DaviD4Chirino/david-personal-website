@@ -18,13 +18,17 @@ const components: Partial<Components> = {
     return <FigureImg alt={alt || ""} src={src || ""} />;
   },
   a(props) {
-    const { children, node, ...rest } = props;
+    const { children, node, href, ...rest } = props;
     const anchorLinkRegex = /#/g;
-    const isAnchorLink = anchorLinkRegex.test(rest.href || "");
+    const isAnchorLink = anchorLinkRegex.test(href || "");
 
     console.log(isAnchorLink);
     if (isAnchorLink) {
-      return <HashLink></HashLink>;
+      return (
+        <HashLink to={href || ""} {...rest}>
+          {children}
+        </HashLink>
+      );
     }
 
     return <a {...rest}>{children}</a>;
