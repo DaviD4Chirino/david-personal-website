@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import FigureImg from "./FigureImg";
 import { isValidElement } from "react";
 import { HashLink } from "react-router-hash-link";
+
 const components: Partial<Components> = {
   p(props) {
     const { children } = props;
@@ -22,7 +23,6 @@ const components: Partial<Components> = {
     const anchorLinkRegex = /#/g;
     const isAnchorLink = anchorLinkRegex.test(href || "");
 
-    console.log(isAnchorLink);
     if (isAnchorLink) {
       return (
         <HashLink to={href || ""} {...rest}>

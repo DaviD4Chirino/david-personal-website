@@ -35,52 +35,40 @@ export default function SharePage({
   iconSize?: number;
 }) {
   return (
-    <ul {...props}>
+    <section {...props}>
       {/* <li>
         <IconButton color="primary">
           <LinkI />
         </IconButton>
       </li> */}
-      <li>
-        <EmailShareButton
-          children={<EmailIcon size={iconSize} round />}
-          url={url}
-        />
-      </li>
-      <li>
-        <WhatsappShareButton
-          title={title}
-          children={<WhatsappIcon size={iconSize} round />}
-          url={url}
-        />
-      </li>
-      <li>
-        <TelegramShareButton
-          title={title}
-          children={<TelegramIcon size={iconSize} round />}
-          url={url}
-        />
-      </li>
-      <li>
-        <FacebookShareButton
-          children={<FacebookIcon size={iconSize} round />}
-          url={url}
-        />
-      </li>
+      <EmailShareButton
+        children={<EmailIcon size={iconSize} round />}
+        url={url}
+      />
+      <WhatsappShareButton
+        title={title}
+        children={<WhatsappIcon size={iconSize} round />}
+        url={url}
+      />
+      <TelegramShareButton
+        title={title}
+        children={<TelegramIcon size={iconSize} round />}
+        url={url}
+      />
+      <FacebookShareButton
+        children={<FacebookIcon size={iconSize} round />}
+        url={url}
+      />
 
-      <li>
-        <RedditShareButton
-          children={<RedditIcon size={iconSize} round />}
-          url={url}
-        />
-      </li>
+      <RedditShareButton
+        children={<RedditIcon size={iconSize} round />}
+        url={url}
+      />
 
-      <li>
-        <LinkedinShareButton
-          children={<LinkedinIcon size={iconSize} round />}
-          url={url}
-        />
-      </li>
-    </ul>
+      <LinkedinShareButton
+        children={<LinkedinIcon size={iconSize} round />}
+        url={url}
+      />
+    </section>
   );
 }

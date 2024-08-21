@@ -49,7 +49,7 @@ export default function Article() {
         {data && <ContinueReading articles={data} />}
         <SharePage
           title={data ? data[title || ""].title : ""}
-          className="flex flex-wrap gap-x-3 -mb-20"
+          className="flex flex-wrap gap-x-3 -mb-28 h-fit place-items-center"
           iconSize={40}
         />
         <DiscussionEmbed
