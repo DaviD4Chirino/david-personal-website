@@ -5,7 +5,7 @@ import { routes } from "../../staticData/pages.json";
 import { toPascalCase } from "../../utils";
 import Markdown from "../atoms/Markdown";
 import Navlinks from "../molecules/Navlinks";
-import { useUpdateEffect } from "react-use";
+import { useTitle, useUpdateEffect } from "react-use";
 import ContinueReadingLink from "../organisms/ContinueReadingLink";
 import { DiscussionEmbed } from "disqus-react";
 import SharePage from "../molecules/SharePage";
@@ -14,6 +14,7 @@ import SharePage from "../molecules/SharePage";
 export default function Article() {
   const navigate = useNavigate();
   const { title } = useParams();
+
   // * Article Query
   const { data, error, isError } = useQuery({
     queryKey: [`article-${title || "404"}`],
@@ -26,6 +27,14 @@ export default function Article() {
       navigate(routes.articleNonExistent);
     }
   }, [error]);
+  const currentArticle = data ? data[title || ""] : null;
+
+  useTitle(
+    currentArticle ? `${currentArticle?.title} - David'Space` : "David'Space",
+    {
+      restoreOnUnmount: true,
+    }
+  );
 
   return (
     <section
@@ -46,7 +55,7 @@ export default function Article() {
         <DiscussionEmbed
           shortname="david-space"
           config={{
-            url: `${window.location}`,
+            url: `${window.location.href}`,
             identifier: title,
             title: title,
             language: "en",
