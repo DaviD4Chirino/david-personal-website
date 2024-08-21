@@ -91,12 +91,11 @@ function Document({ title }: { title: string }) {
     <article
       id={toPascalCase(title)}
       className="
-        mt-36 mx-auto   
-        grid gap-6 
+        mt-36 mx-auto
+        grid gap-6
         leading-relaxed 
         max-w-[80ch] min-h-screen
         animate-fade-up
-
         article-md
       "
     >

@@ -27,21 +27,19 @@ export default function FigureImg({
   ${props.className ? props.className : ""}
    `}
     >
-      <a href={src} target="_blank">
-        <img
-          src={src}
-          alt={alt}
-          className={`
+      <img
+        src={src}
+        alt={alt}
+        className={`
             p-3 mx-auto 
             w-max max-h-[80vh]
-            rounded-xl shadow-lg
+            rounded-xl shadow
             bg-grey-100
             ${imgClassName}`}
-          title={caption || alt}
-        />
-      </a>
+        title={caption || alt}
+      />
       <figcaption className="text-sm leading-3 text-center text-kanit-light text-grey-600">
-        {caption || alt}
+        <a href={src}>{caption || alt}</a>
       </figcaption>
     </figure>
   );
