@@ -34,6 +34,7 @@ export default function FigureImg({
             p-3 mx-auto 
             w-max max-h-[80vh]
             rounded-xl shadow
+            min-w-32 min-h-32
             bg-grey-100
             ${imgClassName}`}
         title={caption || alt}
