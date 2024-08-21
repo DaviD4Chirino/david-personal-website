@@ -24,7 +24,7 @@ export default function Article() {
   useUpdateEffect(() => {
     if (isError) {
       console.error("document or data returned an error");
-      // navigate(routes.articleNonExistent);
+      navigate(routes.articleNonExistent);
     }
   }, [error]);
   const currentArticle = data ? data[title || ""] : null;
@@ -81,7 +81,7 @@ function Document({ title }: { title: string }) {
   useUpdateEffect(() => {
     if (isError) {
       console.error("Document query returned an error: " + error);
-      // navigate(routes.articleNonExistent);
+      navigate(routes.articleNonExistent);
 
       return;
     }
@@ -117,8 +117,8 @@ function ContinueReading({ articles }: { articles: Articles }) {
   const prevIndex: number = currentArticleIndex - 1;
   const nextIndex: number = currentArticleIndex + 1;
 
-  const prevArticle: Article | undefined = articlesArray[nextIndex];
-  const nextArticle: Article | undefined = articlesArray[prevIndex];
+  const prevArticle: Article | undefined = articlesArray[prevIndex];
+  const nextArticle: Article | undefined = articlesArray[nextIndex];
 
   const prevSlug: string = articlesKeys[prevIndex];
   const nextSlug: string = articlesKeys[nextIndex];
