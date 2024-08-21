@@ -31,7 +31,11 @@ const components: Partial<Components> = {
       );
     }
 
-    return <a {...rest}>{children}</a>;
+    return (
+      <a {...rest} href={href}>
+        {children}
+      </a>
+    );
   },
 };
 
