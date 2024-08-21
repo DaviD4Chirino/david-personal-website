@@ -23,11 +23,13 @@ export type BlogCardProps = {
   description: string;
   category: string;
   tags: string;
+  to: string;
   compact?: boolean;
 };
 
 export default function BlogCard({
   title,
+  to,
   date,
   description,
   category = "article",
@@ -47,11 +49,13 @@ export default function BlogCard({
 
   return (
     <article
-      className={`p-3 no-underline rounded-2xl transition-transform ${getOutline( category )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-100`}
+      className={`p-3 no-underline rounded-2xl transition-transform ${getOutline(
+        category
+      )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-100`}
       id="BlogCard"
     >
       <Link
-        to={`/blogs/article/${toKebabCase(title)}`}
+        to={`/blogs/article/${to}`}
         className={`
         ${compact ? compactStyle : normalStyle}
         gap-5

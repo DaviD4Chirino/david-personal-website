@@ -28,12 +28,15 @@ export default function Articles({
   compact,
 }: ArticlesProps) {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [articleKeys, setArticleKeys] = useState<string[]>([]);
+
   const [showLoading, setShowLoading] = useState(false);
   const { isLoading, data } = useQuery({
     queryKey: ["articles"],
     queryFn: () =>
       getAllArticles().then((res) => {
-        const _articles: Article[] = Object.values(res as Articles);
+        const _articles: Article[] = Object.values(res as Articles).reverse();
+        setArticleKeys(Object.keys(res as Articles).reverse());
 
         if (count >= 0) {
           const newArticles: Article[] = paginateArray(_articles, count, page);
@@ -79,11 +82,13 @@ export default function Articles({
   if (isLoading) {
     return <>{showLoading ? <h3>Loading... </h3> : <></>}</>;
   }
+
   return (
     <>
-      {articles?.map((article) => (
+      {articles?.map((article, i) => (
         <BlogCard
           title={article.title}
+          to={articleKeys[i]}
           tags={article.tags}
           date={article.date}
           description={article.description}

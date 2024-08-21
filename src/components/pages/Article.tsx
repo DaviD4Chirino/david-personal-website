@@ -24,7 +24,7 @@ export default function Article() {
   useUpdateEffect(() => {
     if (isError) {
       console.error("document or data returned an error");
-      navigate(routes.articleNonExistent);
+      // navigate(routes.articleNonExistent);
     }
   }, [error]);
   const currentArticle = data ? data[title || ""] : null;
@@ -81,7 +81,7 @@ function Document({ title }: { title: string }) {
   useUpdateEffect(() => {
     if (isError) {
       console.error("Document query returned an error: " + error);
-      navigate(routes.articleNonExistent);
+      // navigate(routes.articleNonExistent);
 
       return;
     }
@@ -106,23 +106,37 @@ function Document({ title }: { title: string }) {
 
 function ContinueReading({ articles }: { articles: Articles }) {
   const { title } = useParams();
+
   const articlesArray = Object.values(articles);
+  const articlesKeys = Object.keys(articles);
+
   const currentArticleIndex: number = Object.keys(articles).findIndex(
     (art) => art == title
   );
 
-  const nextArticle = articlesArray[currentArticleIndex + 1];
-  const prevArticle = articlesArray[currentArticleIndex - 1];
+  const prevIndex: number = currentArticleIndex - 1;
+  const nextIndex: number = currentArticleIndex + 1;
+
+  const prevArticle: Article | undefined = articlesArray[nextIndex];
+  const nextArticle: Article | undefined = articlesArray[prevIndex];
+
+  const prevSlug: string = articlesKeys[prevIndex];
+  const nextSlug: string = articlesKeys[nextIndex];
 
   return (
     <section className="flex gap-3 justify-between">
       {prevArticle ? (
-        <ContinueReadingLink article={prevArticle} />
+        <ContinueReadingLink title={prevArticle.title} articleSlug={prevSlug} />
       ) : (
         <div></div>
       )}
       {nextArticle ? (
-        <ContinueReadingLink article={nextArticle} title="Next" right />
+        <ContinueReadingLink
+          title={nextArticle.title}
+          articleSlug={nextSlug}
+          prevOrNext="Next"
+          right
+        />
       ) : (
         <div></div>
       )}
