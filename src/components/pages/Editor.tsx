@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/getArticles";
 import BlogCard from "../molecules/BlogCard";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useUpdateEffect } from "react-use";
+import { useEffect, useState } from "react";
 
 // TODO: Style this thing
 // TODO: Build the article object
@@ -11,15 +14,27 @@ import { SubmitHandler, useForm } from "react-hook-form";
 // TODO: Find out how to update a gist from here
 // ?: It may need another input taking the Github access token
 export default function Editor() {
+  let [articleQuery] = useSearchParams();
+
+  const [selectedArticle, setSelectedArticle] = useState<Article | undefined>();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["articles"],
     queryFn: () => getAllArticles(),
   });
 
+  useUpdateEffect(() => {
+    const value: string | null = articleQuery.get("article");
+    const art: Article | undefined = data ? data[value || ""] : undefined;
+    setSelectedArticle(art);
+  }, [articleQuery]);
+
+  useUpdateEffect(() => {}, [selectedArticle]);
+
   return (
     <section className="container  my-10 grid gap-y-28">
       <h1>Article Editor</h1>
-      <Form />
+      <Form article={selectedArticle} />
       {data && <ArticlesToEdit articles={data} />}
     </section>
   );
@@ -36,17 +51,20 @@ type Inputs = {
   githubApiKey: string;
 };
 
-function Form() {
+function Form({ article }: { article?: Article }) {
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
   };
+
+  setValue("articleDescription", article?.description || "");
 
   return (
     <form
@@ -59,36 +77,45 @@ function Form() {
         placeholder="in-kebab-case"
         type="text"
         className="md:col-span-2"
+        defaultValue={article?.name}
         {...register("articleName")}
       />
       <InputLabel
         title="Title of the Article"
         type="text"
         className="md:col-span-2"
+        defaultValue={article?.title}
         {...register("articleTitle")}
       />
       <InputLabel
         title="Description"
         type="text"
         className="md:col-span-2"
-        {...register("articleDescription")}
+        defaultValue={article?.description}
+        {...register("articleDescription", { value: article?.description })}
       />
       <InputLabel
         title="Category"
         type="text"
         className="md:col-span-2"
+        defaultValue={article?.category}
         {...register("articleCategory")}
       />
       <InputLabel
         title="Tags"
         type="text"
         className="md:col-span-2"
+        defaultValue={article?.tags}
         {...register("articleTags")}
       />
       <InputLabel
         title="Date"
         type="Date"
-        defaultValue={new Date().toLocaleDateString("en-CA")}
+        value={
+          article
+            ? new Date(article?.date).toLocaleDateString("en-CA")
+            : new Date().toLocaleDateString("en-CA")
+        }
         className="md:col-span-2"
         {...register("articleDate")}
       />

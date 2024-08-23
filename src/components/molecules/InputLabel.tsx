@@ -1,5 +1,8 @@
-export default function InputLabel(
-  props: JSX.IntrinsicElements["input"] & { name: string; title: string }
+import { ForwardedRef, forwardRef } from "react";
+
+const InputLabel = forwardRef(function (
+  props: JSX.IntrinsicElements["input"] & { name: string; title: string },
+  ref: ForwardedRef<HTMLInputElement>
 ) {
   const { name, title, className, ...rest } = props;
   return (
@@ -9,7 +12,9 @@ export default function InputLabel(
       }`}
     >
       <label htmlFor={name}>{title}</label>
-      <input name={name} {...rest} className="rounded-md px-2 py-1" />
+      <input name={name} {...rest} ref={ref} className="rounded-md px-2 py-1" />
     </div>
   );
-}
+});
+
+export default InputLabel;
