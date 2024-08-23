@@ -88,7 +88,7 @@ export default function Articles({
       {articles?.map((article, i) => (
         <BlogCard
           title={article.title}
-          to={articleKeys[i]}
+          to={`/blogs/article/${articleKeys[i]}`}
           tags={article.tags}
           date={article.date}
           description={article.description}

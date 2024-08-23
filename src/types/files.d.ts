@@ -1,4 +1,5 @@
 type Article = {
+  name: string;
   id: number;
   title: string;
   description: string;
@@ -7,6 +8,6 @@ type Article = {
   tags: string;
   date: string;
 };
-interface Articles {
+type Articles = {
   [key: string]: Article;
-}
+};

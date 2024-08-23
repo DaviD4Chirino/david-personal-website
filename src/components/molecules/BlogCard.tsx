@@ -1,6 +1,6 @@
 import { breakText, capitalize, cleanString } from "../../utils";
 import Tag from "../atoms/Tag";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import Markdown from "../atoms/Markdown";
 
 const outlines = [
@@ -23,7 +23,7 @@ export type BlogCardProps = {
   description: string;
   category: string;
   tags: string;
-  to: string;
+  to: LinkProps["to"];
   compact?: boolean;
 };
 
@@ -55,7 +55,7 @@ export default function BlogCard({
       id="BlogCard"
     >
       <Link
-        to={`/blogs/article/${to}`}
+        to={to}
         className={`
         ${compact ? compactStyle : normalStyle}
         gap-5
