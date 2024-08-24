@@ -6,8 +6,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { useUpdateEffect } from "react-use";
 import { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 
 import BlogCard from "../molecules/BlogCard";
+import { Link } from "react-router-dom";
 
 // * TODO: Style this thing
 // * TODO: Build the article object
@@ -33,9 +35,11 @@ export default function Editor() {
   // useUpdateEffect(() => {}, [selectedArticle]);
 
   return (
-    <section className="container  my-10 grid gap-y-28">
+    <section className="container my-10 grid gap-28">
       <h1>Article Editor</h1>
+
       <Form article={selectedArticle} />
+
       {data && <ArticlesToEdit articles={data} />}
     </section>
   );
@@ -49,11 +53,12 @@ function Form({ article }: { article?: Article }) {
   const {
     register,
     handleSubmit,
+    setValue,
     // watch,
     // formState: { errors },
   } = useForm<ArticleObject>({
     values: {
-      id: article?.id || "",
+      id: `${article?.id}` || "",
       name: article?.name || "",
       title: article?.title || "",
       description: article?.description || "",
@@ -68,6 +73,13 @@ function Form({ article }: { article?: Article }) {
       // githubApiKey: ,
     },
   });
+
+  useEffect(() => {
+    if (article && !String(article.id)) {
+      setValue("id", uuid());
+    }
+    return () => {};
+  }, [article]);
 
   const onSubmit: SubmitHandler<ArticleObject> = (data) => {
     console.log("🚀 ~ Form ~ data:", data);
@@ -103,7 +115,7 @@ function Form({ article }: { article?: Article }) {
 
       <InputLabel title="Document Name" {...register("file")} />
 
-      <InputLabel title="ID" {...register("id")} />
+      <InputLabel title="ID" type="text" {...register("id")} />
 
       <InputLabel
         title="Github Api Key"
@@ -124,6 +136,18 @@ function Form({ article }: { article?: Article }) {
             transition-colors
           "
       />
+      <Link
+        to={{ search: `` }}
+        className="
+          py-2
+          bg-primary-darkest hover:bg-primary-dark transition-colors text-primary-lightest no-underline
+          text-center
+          rounded-md
+          col-span-full
+        "
+      >
+        Clear
+      </Link>
     </form>
   );
 }

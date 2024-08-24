@@ -1,6 +1,6 @@
 type Article = {
   name: string;
-  id: string | number;
+  id: string;
   title: string;
   description: string;
   file: string;
