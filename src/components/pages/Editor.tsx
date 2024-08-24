@@ -14,9 +14,10 @@ import { getGistFiles, GIST_IDS } from "../../database";
 
 // * TODO: Style this thing
 // * TODO: Build the article object
-// TODO: Build the markdown file
-// TODO: Find out how to update a gist from here
+// * TODO: Build the markdown file
+// ? I may need to add another MD Editor, this one has quirks
 // ?: It may need another input taking the Github access token
+// TODO: update the gist
 export default function Editor() {
   let [articleQuery] = useSearchParams();
 
