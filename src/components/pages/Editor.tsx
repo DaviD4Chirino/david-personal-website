@@ -10,6 +10,7 @@ import { v4 as uuid } from "uuid";
 
 import BlogCard from "../molecules/BlogCard";
 import { Link } from "react-router-dom";
+import { getGistFiles, GIST_IDS } from "../../database";
 
 // * TODO: Style this thing
 // * TODO: Build the article object
@@ -20,10 +21,16 @@ export default function Editor() {
   let [articleQuery] = useSearchParams();
 
   const [selectedArticle, setSelectedArticle] = useState<Article | undefined>();
+  const [selectedDocument, setSelectedDocument] = useState<File | undefined>();
 
   const { data } = useQuery({
     queryKey: ["articles"],
     queryFn: () => getAllArticles(),
+  });
+
+  const { data: document } = useQuery({
+    queryKey: [`files`],
+    queryFn: () => getGistFiles(GIST_IDS.articles_files),
   });
 
   useEffect(() => {
@@ -32,13 +39,31 @@ export default function Editor() {
     setSelectedArticle(art);
   }, [articleQuery]);
 
+  useEffect(() => {
+    if (!selectedArticle || !document) return;
+
+    const currentDocument: File = document[selectedArticle.file];
+    setSelectedDocument(currentDocument);
+  }, [document, selectedArticle, articleQuery]);
+
+  // useEffect(() => {
+  //   console.log("🚀 ~ Editor ~ selectedDocument:", selectedDocument);
+
+  //   return () => {};
+  // }, [selectedDocument]);
+
   // useUpdateEffect(() => {}, [selectedArticle]);
 
   return (
     <section className="container my-10 grid gap-28">
       <h1>Article Editor</h1>
 
-      <Form article={selectedArticle} />
+      <Form
+        article={selectedArticle}
+        markdownContent={
+          selectedDocument ? selectedDocument.content : undefined
+        }
+      />
 
       {data && <ArticlesToEdit articles={data} />}
     </section>
@@ -46,14 +71,38 @@ export default function Editor() {
 }
 
 type ArticleObject = Article & {
+  document: string;
   githubApiKey: string;
 };
 
-function Form({ article }: { article?: Article }) {
+function Form({
+  article,
+  markdownContent,
+}: {
+  article?: Article;
+  markdownContent?: string;
+}) {
+  const [mdContent, setMdContent] = useState(markdownContent || "");
+
+  const defaultValues = {
+    id: "",
+    name: "",
+    title: "",
+    description: "",
+    category: "",
+    tags: "",
+    file: "",
+    date: "",
+    githubApiKey: "",
+    document: "",
+    // githubApiKey: ,
+  };
+
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     // watch,
     // formState: { errors },
   } = useForm<ArticleObject>({
@@ -70,16 +119,28 @@ function Form({ article }: { article?: Article }) {
         : new Date().toLocaleDateString("en-CA"),
 
       githubApiKey: "",
+      document: "",
       // githubApiKey: ,
     },
   });
 
   useEffect(() => {
-    if (article && !String(article.id)) {
+    if ((article && !String(article.id)) || !article) {
       setValue("id", uuid());
     }
     return () => {};
   }, [article]);
+
+  useEffect(() => {
+    if (!markdownContent) {
+      setMdContent("");
+      console.log("🚀 ~ useUpdateEffect ~ markdownContent:", markdownContent);
+      return;
+    }
+    setMdContent(markdownContent || "");
+
+    console.log("🚀 ~ useUpdateEffect ~ markdownContent:", markdownContent);
+  }, [markdownContent]);
 
   const onSubmit: SubmitHandler<ArticleObject> = (data) => {
     console.log("🚀 ~ Form ~ data:", data);
@@ -122,7 +183,13 @@ function Form({ article }: { article?: Article }) {
         type="password"
         {...register("githubApiKey")}
       />
-      <MarkdownEditor className="col-span-full mt-8 " height="500px" />
+      <MarkdownEditor
+        className="col-span-full mt-8 "
+        height="500px"
+        value={mdContent}
+        onChange={(markdown) => setMdContent(markdown)}
+      />
+      <input type="hidden" {...register("document")} />
       <input
         type="submit"
         name="submit"
@@ -138,6 +205,10 @@ function Form({ article }: { article?: Article }) {
       />
       <Link
         to={{ search: `` }}
+        onClick={() => {
+          reset(defaultValues);
+          setMdContent("");
+        }}
         className="
           py-2
           bg-primary-darkest hover:bg-primary-dark transition-colors text-primary-lightest no-underline

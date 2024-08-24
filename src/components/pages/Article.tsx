@@ -78,6 +78,7 @@ function Document({ title }: { title: string }) {
     queryFn: () => getArticleFile(title),
   });
 
+  // getGistFiles
   useUpdateEffect(() => {
     if (isError) {
       console.error("Document query returned an error: " + error);

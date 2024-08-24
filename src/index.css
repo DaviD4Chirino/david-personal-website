@@ -12,7 +12,8 @@
   --accent: #141414;
 }
 @layer base {
-  #Article .article-md {
+  #Article .article-md,
+  #ArticleEditor * {
     ul,
     ol {
       list-style: revert;
