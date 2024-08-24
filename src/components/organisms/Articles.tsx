@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAllArticles } from "../../database/getArticles";
+import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { useTimeoutFn, useUpdateEffect } from "react-use";

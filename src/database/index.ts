@@ -33,7 +33,7 @@ export async function getGistFile(
 export async function getGistFiles(gistID: string = GIST_IDS.database) {
   const res = await axios
     .get(`https://api.github.com/gists/${gistID}`, {
-      headers: { Authorization: `Bearer ${import.meta.env.VITE_GIST_AUTH}` },
+      headers: { Authorization: `token ${import.meta.env.VITE_GIST_AUTH}` },
     })
     .then((res) => res)
     .catch((err) => err);
@@ -43,4 +43,21 @@ export async function getGistFiles(gistID: string = GIST_IDS.database) {
   }
 
   return null;
+}
+
+export async function updateGist(
+  gistID: string = GIST_IDS.database,
+  files: GistUpdateFiles
+) {
+  return axios.patch(
+    `https://api.github.com/gists/${gistID}`,
+    {
+      files: files,
+    },
+    {
+      headers: {
+        Authorization: `token ${import.meta.env.VITE_GIST_AUTH}`,
+      },
+    }
+  );
 }

@@ -90,3 +90,10 @@ interface ChangeStatus {
   additions: number;
   deletions: number;
 }
+
+interface GistUpdateFiles {
+  [filename: string]: {
+    /** If Content is empty, the file will be deleted */
+    content: string;
+  };
+}
