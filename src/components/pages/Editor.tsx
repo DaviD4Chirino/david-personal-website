@@ -10,14 +10,9 @@ import { v4 as uuid } from "uuid";
 
 import BlogCard from "../molecules/BlogCard";
 import { Link } from "react-router-dom";
-import { getGistFiles, GIST_IDS, updateGist } from "../../database";
+import { getGistFiles, GIST_IDS } from "../../database";
+import { updateBlog } from "../../database/update";
 
-// * ?: It may need another input taking the Github access token
-// * TODO: Style this thing
-// * TODO: Build the article object
-// * TODO: Build the markdown file
-// ? I may need to add another MD Editor, this one has quirks
-// TODO: update the gist
 export default function Editor() {
   let [articleQuery] = useSearchParams();
 
@@ -46,18 +41,6 @@ export default function Editor() {
     const currentDocument: File = document[selectedArticle.file];
     setSelectedDocument(currentDocument);
   }, [document, selectedArticle, articleQuery]);
-
-  /* useEffect(() => {
-    updateGist();
-  }, []); */
-
-  // useEffect(() => {
-  //   console.log("🚀 ~ Editor ~ selectedDocument:", selectedDocument);
-
-  //   return () => {};
-  // }, [selectedDocument]);
-
-  // useUpdateEffect(() => {}, [selectedArticle]);
 
   return (
     <section className="container my-10 grid gap-28">
@@ -139,16 +122,16 @@ function Form({
   useEffect(() => {
     if (!markdownContent) {
       setMdContent("");
-      console.log("🚀 ~ useUpdateEffect ~ markdownContent:", markdownContent);
       return;
     }
     setMdContent(markdownContent || "");
-
-    console.log("🚀 ~ useUpdateEffect ~ markdownContent:", markdownContent);
   }, [markdownContent]);
 
   const onSubmit: SubmitHandler<ArticleObject> = (data) => {
-    console.log("🚀 ~ Form ~ data:", data);
+    data.document = mdContent;
+    const { githubApiKey, document, ...rest } = data;
+
+    updateBlog(rest, document);
   };
 
   useUpdateEffect(() => {}, [article]);
