@@ -42,12 +42,13 @@ export default function Editor() {
 
 type Inputs = {
   articleName: string;
-  exampleRequired: string;
+
   articleTitle: string;
   articleDescription: string;
   articleCategory: string;
   articleTags: string;
   articleDate: string;
+  articleFile: string;
   githubApiKey: string;
 };
 
@@ -55,16 +56,30 @@ function Form({ article }: { article?: Article }) {
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<Inputs>();
+    // watch,
+    // formState: { errors },
+  } = useForm<Inputs>({
+    values: {
+      articleName: article?.name || "",
+      articleTitle: article?.title || "",
+      articleDescription: article?.description || "",
+      articleCategory: article?.category || "",
+      articleTags: article?.tags || "",
+      articleFile: article?.file || "",
+      articleDate: article
+        ? new Date(article.date).toLocaleDateString("en-CA")
+        : new Date().toLocaleDateString("en-CA"),
+
+      githubApiKey: "",
+      // githubApiKey: ,
+    },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    console.log("🚀 ~ Form ~ data:", data);
   };
 
-  setValue("articleDescription", article?.description || "");
+  useUpdateEffect(() => {}, [article]);
 
   return (
     <form
@@ -77,45 +92,35 @@ function Form({ article }: { article?: Article }) {
         placeholder="in-kebab-case"
         type="text"
         className="md:col-span-2"
-        defaultValue={article?.name}
         {...register("articleName")}
       />
       <InputLabel
         title="Title of the Article"
         type="text"
         className="md:col-span-2"
-        defaultValue={article?.title}
         {...register("articleTitle")}
       />
       <InputLabel
         title="Description"
         type="text"
         className="md:col-span-2"
-        defaultValue={article?.description}
         {...register("articleDescription", { value: article?.description })}
       />
       <InputLabel
         title="Category"
         type="text"
         className="md:col-span-2"
-        defaultValue={article?.category}
         {...register("articleCategory")}
       />
       <InputLabel
         title="Tags"
         type="text"
         className="md:col-span-2"
-        defaultValue={article?.tags}
         {...register("articleTags")}
       />
       <InputLabel
         title="Date"
         type="Date"
-        value={
-          article
-            ? new Date(article?.date).toLocaleDateString("en-CA")
-            : new Date().toLocaleDateString("en-CA")
-        }
         className="md:col-span-2"
         {...register("articleDate")}
       />
@@ -125,7 +130,15 @@ function Form({ article }: { article?: Article }) {
         className="col-span-full"
         {...register("githubApiKey")}
       />
-      <MarkdownEditor className="col-span-full " height="500px" />
+      <div className="grid gap-y-2 col-span-full grid-cols-1 md:grid-cols-3 ">
+        <InputLabel
+          title="Document Name"
+          type="text"
+          className=""
+          {...register("articleFile")}
+        />
+        <MarkdownEditor className="col-span-full " height="500px" />
+      </div>
       <input
         type="submit"
         name="submit"
