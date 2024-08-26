@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { getGistFiles, GIST_IDS } from "../../database";
 import { updateBlog } from "../../database/update";
 import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
+import Modal from "../organisms/Modal";
 
 export default function Editor() {
   let [articleQuery] = useSearchParams();
@@ -46,7 +47,7 @@ export default function Editor() {
   return (
     <section className="container my-10 grid gap-28">
       <h1>Article Editor</h1>
-
+      <Modal />
       <Form
         article={selectedArticle}
         markdownContent={
