@@ -47,7 +47,8 @@ export async function getGistFiles(gistID: string = GIST_IDS.database) {
 
 export async function updateGist(
   gistID: string = GIST_IDS.database,
-  files: GistUpdateFiles
+  files: GistUpdateFiles,
+  apiKey: string
 ) {
   return axios.patch(
     `https://api.github.com/gists/${gistID}`,
@@ -56,7 +57,7 @@ export async function updateGist(
     },
     {
       headers: {
-        Authorization: `token ${import.meta.env.VITE_GIST_AUTH}`,
+        Authorization: `token ${apiKey}`,
       },
     }
   );

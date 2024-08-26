@@ -3,7 +3,11 @@ import { GIST_IDS, updateGist } from ".";
 import { inRange } from "../utils";
 import { getAllArticles } from "./get";
 
-export async function updateBlog(articleObject: Article, document: string) {
+export async function updateBlog(
+  articleObject: Article,
+  document: string,
+  apiKey: string
+) {
   const { file, name } = articleObject;
 
   const prevArticles = await getAllArticles();
@@ -13,17 +17,25 @@ export async function updateBlog(articleObject: Article, document: string) {
   }
   const newArticles = { ...prevArticles, [name]: articleObject };
 
-  const updateArticleRes = await updateGist(GIST_IDS.database, {
-    "articles.json": { content: JSON.stringify(newArticles) },
-  });
+  const updateArticleRes = await updateGist(
+    GIST_IDS.database,
+    {
+      "articles.json": { content: JSON.stringify(newArticles) },
+    },
+    apiKey
+  );
 
   if (handleStatus(updateArticleRes)) {
     console.log("Article updated or added");
   }
 
-  const updateDocumentRes = await updateGist(GIST_IDS.articles_files, {
-    [file]: { content: document },
-  });
+  const updateDocumentRes = await updateGist(
+    GIST_IDS.articles_files,
+    {
+      [file]: { content: document },
+    },
+    apiKey
+  );
 
   if (handleStatus(updateDocumentRes)) {
     console.log("Document updated or added");

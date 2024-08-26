@@ -131,7 +131,7 @@ function Form({
     data.document = mdContent;
     const { githubApiKey, document, ...rest } = data;
 
-    updateBlog(rest, document);
+    updateBlog(rest, document, githubApiKey);
   };
 
   useUpdateEffect(() => {}, [article]);
