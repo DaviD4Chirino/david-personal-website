@@ -12,6 +12,7 @@ import BlogCard from "../molecules/BlogCard";
 import { Link } from "react-router-dom";
 import { getGistFiles, GIST_IDS } from "../../database";
 import { updateBlog } from "../../database/update";
+import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
 
 export default function Editor() {
   let [articleQuery] = useSearchParams();
@@ -221,13 +222,15 @@ function ArticlesToEdit(props: { articles: Articles }) {
         Object.values(props.articles)
           .reverse()
           .map((art) => (
-            <BlogCard
-              {...art}
-              to={{
-                search: `article=${art.name}`,
-              }}
-              key={art.id}
-            />
+            <div className="grid grid-rows-[auto_1fr] isolate" key={art.id}>
+              <DeleteArticleButton article={art} className="ms-3" />
+              <BlogCard
+                {...art}
+                to={{
+                  search: `article=${art.name}`,
+                }}
+              />
+            </div>
           ))}
     </section>
   );
