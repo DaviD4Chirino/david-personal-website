@@ -12,7 +12,9 @@ export default function DeleteArticleButton(
 
   function handleDeleteArticle() {
     // console.log("🚀 ~ deleteArticle ~ Not implemented");
-    deleteArticle(article.id, apiKey);
+    deleteArticle(article.name, apiKey)
+      .then(() => alert(`Article ${article.name} deleted`))
+      .catch((err) => console.log(err));
   }
 
   return (

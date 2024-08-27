@@ -11,7 +11,7 @@ import { v4 as uuid } from "uuid";
 import BlogCard from "../molecules/BlogCard";
 import { Link } from "react-router-dom";
 import { getGistFiles, GIST_IDS } from "../../database";
-import { updateBlog } from "../../database/update";
+import { updateArticle, updateDocument } from "../../database/update";
 import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
 
 export default function Editor() {
@@ -21,7 +21,7 @@ export default function Editor() {
   const [selectedDocument, setSelectedDocument] = useState<File | undefined>();
   const [apiKeyValue, setApiKeyValue] = useState<string>("");
 
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["articles"],
     queryFn: () => getAllArticles(),
   });
@@ -32,8 +32,21 @@ export default function Editor() {
   });
 
   useEffect(() => {
-    const value: string | null = articleQuery.get("article");
-    const art: Article | undefined = data ? data[value || ""] : undefined;
+    const searchQuery: string = articleQuery.get("article") || "";
+    if (!data) {
+      console.error(`article query error: `, error);
+      return;
+    }
+
+    const art: Article | undefined = Object.values(data).find(
+      (art) => art.name == searchQuery
+    );
+
+    if (!art) {
+      console.error("Could not find article", searchQuery);
+      return;
+    }
+
     setSelectedArticle(art);
   }, [articleQuery]);
 
@@ -136,11 +149,26 @@ function Form({
     setMdContent(markdownContent || "");
   }, [markdownContent]);
 
+  useUpdateEffect(() => {}, [article]);
+
   const onSubmit: SubmitHandler<ArticleObject> = (data) => {
     data.document = mdContent;
     const { githubApiKey, document, ...rest } = data;
+    rest.file = rest.name + ".md";
 
-    updateBlog(rest, document, githubApiKey);
+    async function sendData() {
+      updateArticle(rest, githubApiKey)
+        .then(() => console.log("Article updated!"))
+        .catch((err) => console.log("Article", err));
+
+      updateDocument(rest.file, document, githubApiKey)
+        .then(() => console.log("Document updated!"))
+        .catch((err) => console.log("Document", err));
+
+      // if(articleRes)
+    }
+
+    sendData();
   };
 
   useUpdateEffect(() => {}, [article]);
@@ -177,7 +205,7 @@ function Form({
 
       <InputLabel
         title="Github Api Key"
-        type="password"
+        type="text"
         {...register("githubApiKey")}
       />
       <MarkdownEditor
