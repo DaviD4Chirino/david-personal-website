@@ -13,11 +13,11 @@ export default function DeleteArticleButton(
   function handleDeleteArticle() {
     // console.log("🚀 ~ deleteArticle ~ Not implemented");
     deleteArticle(article.name, apiKey)
-      .then(() => alert(`Article ${article.name} deleted`))
+      .then(() => console.log(`Article ${article.name} deleted`))
       .catch((err) => console.log("Article Delete Error:", err));
 
     deleteDocument(article.file, apiKey)
-      .then(() => alert(`Document ${article.file} `))
+      .then(() => console.log(`Document ${article.file} deleted`))
       .catch((err) => console.log("Document Delete Error:", err));
   }
 
