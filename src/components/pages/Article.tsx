@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAllArticles, getArticleFile } from "../../database/getArticles";
+import { getAllArticles, getArticleFile } from "../../database/get";
 import { routes } from "../../staticData/pages.json";
 import { toPascalCase } from "../../utils";
 import Markdown from "../atoms/Markdown";
@@ -78,6 +78,7 @@ function Document({ title }: { title: string }) {
     queryFn: () => getArticleFile(title),
   });
 
+  // getGistFiles
   useUpdateEffect(() => {
     if (isError) {
       console.error("Document query returned an error: " + error);

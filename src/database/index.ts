@@ -1,6 +1,6 @@
 import axios from "axios";
 
-enum GIST_IDS {
+export enum GIST_IDS {
   database = "b8bc2293fd39b57751cc6d92be90818a",
   articles_files = "4ada55ee93a94b48c96d472cbd58640d",
 }
@@ -33,14 +33,32 @@ export async function getGistFile(
 export async function getGistFiles(gistID: string = GIST_IDS.database) {
   const res = await axios
     .get(`https://api.github.com/gists/${gistID}`, {
-      headers: { Authorization: `Bearer ${import.meta.env.VITE_GIST_AUTH}` },
+      headers: { Authorization: `token ${import.meta.env.VITE_GIST_AUTH}` },
     })
     .then((res) => res)
-    .catch(() => null);
+    .catch((err) => err);
 
   if (res) {
     return res.data.files;
   }
 
   return null;
+}
+
+export async function updateGist(
+  gistID: string = GIST_IDS.database,
+  files: GistUpdateFiles,
+  apiKey: string
+) {
+  return axios.patch(
+    `https://api.github.com/gists/${gistID}`,
+    {
+      files: files,
+    },
+    {
+      headers: {
+        Authorization: `token ${apiKey}`,
+      },
+    }
+  );
 }

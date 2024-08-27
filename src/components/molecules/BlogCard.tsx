@@ -1,6 +1,6 @@
 import { breakText, capitalize, cleanString } from "../../utils";
 import Tag from "../atoms/Tag";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import Markdown from "../atoms/Markdown";
 
 const outlines = [
@@ -23,8 +23,9 @@ export type BlogCardProps = {
   description: string;
   category: string;
   tags: string;
-  to: string;
+  to: LinkProps["to"];
   compact?: boolean;
+  className?: string;
 };
 
 export default function BlogCard({
@@ -35,6 +36,7 @@ export default function BlogCard({
   category = "article",
   compact = false,
   tags,
+  className = "",
 }: BlogCardProps) {
   const formattedDate = new Date(date).toLocaleString("en", {
     day: "2-digit",
@@ -45,21 +47,21 @@ export default function BlogCard({
   const tagsArray: string[] = breakText(tags, ",");
 
   const compactStyle = "grid grid-cols-1 ";
-  const normalStyle = "grid grid-rows-[auto_1fr_auto]  ";
+  const normalStyle = "grid grid-rows-[auto_1fr_auto]   ";
 
   return (
     <article
       className={`p-3 no-underline rounded-2xl transition-transform ${getOutline(
         category
-      )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-100`}
+      )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-100 ${className}`}
       id="BlogCard"
     >
       <Link
-        to={`/blogs/article/${to}`}
+        to={to}
         className={`
         ${compact ? compactStyle : normalStyle}
         gap-5
-        no-underline
+        no-underline h-[100%]
       `}
       >
         <div className="flex flex-wrap gap-3 justify-between w-full">

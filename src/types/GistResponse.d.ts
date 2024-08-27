@@ -90,3 +90,11 @@ interface ChangeStatus {
   additions: number;
   deletions: number;
 }
+
+/** If Content is null, the file will be deleted */
+interface GistUpdateFiles {
+  [filename: string]: {
+    /** If Content is null, the file will be deleted */
+    content: string | null;
+  };
+}

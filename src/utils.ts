@@ -63,3 +63,7 @@ export function getContrastHex(hexcolor: string) {
   var yiq = (r * 299 + g * 587 + b * 114) / 1000;
   return yiq >= 128 ? "black" : "white";
 }
+
+export function inRange(num: number, min: number, max: number): boolean {
+  return num >= min && num <= max;
+}
