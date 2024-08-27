@@ -1,4 +1,5 @@
 import { MdCancel as CrossI } from "react-icons/md";
+import ConsentModal from "../../organisms/ConsentModal";
 
 export default function DeleteArticleButton(
   props: JSX.IntrinsicElements["button"] & {
@@ -7,23 +8,32 @@ export default function DeleteArticleButton(
 ) {
   const { article, ...rest } = props;
   return (
-    <button
-      {...rest}
-      title={`Delete ${article.title}?`}
+    <ConsentModal
+      button={
+        <p className="flex gap-2 place-items-center">
+          <CrossI className="inline size-5" />
+          Delete Article ?
+        </p>
+      }
       className={`
-        flex gap-1
-        bg-grey-900 text-grey-100
-        w-fit
-        align-middle
-        py-3 px-5
-        rounded-tr-lg rounded-tl-lg
-        leading-[20px]
-
+        flex gap-6
+        bg-grey-900 text-grey-100 hover:bg-grey-800 
+        w-fit rounded-none rounded-tl-xl rounded-tr-xl
         ${rest.className ? rest.className : ""}
     `}
+      dialogProps={{
+        size: "md",
+        dismissible: true,
+        position: "center",
+      }}
     >
-      <CrossI className="inline size-4" />
-      <p>Delete Article ?</p>
-    </button>
+      <p className="text-center">
+        You will delete{" "}
+        <b>
+          <u>{article.title}</u>
+        </b>
+        , are you <b>sure</b>?
+      </p>
+    </ConsentModal>
   );
 }

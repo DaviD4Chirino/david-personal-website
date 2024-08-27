@@ -1,7 +1,10 @@
  /** @type {Config} */ 
 /** @typedef {import('tailwindcss').Config} Config */
+const flowbite = require("flowbite-react/tailwind");
+
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}",  './node_modules/flowbite-react/lib/esm/**/*.js'],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}",  flowbite.content()
+  ],
   theme: {
     colors: {
       text: "#050315",
@@ -60,5 +63,5 @@ export default {
     extend: {},
   },
   // eslint-disable-next-line no-undef
-  plugins: [require('tailwindcss-animated'),  require('flowbite/plugin')],
+  plugins: [require('tailwindcss-animated'),  flowbite.plugin(),],
 };
