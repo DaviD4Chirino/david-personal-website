@@ -57,8 +57,8 @@ export default function ConsentModal(props: ConsentModalProps) {
           dialogProps?.className ? dialogProps.className : ""
         } animate-fade `}
       >
-        <Dialog.Header className="text-center">
-          <h3 className="text-center">{title ? title : "Attention!"}</h3>
+        <Dialog.Header>
+          <p className="text-center text-xl">{title ? title : "Attention!"}</p>
         </Dialog.Header>
         <Dialog.Body>
           {children ? (

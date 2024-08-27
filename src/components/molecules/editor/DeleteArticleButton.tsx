@@ -1,12 +1,20 @@
 import { MdCancel as CrossI } from "react-icons/md";
 import ConsentModal from "../../organisms/ConsentModal";
+import { deleteArticle } from "../../../database/update";
 
 export default function DeleteArticleButton(
   props: JSX.IntrinsicElements["button"] & {
     article: Article;
+    apiKey: string;
   }
 ) {
-  const { article, ...rest } = props;
+  const { article, apiKey, ...rest } = props;
+
+  function handleDeleteArticle() {
+    // console.log("🚀 ~ deleteArticle ~ Not implemented");
+    deleteArticle(article.id, apiKey);
+  }
+
   return (
     <ConsentModal
       button={
@@ -26,6 +34,7 @@ export default function DeleteArticleButton(
         dismissible: true,
         position: "center",
       }}
+      onAccept={handleDeleteArticle}
     >
       <p className="text-center">
         You will delete{" "}

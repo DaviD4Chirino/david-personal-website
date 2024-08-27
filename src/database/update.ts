@@ -14,6 +14,7 @@ export async function updateBlog(
 
   if (!prevArticles) {
     console.error(`Cannot get gist file articles.json`);
+    return;
   }
   const newArticles = { ...prevArticles, [name]: articleObject };
 
@@ -39,6 +40,36 @@ export async function updateBlog(
 
   if (handleStatus(updateDocumentRes)) {
     console.log("Document updated or added");
+  }
+}
+
+export async function deleteArticle(articleId: string, apiKey: string) {
+  const articles = await getAllArticles();
+
+  if (!articles) {
+    console.error(`Cannot get gist file articles.json`);
+    return;
+  }
+  const filteredArticles = Object.values(articles).filter(
+    (art) => art.id != articleId
+  );
+  console.log("🚀 ~ deleteArticle ~ filteredArticles:", filteredArticles);
+
+  if (filteredArticles === Object.values(articles)) {
+    console.error("Could not be filtered");
+    return;
+  }
+
+  const updateArticleRes = await updateGist(
+    GIST_IDS.database,
+    {
+      "articles.json": { content: JSON.stringify(filteredArticles) },
+    },
+    apiKey
+  );
+
+  if (handleStatus(updateArticleRes)) {
+    console.log("Article removed");
   }
 }
 

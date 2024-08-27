@@ -19,6 +19,7 @@ export default function Editor() {
 
   const [selectedArticle, setSelectedArticle] = useState<Article | undefined>();
   const [selectedDocument, setSelectedDocument] = useState<File | undefined>();
+  const [apiKeyValue, setApiKeyValue] = useState<string>("");
 
   const { data } = useQuery({
     queryKey: ["articles"],
@@ -52,9 +53,10 @@ export default function Editor() {
         markdownContent={
           selectedDocument ? selectedDocument.content : undefined
         }
+        setApiKey={async (apiKey) => setApiKeyValue(apiKey)}
       />
 
-      {data && <ArticlesToEdit articles={data} />}
+      {data && <ArticlesToEdit articles={data} apiKey={apiKeyValue} />}
     </section>
   );
 }
@@ -67,9 +69,11 @@ type ArticleObject = Article & {
 function Form({
   article,
   markdownContent,
+  setApiKey,
 }: {
   article?: Article;
   markdownContent?: string;
+  setApiKey: (apiKey: string) => {};
 }) {
   const [mdContent, setMdContent] = useState(markdownContent || "");
 
@@ -92,7 +96,7 @@ function Form({
     handleSubmit,
     setValue,
     reset,
-    // watch,
+    watch,
     // formState: { errors },
   } = useForm<ArticleObject>({
     values: {
@@ -111,6 +115,10 @@ function Form({
       document: "",
       // githubApiKey: ,
     },
+  });
+
+  watch(({ githubApiKey }) => {
+    setApiKey(githubApiKey || "");
   });
 
   useEffect(() => {
@@ -212,7 +220,7 @@ function Form({
   );
 }
 
-function ArticlesToEdit(props: { articles: Articles }) {
+function ArticlesToEdit(props: { articles: Articles; apiKey: string }) {
   return (
     <section
       id="EditArticles"
@@ -223,7 +231,11 @@ function ArticlesToEdit(props: { articles: Articles }) {
           .reverse()
           .map((art) => (
             <div className="grid grid-rows-[auto_1fr] isolate" key={art.id}>
-              <DeleteArticleButton article={art} className="ms-3" />
+              <DeleteArticleButton
+                article={art}
+                apiKey={props.apiKey}
+                className="ms-3"
+              />
               <BlogCard
                 {...art}
                 to={{
