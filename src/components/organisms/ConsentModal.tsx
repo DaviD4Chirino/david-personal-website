@@ -55,7 +55,7 @@ export default function ConsentModal(props: ConsentModalProps) {
         {...dialogProps}
         className={`${
           dialogProps?.className ? dialogProps.className : ""
-        } animate-fade `}
+        } animate-fade animate-duration-150 `}
       >
         <Dialog.Header>
           <p className="text-center text-xl">{title ? title : "Attention!"}</p>

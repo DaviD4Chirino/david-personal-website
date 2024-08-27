@@ -61,7 +61,7 @@ export default function BlogCard({
         className={`
         ${compact ? compactStyle : normalStyle}
         gap-5
-        no-underline
+        no-underline h-[100%]
       `}
       >
         <div className="flex flex-wrap gap-3 justify-between w-full">

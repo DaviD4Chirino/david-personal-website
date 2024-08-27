@@ -1,6 +1,4 @@
-import { AxiosResponse } from "axios";
 import { GIST_IDS, updateGist } from ".";
-import { inRange } from "../utils";
 import { getAllArticles } from "./get";
 
 export async function updateArticle(article: Article, apiKey: string) {
@@ -50,6 +48,16 @@ export async function deleteArticle(articleName: string, apiKey: string) {
     GIST_IDS.database,
     {
       "articles.json": { content: JSON.stringify(rest) },
+    },
+    apiKey
+  );
+}
+
+export async function deleteDocument(fileName: string, apiKey: string) {
+  return updateGist(
+    GIST_IDS.articles_files,
+    {
+      [fileName]: { content: "" },
     },
     apiKey
   );

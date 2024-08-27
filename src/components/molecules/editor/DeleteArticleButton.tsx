@@ -1,6 +1,6 @@
 import { MdCancel as CrossI } from "react-icons/md";
 import ConsentModal from "../../organisms/ConsentModal";
-import { deleteArticle } from "../../../database/update";
+import { deleteArticle, deleteDocument } from "../../../database/update";
 
 export default function DeleteArticleButton(
   props: JSX.IntrinsicElements["button"] & {
@@ -14,7 +14,11 @@ export default function DeleteArticleButton(
     // console.log("🚀 ~ deleteArticle ~ Not implemented");
     deleteArticle(article.name, apiKey)
       .then(() => alert(`Article ${article.name} deleted`))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("Article Delete Error:", err));
+
+    deleteDocument(article.file, apiKey)
+      .then(() => alert(`Document ${article.file} `))
+      .catch((err) => console.log("Document Delete Error:", err));
   }
 
   return (
