@@ -59,6 +59,7 @@ export default {
       "4xl": "2.442rem",
       "5xl": "3.053rem",
     },
+    // input:{}
 
     extend: {},
   },

@@ -2,15 +2,22 @@ import { MdCancel as CrossI } from "react-icons/md";
 import ConsentModal from "../../organisms/ConsentModal";
 import { deleteArticle, deleteDocument } from "../../../database/update";
 import { useToast } from "../../../context/Toast/useToast";
+import InputLabel from "../InputLabel";
+import React, { useState } from "react";
 
 export default function DeleteArticleButton(
   props: JSX.IntrinsicElements["button"] & {
     article: Article;
-    apiKey: string;
   }
 ) {
   const toast = useToast();
-  const { article, apiKey, ...rest } = props;
+  const [apiKey, setApiKey] = useState<string>("");
+
+  const { article, ...rest } = props;
+
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setApiKey(e.target.value);
+  }
 
   function handleDeleteArticle() {
     // console.log("🚀 ~ deleteArticle ~ Not implemented");
@@ -38,19 +45,27 @@ export default function DeleteArticleButton(
         ${rest.className ? rest.className : ""}
     `}
       dialogProps={{
-        size: "md",
+        size: "xl",
         dismissible: true,
         position: "center",
       }}
       onAccept={handleDeleteArticle}
     >
-      <p className="text-center">
-        You will delete{" "}
-        <b>
-          <u>{article.title}</u>
-        </b>
-        , are you <b>sure</b>?
-      </p>
+      <div className="grid gap-y-5">
+        <p className="text-center">
+          You will delete{" "}
+          <u>
+            <b>{article.title}</b>
+          </u>
+          , are you sure?
+        </p>
+        <InputLabel
+          name="githubApiKey"
+          title="Github Api Key"
+          onChange={handleOnChange}
+          value={apiKey}
+        />
+      </div>
     </ConsentModal>
   );
 }

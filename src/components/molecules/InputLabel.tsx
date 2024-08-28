@@ -1,18 +1,23 @@
+import { Label, TextInput, TextInputProps } from "flowbite-react";
 import { ForwardedRef, forwardRef } from "react";
 
 const InputLabel = forwardRef(function (
-  props: JSX.IntrinsicElements["input"] & { name: string; title: string },
+  props: TextInputProps & { name: string; title: string },
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const { name, title, className, ...rest } = props;
   return (
     <div
-      className={`input-container grid grid-rows-[auto_auto] h-fit ${
-        className ? className : ""
-      }`}
+      className={`input-container grid grid-rows-[auto_auto] gap-y-1  h-fit`}
     >
-      <label htmlFor={name}>{title}</label>
-      <input name={name} {...rest} ref={ref} className="rounded-md px-2 py-1" />
+      <Label htmlFor={name}>{title}</Label>
+      <TextInput
+        {...rest}
+        sizing="sm"
+        name={name}
+        ref={ref}
+        // className="bg-text"
+      />
     </div>
   );
 });

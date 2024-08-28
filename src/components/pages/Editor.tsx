@@ -20,7 +20,6 @@ export default function Editor() {
 
   const [selectedArticle, setSelectedArticle] = useState<Article | undefined>();
   const [selectedDocument, setSelectedDocument] = useState<File | undefined>();
-  const [apiKeyValue, setApiKeyValue] = useState<string>("");
 
   const { data, error } = useQuery({
     queryKey: ["articles"],
@@ -67,10 +66,9 @@ export default function Editor() {
         markdownContent={
           selectedDocument ? selectedDocument.content : undefined
         }
-        setApiKey={async (apiKey) => setApiKeyValue(apiKey)}
       />
 
-      {data && <ArticlesToEdit articles={data} apiKey={apiKeyValue} />}
+      {data && <ArticlesToEdit articles={data} />}
     </section>
   );
 }
@@ -83,17 +81,15 @@ type ArticleObject = Article & {
 function Form({
   article,
   markdownContent,
-  setApiKey,
 }: {
   article?: Article;
   markdownContent?: string;
-  setApiKey: (apiKey: string) => {};
 }) {
   const [mdContent, setMdContent] = useState(markdownContent || "");
   const toast = useToast();
 
   const defaultValues = {
-    id: "",
+    id: uuid(),
     name: "",
     title: "",
     description: "",
@@ -111,7 +107,6 @@ function Form({
     handleSubmit,
     setValue,
     reset,
-    watch,
     // formState: { errors },
   } = useForm<ArticleObject>({
     values: {
@@ -130,10 +125,6 @@ function Form({
       document: "",
       // githubApiKey: ,
     },
-  });
-
-  watch(({ githubApiKey }) => {
-    setApiKey(githubApiKey || "");
   });
 
   useEffect(() => {
@@ -198,6 +189,7 @@ function Form({
       />
       <InputLabel title="Category" type="text" {...register("category")} />
       <InputLabel title="Tags" type="text" {...register("tags")} />
+
       <InputLabel title="Date" type="Date" {...register("date")} />
 
       <InputLabel title="Document Name" {...register("file")} />
@@ -249,7 +241,7 @@ function Form({
   );
 }
 
-function ArticlesToEdit(props: { articles: Articles; apiKey: string }) {
+function ArticlesToEdit(props: { articles: Articles }) {
   return (
     <section
       id="EditArticles"
@@ -260,11 +252,7 @@ function ArticlesToEdit(props: { articles: Articles; apiKey: string }) {
           .reverse()
           .map((art) => (
             <div className="grid grid-rows-[auto_1fr] isolate" key={art.id}>
-              <DeleteArticleButton
-                article={art}
-                apiKey={props.apiKey}
-                className="ms-3"
-              />
+              <DeleteArticleButton article={art} className="ms-3" />
               <BlogCard
                 {...art}
                 to={{
