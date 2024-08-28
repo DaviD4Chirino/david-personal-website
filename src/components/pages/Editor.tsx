@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/get";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
-import { useUpdateEffect } from "react-use";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
