@@ -1,6 +1,7 @@
 import { MdCancel as CrossI } from "react-icons/md";
 import ConsentModal from "../../organisms/ConsentModal";
 import { deleteArticle, deleteDocument } from "../../../database/update";
+import { useToast } from "../../../context/Toast/useToast";
 
 export default function DeleteArticleButton(
   props: JSX.IntrinsicElements["button"] & {
@@ -8,17 +9,18 @@ export default function DeleteArticleButton(
     apiKey: string;
   }
 ) {
+  const toast = useToast();
   const { article, apiKey, ...rest } = props;
 
   function handleDeleteArticle() {
     // console.log("🚀 ~ deleteArticle ~ Not implemented");
     deleteArticle(article.name, apiKey)
-      .then(() => console.log(`Article ${article.name} deleted`))
-      .catch((err) => console.log("Article Delete Error:", err));
+      .then(() => toast.success(`Article ${article.name} deleted`))
+      .catch((err) => toast.error(`Article Delete Error: ${err}`));
 
     deleteDocument(article.file, apiKey)
-      .then(() => console.log(`Document ${article.file} deleted`))
-      .catch((err) => console.log("Document Delete Error:", err));
+      .then(() => toast.success(`Document ${article.file} deleted`))
+      .catch((err) => toast.error(`Document Delete Error: ${err}`));
   }
 
   return (

@@ -13,12 +13,9 @@ import { Link } from "react-router-dom";
 import { getGistFiles, GIST_IDS } from "../../database";
 import { updateArticle, updateDocument } from "../../database/update";
 import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
-import ToastContainer from "../../context/Toast/ToastContainer";
-import { Button } from "flowbite-react";
 import { useToast } from "../../context/Toast/useToast";
 
 export default function Editor() {
-  const toast = useToast();
   let [articleQuery] = useSearchParams();
 
   const [selectedArticle, setSelectedArticle] = useState<Article | undefined>();
@@ -64,32 +61,6 @@ export default function Editor() {
   return (
     <section className="container my-10 grid gap-28 ">
       <h1>Article Editor</h1>
-      <div className="grid gap-2">
-        <Button
-          onClick={() => toast.success("Clicked")}
-          className="bg-[green] text-[white]"
-        >
-          Click for Success toast
-        </Button>
-        <Button
-          onClick={() => toast.error("Clicked")}
-          className="bg-[red] text-[white]"
-        >
-          Click for Error toast
-        </Button>
-        <Button
-          onClick={() => toast.warning("Clicked")}
-          className="bg-[orange] text-[black]"
-        >
-          Click for Warning toast
-        </Button>
-        <Button
-          onClick={() => toast.info("Clicked")}
-          className="bg-[blue] text-[white]"
-        >
-          Click for Info toast
-        </Button>
-      </div>
 
       <Form
         article={selectedArticle}
@@ -119,6 +90,7 @@ function Form({
   setApiKey: (apiKey: string) => {};
 }) {
   const [mdContent, setMdContent] = useState(markdownContent || "");
+  const toast = useToast();
 
   const defaultValues = {
     id: "",
@@ -188,13 +160,12 @@ function Form({
 
     async function sendData() {
       updateArticle(rest, githubApiKey)
-        .then(() => console.log("Article updated!"))
-        .catch((err) => console.log("Article", err));
+        .then(() => toast.success("Article updated!"))
+        .catch((err) => toast.error(`Article Error ${err}`));
 
       updateDocument(rest.file, document, githubApiKey)
-        .then(() => console.log("Document updated!"))
-        .catch((err) => console.log("Document", err));
-
+        .then(() => toast.success("Document updated!"))
+        .catch((err) => toast.error(`Document Error ${err}`));
       // if(articleRes)
     }
 
