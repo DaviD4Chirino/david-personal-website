@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { getGistFiles, GIST_IDS } from "../../database";
 import { updateArticle, updateDocument } from "../../database/update";
 import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
+import Toast from "../../context/Toast/Toast";
 import ToastContainer from "../../context/Toast/ToastContainer";
 
 export default function Editor() {
@@ -61,12 +62,14 @@ export default function Editor() {
   return (
     <section className="container my-10 grid gap-28 ">
       <h1>Article Editor</h1>
-      <div className="grid gap-y-2 w-96">
-        <ToastContainer type="success" />
-        <ToastContainer type="info" />
-        <ToastContainer type="error" />
-        <ToastContainer type="warning" />
-      </div>
+      <ToastContainer
+        toasts={[
+          { type: "error", message: "error" },
+          { type: "info", message: "info" },
+          { type: "success", message: "success" },
+          { type: "warning", message: "warning" },
+        ]}
+      />
 
       <Form
         article={selectedArticle}
