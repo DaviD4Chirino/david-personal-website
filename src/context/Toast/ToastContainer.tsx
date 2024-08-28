@@ -1,5 +1,5 @@
 import Toast, { ToastProps } from "./Toast";
-
+import { v4 as uuid } from "uuid";
 type ToastContainerProps = {
   toasts: ToastProps[];
 };
@@ -13,15 +13,18 @@ export default function ToastContainer({ toasts }: ToastContainerProps) {
     p-5 
     fixed top-0 right-0 left-0 bottom-0 
     z-50  pointer-events-none
-    flex justify-end
+    flex place-items-end place-content-end
     "
     >
       <div
-        className="grid gap-2 h-max w-full sm:w-[30rem] pointer-events-auto"
+        className="
+        grid gap-2 
+        h-max w-full sm:w-[30rem] 
+        pointer-events-auto"
         id="ToastContainer"
       >
         {toasts.map((toast, i) => (
-          <Toast {...toast} key={i} />
+          <Toast {...toast} key={toast.id} />
         ))}
       </div>
     </div>

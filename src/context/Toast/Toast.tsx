@@ -4,6 +4,9 @@ import {
   FaExclamationTriangle as WarningI,
   FaInfoCircle as InfoI,
 } from "react-icons/fa";
+import { useToast } from "./useToast";
+import { useEffectOnce, useTimeoutFn } from "react-use";
+import { useEffect, useRef } from "react";
 
 type ToastTypes = "success" | "error" | "warning" | "info";
 
@@ -49,20 +52,33 @@ const toastPresets: ToastPresets = {
   },
 };
 
-export default function Toast({ type, message }: ToastProps) {
+export default function Toast({ type, message, id }: ToastProps) {
   const { bgColor, color, icon }: ToastPreset = toastPresets[type];
+  const toast = useToast();
+
+  function handleRemoval() {
+    toast.remove(id);
+  }
+
+  function handleClick() {
+    handleRemoval();
+  }
+  useTimeoutFn(handleRemoval, 5000);
+
   return (
-    <span
+    <button
+      onClick={handleClick}
       className={`
         toast toast-${type} 
         ${bgColor}
         ${color}
-        rounded-md p-4
+        rounded-md p-4 
+        text-left
         grid grid-cols-[auto_1fr] gap-3
     `}
     >
       {icon}
-      <p className="self-center line-clamp-1 ">{message}</p>
-    </span>
+      <p className="self-center line-clamp-1">{message}</p>
+    </button>
   );
 }
