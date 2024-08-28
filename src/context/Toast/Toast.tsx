@@ -5,8 +5,7 @@ import {
   FaInfoCircle as InfoI,
 } from "react-icons/fa";
 import { useToast } from "./useToast";
-import { useEffectOnce, useTimeoutFn } from "react-use";
-import { useEffect, useRef } from "react";
+import { useTimeoutFn } from "react-use";
 
 type ToastTypes = "success" | "error" | "warning" | "info";
 
@@ -63,7 +62,7 @@ export default function Toast({ type, message, id }: ToastProps) {
   function handleClick() {
     handleRemoval();
   }
-  useTimeoutFn(handleRemoval, 5000);
+  // useTimeoutFn(handleRemoval, 5000);
 
   return (
     <button
