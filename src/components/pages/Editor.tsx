@@ -105,7 +105,6 @@ function Form({
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     // formState: { errors },
   } = useForm<ArticleObject>({
@@ -127,12 +126,12 @@ function Form({
     },
   });
 
-  useEffect(() => {
+  /* useEffect(() => {
     if ((article && !String(article.id)) || !article) {
       setValue("id", uuid());
     }
     return () => {};
-  }, [article]);
+  }, [article]); */
 
   useEffect(() => {
     if (!markdownContent) {
@@ -142,7 +141,7 @@ function Form({
     setMdContent(markdownContent || "");
   }, [markdownContent]);
 
-  useUpdateEffect(() => {}, [article]);
+  // useUpdateEffect(() => {}, [article]);
 
   const onSubmit: SubmitHandler<ArticleObject> = (data) => {
     data.document = mdContent;
@@ -163,7 +162,7 @@ function Form({
     sendData();
   };
 
-  useUpdateEffect(() => {}, [article]);
+  // useUpdateEffect(() => {}, [article]);
 
   return (
     <form
@@ -188,11 +187,12 @@ function Form({
         {...register("description")}
       />
       <InputLabel title="Category" type="text" {...register("category")} />
+
       <InputLabel title="Tags" type="text" {...register("tags")} />
 
       <InputLabel title="Date" type="Date" {...register("date")} />
 
-      <InputLabel title="Document Name" {...register("file")} />
+      <InputLabel title="Document Name" {...register("file")} disabled />
 
       <InputLabel title="ID" type="text" {...register("id")} />
 
