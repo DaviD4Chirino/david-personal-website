@@ -10,6 +10,7 @@ type ToastTypes = "success" | "error" | "warning" | "info";
 export type ToastProps = {
   type: ToastTypes;
   message: string;
+  id: number;
 };
 
 type ToastPresets = {

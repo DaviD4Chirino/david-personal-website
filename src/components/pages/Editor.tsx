@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import { getGistFiles, GIST_IDS } from "../../database";
 import { updateArticle, updateDocument } from "../../database/update";
 import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
-import Toast from "../../context/Toast/Toast";
 import ToastContainer from "../../context/Toast/ToastContainer";
 
 export default function Editor() {
@@ -64,10 +63,10 @@ export default function Editor() {
       <h1>Article Editor</h1>
       <ToastContainer
         toasts={[
-          { type: "error", message: "error" },
-          { type: "info", message: "info" },
-          { type: "success", message: "success" },
-          { type: "warning", message: "warning" },
+          { type: "error", message: "error", id: 1 },
+          { type: "info", message: "info", id: 2 },
+          { type: "success", message: "success", id: 3 },
+          { type: "warning", message: "warning", id: 4 },
         ]}
       />
 
