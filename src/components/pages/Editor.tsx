@@ -1,13 +1,8 @@
 import MarkdownEditor from "@uiw/react-markdown-editor";
-import InputLabel, { InputLabelProps } from "../molecules/InputLabel";
+import InputLabel from "../molecules/InputLabel";
 import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/get";
-import {
-  RegisterOptions,
-  SubmitHandler,
-  useForm,
-  UseFormRegister,
-} from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
@@ -125,6 +120,7 @@ function Form({
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ArticleObject>({
     resolver: yupResolver(ArticleSchema),
@@ -146,12 +142,12 @@ function Form({
     },
   });
 
-  /* useEffect(() => {
+  useEffect(() => {
     if ((article && !String(article.id)) || !article) {
       setValue("id", uuid());
     }
     return () => {};
-  }, [article]); */
+  }, [article]);
 
   useEffect(() => {
     if (!markdownContent) {
@@ -248,6 +244,7 @@ function Form({
         {...register("id")}
         helperText={errors["id"]?.message}
         color={errors["id"] ? "failure" : ""}
+        disabled
       />
 
       <InputLabel
