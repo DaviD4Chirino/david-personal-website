@@ -6,10 +6,24 @@ type ToastContainerProps = {
 
 export default function ToastContainer({ toasts }: ToastContainerProps) {
   return (
-    <div className="grid h-max gap-2" id="ToastContainer">
-      {toasts.map((toast, i) => (
-        <Toast {...toast} key={i} />
-      ))}
+    <div
+      tabIndex={-1}
+      className="
+   
+    p-5 
+    fixed top-0 right-0 left-0 bottom-0 
+    z-50  pointer-events-none
+    flex justify-end
+    "
+    >
+      <div
+        className="grid gap-2 h-max w-full sm:w-[30rem] pointer-events-auto"
+        id="ToastContainer"
+      >
+        {toasts.map((toast, i) => (
+          <Toast {...toast} key={i} />
+        ))}
+      </div>
     </div>
   );
 }
