@@ -1,8 +1,13 @@
 import MarkdownEditor from "@uiw/react-markdown-editor";
-import InputLabel from "../molecules/InputLabel";
+import InputLabel, { InputLabelProps } from "../molecules/InputLabel";
 import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/get";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  RegisterOptions,
+  SubmitHandler,
+  useForm,
+  UseFormRegister,
+} from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
@@ -13,6 +18,8 @@ import { getGistFiles, GIST_IDS } from "../../database";
 import { updateArticle, updateDocument } from "../../database/update";
 import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
 import { useToast } from "../../context/Toast/useToast";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function Editor() {
   let [articleQuery] = useSearchParams();
@@ -77,6 +84,19 @@ type ArticleObject = Article & {
   githubApiKey: string;
 };
 
+const ArticleSchema: yup.ObjectSchema<ArticleObject> = yup.object().shape({
+  id: yup.string().required("Required"),
+  name: yup.string().required("Required"),
+  title: yup.string().required("Required"),
+  description: yup.string().required("Required"),
+  category: yup.string().required("Required"),
+  tags: yup.string().required("Required"),
+  file: yup.string().default(""),
+  date: yup.string().required("Required"),
+  githubApiKey: yup.string().required("Required"),
+  document: yup.string().default(""),
+});
+
 function Form({
   article,
   markdownContent,
@@ -105,8 +125,9 @@ function Form({
     register,
     handleSubmit,
     reset,
-    // formState: { errors },
+    formState: { errors },
   } = useForm<ArticleObject>({
+    resolver: yupResolver(ArticleSchema),
     values: {
       id: `${article?.id}` || "",
       name: article?.name || "",
@@ -140,8 +161,6 @@ function Form({
     setMdContent(markdownContent || "");
   }, [markdownContent]);
 
-  // useUpdateEffect(() => {}, [article]);
-
   const onSubmit: SubmitHandler<ArticleObject> = (data) => {
     data.document = mdContent;
     const { githubApiKey, document, ...rest } = data;
@@ -174,31 +193,69 @@ function Form({
         placeholder="in-kebab-case"
         type="text"
         {...register("name")}
+        helperText={errors["name"]?.message}
+        color={errors["name"] ? "failure" : ""}
       />
       <InputLabel
         title="Title of the Article"
         type="text"
         {...register("title")}
+        helperText={errors["title"]?.message}
+        color={errors["title"] ? "failure" : ""}
       />
       <InputLabel
         title="Description"
         type="text"
         {...register("description")}
+        helperText={errors["description"]?.message}
+        color={errors["description"] ? "failure" : ""}
       />
-      <InputLabel title="Category" type="text" {...register("category")} />
+      <InputLabel
+        title="Category"
+        type="text"
+        {...register("category")}
+        helperText={errors["category"]?.message}
+        color={errors["category"] ? "failure" : ""}
+      />
 
-      <InputLabel title="Tags" type="text" {...register("tags")} />
+      <InputLabel
+        title="Tags"
+        type="text"
+        {...register("tags")}
+        helperText={errors["tags"]?.message}
+        color={errors["tags"] ? "failure" : ""}
+      />
 
-      <InputLabel title="Date" type="Date" {...register("date")} />
+      <InputLabel
+        title="Date"
+        type="Date"
+        {...register("date")}
+        helperText={errors["date"]?.message}
+        color={errors["date"] ? "failure" : ""}
+      />
 
-      <InputLabel title="Document Name" {...register("file")} disabled />
+      {/* <InputLabel
+        title="Document Name"
+        {...register("file")}
+        disabled
+        helperText={errors["file"]?.message}
+        color={errors["file"] ? "failure" : ""}
+      /> */}
 
-      <InputLabel title="ID" type="text" {...register("id")} />
+      <InputLabel
+        title="ID"
+        type="text"
+        {...register("id")}
+        helperText={errors["id"]?.message}
+        color={errors["id"] ? "failure" : ""}
+      />
 
       <InputLabel
         title="Github Api Key"
         type="text"
         {...register("githubApiKey")}
+        helperText={errors["githubApiKey"]?.message}
+        color={errors["githubApiKey"] ? "failure" : ""}
       />
       <MarkdownEditor
         className="col-span-full mt-8 "
@@ -206,7 +263,7 @@ function Form({
         value={mdContent}
         onChange={(markdown) => setMdContent(markdown)}
       />
-      <input type="hidden" {...register("document")} />
+      <InputLabel title="" type="hidden" {...register("document")} />
       <input
         type="submit"
         name="submit"

@@ -1,8 +1,10 @@
 import { Label, TextInput, TextInputProps } from "flowbite-react";
 import { ForwardedRef, forwardRef } from "react";
 
+export type InputLabelProps = TextInputProps & { name: string; title: string };
+
 const InputLabel = forwardRef(function (
-  props: TextInputProps & { name: string; title: string },
+  props: InputLabelProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const { name, title, className, ...rest } = props;
