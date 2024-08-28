@@ -12,6 +12,8 @@ type ToastTypes = "success" | "error" | "warning" | "info";
 export type ToastProps = {
   type: ToastTypes;
   message: string;
+  /** In ms */
+  duration: number;
   id: number;
 };
 
@@ -21,8 +23,7 @@ type ToastPresets = {
 
 type ToastPreset = {
   icon: React.ReactNode;
-  bgColor: string;
-  color: string;
+  className: string;
 };
 // * You can apply this into the ToastContainer however you want
 // You may want to have an icon provider
@@ -31,28 +32,30 @@ const iconClassName: string = "size-7 ";
 const toastPresets: ToastPresets = {
   success: {
     icon: <SuccessI className={iconClassName} />,
-    bgColor: "bg-[green]",
-    color: "text-[white]",
+    className: "bg-[green] text-[white]",
   },
   error: {
     icon: <ErrorI className={iconClassName} />,
-    bgColor: "bg-[red]",
-    color: "text-[white]",
+    className: "bg-[red] text-[white]",
   },
   warning: {
     icon: <WarningI className={iconClassName} />,
-    bgColor: "bg-[orange]",
-    color: "text-[black]",
+    className: "bg-[orange] text-[black]",
   },
   info: {
     icon: <InfoI className={iconClassName} />,
-    bgColor: "bg-[blue]",
-    color: "text-[white]",
+    className: "bg-[blue] text-[white]",
   },
 };
 
-export default function Toast({ type, message, id }: ToastProps) {
-  const { bgColor, color, icon }: ToastPreset = toastPresets[type];
+export default function Toast({
+  type,
+  message,
+  id,
+  duration = 5000,
+}: ToastProps) {
+  const { className, icon }: ToastPreset = toastPresets[type];
+
   const toast = useToast();
 
   function handleRemoval() {
@@ -62,18 +65,19 @@ export default function Toast({ type, message, id }: ToastProps) {
   function handleClick() {
     handleRemoval();
   }
-  // useTimeoutFn(handleRemoval, 5000);
+  useTimeoutFn(handleRemoval, duration);
 
   return (
     <button
       onClick={handleClick}
       className={`
         toast toast-${type} 
-        ${bgColor}
-        ${color}
-        rounded-md p-4 
+        relative isolate
+        rounded-md p-4
         text-left
         grid grid-cols-[auto_1fr] gap-3
+        animate-fade-left animate-duration-[400ms] 
+        ${className}
     `}
     >
       {icon}

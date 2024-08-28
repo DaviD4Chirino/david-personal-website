@@ -1,5 +1,4 @@
 import Toast, { ToastProps } from "./Toast";
-import { v4 as uuid } from "uuid";
 type ToastContainerProps = {
   toasts: ToastProps[];
 };
@@ -23,7 +22,7 @@ export default function ToastContainer({ toasts }: ToastContainerProps) {
         pointer-events-auto"
         id="ToastContainer"
       >
-        {toasts.map((toast, i) => (
+        {toasts.map((toast) => (
           <Toast {...toast} key={toast.id} />
         ))}
       </div>

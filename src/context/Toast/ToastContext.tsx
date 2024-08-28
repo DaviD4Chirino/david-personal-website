@@ -52,7 +52,12 @@ export function ToastContextProvider({
   function addToast(message: ToastProps["message"], type: ToastProps["type"]) {
     dispatch({
       type: "ADD_TOAST",
-      payload: { id: Math.floor(Math.random() * 100000), type, message },
+      payload: {
+        id: Math.floor(Math.random() * 100000),
+        type,
+        message,
+        duration: 5000,
+      },
     });
   }
 
@@ -75,7 +80,7 @@ export function ToastContextProvider({
   function remove(id: ToastProps["id"]) {
     dispatch({
       type: "DELETE_TOAST",
-      payload: { id: id, message: "", type: "error" },
+      payload: { id: id, message: "", type: "error", duration: 5000 },
     });
   }
 
