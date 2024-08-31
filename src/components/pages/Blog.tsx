@@ -35,7 +35,7 @@ export default function Blog() {
           <Filter setQuery={setQuery} />
         </div>
         <div className="grid grid-cols-1 gap-8 animate-fade">
-          <Articles filter={query} count={10} page={1} />
+          <Articles filter={query} count={2} page={1} />
         </div>
       </section>
     </section>

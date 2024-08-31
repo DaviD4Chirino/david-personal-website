@@ -3,7 +3,7 @@ import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { useTimeoutFn, useUpdateEffect } from "react-use";
-import { paginateArray } from "../../utils";
+import { paginate, paginateArray } from "../../utils";
 
 type ArticlesProps = {
   /** A string to filter the articles by their title, tag or category */
@@ -28,13 +28,25 @@ export default function Articles({
   compact,
 }: ArticlesProps) {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [articleKeys, setArticleKeys] = useState<string[]>([]);
+
+  const filteredArticles =
+    articles.length > 0
+      ? articles.filter(
+          (art) =>
+            art.title.toLowerCase().includes(filter.toLowerCase()) ||
+            art.tags.toLocaleLowerCase().includes(filter.toLowerCase()) ||
+            art.category.toLocaleLowerCase().includes(filter.toLowerCase())
+        )
+      : articles;
+
+  const { items } = paginate(filteredArticles, page, count);
+  // console.log(paginated);
 
   const [showLoading, setShowLoading] = useState(false);
   const { isLoading, data } = useQuery({
     queryKey: ["articles"],
-    queryFn: () =>
-      getAllArticles().then((res) => {
+    queryFn: () => getAllArticles(),
+    /*   .then((res) => {
         const _articles: Article[] = Object.values(res as Articles).reverse();
         setArticleKeys(Object.keys(res as Articles).reverse());
 
@@ -50,10 +62,19 @@ export default function Articles({
         }
         setArticles(_articles);
         return _articles;
-      }),
+      }
+    ), */
   });
 
   useUpdateEffect(() => {
+    if (!data) return;
+    console.log(data);
+    setArticles(Object.values(data));
+    // setPaginateData(paginate(Object.values(data), page, count));
+    // console.log(paginate(Object.values(data), page, count));
+  }, [data]);
+
+  /* useUpdateEffect(() => {
     if (!filter) {
       return;
     }
@@ -64,13 +85,13 @@ export default function Articles({
         art.category.toLocaleLowerCase().includes(filter.toLowerCase())
     );
     setArticles(newList || []);
-  }, [filter]);
+  }, [filter]); */
 
-  useUpdateEffect(() => {
-    if (count <= 0) return;
-    const newArticles: Article[] = paginateArray(data || articles, count, page);
-    setArticles(newArticles);
-  }, [count, page]);
+  // useUpdateEffect(() => {
+  //   if (count <= 0) return;
+  //   const newArticles: Article[] = paginateArray(data || articles, count, page);
+  //   setArticles(newArticles);
+  // }, [count, page]);
 
   useTimeoutFn(() => {
     setShowLoading(true);
@@ -85,10 +106,10 @@ export default function Articles({
 
   return (
     <>
-      {articles?.map((article, i) => (
+      {items?.map((article) => (
         <BlogCard
           title={article.title}
-          to={`/blogs/article/${articleKeys[i]}`}
+          to={`/blogs/article/${article.name}`}
           tags={article.tags}
           date={article.date}
           description={article.description}
