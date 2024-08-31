@@ -1,4 +1,4 @@
-import MarkdownEditor from "@uiw/react-markdown-editor";
+import MDEditor from "@uiw/react-md-editor";
 import InputLabel from "../molecules/InputLabel";
 import { useQuery } from "@tanstack/react-query";
 import { getAllArticles } from "../../database/get";
@@ -36,6 +36,7 @@ export default function Editor() {
     const searchQuery: string = articleQuery.get("article") || "";
     if (!data) {
       console.error(`article query error: `, error);
+      setSelectedArticle(undefined);
       return;
     }
 
@@ -45,6 +46,7 @@ export default function Editor() {
 
     if (!art) {
       console.error("Could not find article", searchQuery);
+      setSelectedArticle(undefined);
       return;
     }
 
@@ -154,7 +156,7 @@ function Form({
       setMdContent("");
       return;
     }
-    setMdContent(markdownContent || "");
+    setMdContent(markdownContent);
   }, [markdownContent]);
 
   const onSubmit: SubmitHandler<ArticleObject> = (data) => {
@@ -254,11 +256,12 @@ function Form({
         helperText={errors["githubApiKey"]?.message}
         color={errors["githubApiKey"] ? "failure" : ""}
       />
-      <MarkdownEditor
-        className="col-span-full mt-8 "
-        height="500px"
+      <MDEditor
         value={mdContent}
-        onChange={(markdown) => setMdContent(markdown)}
+        onChange={(markdown) => setMdContent(markdown || "")}
+        className="col-span-full mt-8 "
+        height={"20rem"}
+        textareaProps={{ spellCheck: true, autoCapitalize: "on" }}
       />
       <InputLabel title="" type="hidden" {...register("document")} />
       <input
@@ -275,7 +278,7 @@ function Form({
           "
       />
       <Link
-        to={{ search: `` }}
+        to={{ search: "" }}
         onClick={() => {
           reset(defaultValues);
           setMdContent("");

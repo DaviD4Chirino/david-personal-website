@@ -9,6 +9,12 @@
   padding-inline: 1.5rem;
   margin-inline: auto;
 }
+
+@media (max-width: 600px) {
+  .container {
+    padding-inline: 0.8rem;
+  }
+}
 .bg-pattern-noisy {
   position: absolute;
   z-index: -1;
