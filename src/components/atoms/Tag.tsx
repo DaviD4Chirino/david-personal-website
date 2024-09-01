@@ -27,12 +27,13 @@ export default function Tag({ title, variant }: TagProps) {
   const variantOutlined: string = `outline  outline-1 `;
 
   return (
-    <div
+    <span
       className={`
         ${variant === "filled" ? variantFilled : variantOutlined}
         px-2.5 py-1 
         rounded-md
         text-sm
+        whitespace-nowrap
         `}
       style={{
         backgroundColor: variant === "filled" ? color : "none",
@@ -41,6 +42,6 @@ export default function Tag({ title, variant }: TagProps) {
       }}
     >
       {title}
-    </div>
+    </span>
   );
 }
