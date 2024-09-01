@@ -35,7 +35,6 @@ export default function Article() {
       restoreOnUnmount: true,
     }
   );
-  console.log("location", `${window.location.href}`);
 
   return (
     <section
@@ -56,7 +55,7 @@ export default function Article() {
         <DiscussionEmbed
           shortname="david-space"
           config={{
-            url: `${window.location.href}`,
+            url: window.location.href,
             identifier: title,
             title: title,
             language: "en",
