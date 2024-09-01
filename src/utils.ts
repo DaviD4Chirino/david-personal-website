@@ -75,7 +75,7 @@ export function paginate(
 ): Paginate {
   const length: number = array.length;
   return {
-    total: length,
+    total: Math.ceil(array.length / itemsPerPage),
     per_page: itemsPerPage,
     current_page: currentPage,
     last_page: Math.ceil(length / itemsPerPage),

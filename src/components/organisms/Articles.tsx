@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
-import { useTimeoutFn, useUpdateEffect } from "react-use";
-import { paginate, paginateArray } from "../../utils";
+import { useEffectOnce, useTimeoutFn, useUpdateEffect } from "react-use";
+import { paginate } from "../../utils";
+import { Pagination } from "flowbite-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 type ArticlesProps = {
   /** A string to filter the articles by their title, tag or category */
   filter?: string;
-  /** How many articles you want */
+  /** How many articles you want,
+   * This will also render a pagination component
+   */
   count?: number;
-  /** This will Slice the articles by the number of counts, non indexed
+  /** This will Slice the articles by the number of counts, non indexed.
    *  @eg the page 2 with a count of 10 will be starting from the 20th element
    */
   page?: number;
   compact?: BlogCardProps["compact"];
+  paginationControls?: boolean;
+  paginationTop?: boolean;
+  paginationBelow?: boolean;
 };
 
 /**
@@ -26,8 +33,14 @@ export default function Articles({
   count = -1,
   page = 1,
   compact,
+  paginationControls = count > 0,
+  paginationBelow = true,
+  paginationTop = false,
 }: ArticlesProps) {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const articlePage = searchParams.get("articlePage");
+  console.log("🚀 ~ articlePage:", articlePage);
 
   const filteredArticles =
     articles.length > 0
@@ -39,10 +52,14 @@ export default function Articles({
         )
       : articles;
 
-  const { items } = paginate(filteredArticles, page, count);
+  const { items, current_page, total, per_page } = paginate(
+    filteredArticles,
+    count >= 0 ? Number(articlePage) : page,
+    count
+  );
   // console.log(paginated);
 
-  const [showLoading, setShowLoading] = useState(false);
+  const [showLoading, _setShowLoading] = useState(false);
   const { isLoading, data } = useQuery({
     queryKey: ["articles"],
     queryFn: () => getAllArticles(),
@@ -68,11 +85,16 @@ export default function Articles({
 
   useUpdateEffect(() => {
     if (!data) return;
-    console.log(data);
+    // console.log(data);
     setArticles(Object.values(data));
     // setPaginateData(paginate(Object.values(data), page, count));
     // console.log(paginate(Object.values(data), page, count));
   }, [data]);
+
+  useEffectOnce(() => {
+    if (count <= 0) return;
+    setSearchParams(`articlePage=${page}`);
+  });
 
   /* useUpdateEffect(() => {
     if (!filter) {
@@ -93,9 +115,9 @@ export default function Articles({
   //   setArticles(newArticles);
   // }, [count, page]);
 
-  useTimeoutFn(() => {
+  /*  useTimeoutFn(() => {
     setShowLoading(true);
-  }, 500);
+  }, 500); */
 
   if (articles.length <= 0) {
     return <h3>No articles to show</h3>;
@@ -106,6 +128,9 @@ export default function Articles({
 
   return (
     <>
+      {per_page < items.length && paginationControls && paginationTop && (
+        <PaginationComponent currentPage={current_page} totalPages={total} />
+      )}
       {items?.map((article) => (
         <BlogCard
           title={article.title}
@@ -118,6 +143,28 @@ export default function Articles({
           compact={compact}
         />
       ))}
+      {per_page < items.length && paginationControls && paginationBelow && (
+        <PaginationComponent currentPage={current_page} totalPages={total} />
+      )}
     </>
+  );
+}
+
+function PaginationComponent({
+  currentPage,
+  totalPages,
+}: {
+  currentPage: number;
+  totalPages: number;
+}) {
+  const navigate = useNavigate();
+  return (
+    <Pagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={(page: number) => {
+        navigate({ search: `articlePage=${page}` });
+      }}
+    />
   );
 }
