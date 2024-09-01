@@ -14,19 +14,19 @@ import SharePage from "../molecules/SharePage";
 export default function Article() {
   const navigate = useNavigate();
   const { title } = useParams();
-
   // * Article Query
   const { data, error, isError } = useQuery({
-    queryKey: [`article-${title || "404"}`],
+    queryKey: [`article-${title ? title : "404"}`],
     queryFn: () => getAllArticles(),
   });
 
   useUpdateEffect(() => {
-    if (isError) {
+    if (isError && !data) {
       console.error("document or data returned an error");
       navigate(routes.articleNonExistent);
     }
   }, [error]);
+
   const currentArticle = data ? data[title || ""] : null;
 
   useTitle(
@@ -35,6 +35,7 @@ export default function Article() {
       restoreOnUnmount: true,
     }
   );
+  console.log("location", `${window.location.href}`);
 
   return (
     <section
