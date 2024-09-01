@@ -125,7 +125,7 @@ function ContinueReading({ articles }: { articles: Articles }) {
   const nextSlug: string = articlesKeys[nextIndex];
 
   return (
-    <section className="flex gap-3 justify-between">
+    <section className="grid h-max grid-cols-1 sm:grid-cols-2 gap-y-7 gap-x-5">
       {prevArticle ? (
         <ContinueReadingLink title={prevArticle.title} articleSlug={prevSlug} />
       ) : (

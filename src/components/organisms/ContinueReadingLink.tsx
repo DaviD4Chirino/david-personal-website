@@ -11,16 +11,16 @@ export default function ContinueReadingLink({
   right?: boolean;
   prevOrNext?: "Previously" | "Next";
 }) {
-  const rightClassNames: string = "text-right";
+  const rightClassNames: string = "text-right align-self-end";
 
   return (
     <Link
       to={`/blogs/article/${articleSlug}`}
-      className="grid grid-rows-[auto_auto] h-max no-underline group leading-3"
+      className="grid grid-rows-[auto_auto] h-max no-underline group leading-6 "
       id={`ContinueReading-${right ? "Right" : "Left"}`}
     >
       <p
-        className={` text-sm
+        className={`text-md text-grey-600
         ${right ? rightClassNames : ""}`}
       >
         {prevOrNext}
