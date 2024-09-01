@@ -55,7 +55,9 @@ export default function Article() {
         <DiscussionEmbed
           shortname="david-space"
           config={{
-            url: window.location.href,
+            url: `https://davidspace.vercel.app/blogs/article/${
+              data ? data[title || ""].title : "404"
+            }`,
             identifier: title,
             title: title,
             language: "en",
