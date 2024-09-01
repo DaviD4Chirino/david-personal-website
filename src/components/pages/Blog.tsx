@@ -34,9 +34,18 @@ export default function Blog() {
         >
           <Filter setQuery={setQuery} />
         </div>
-        <div className="grid grid-cols-1 gap-8 animate-fade">
-          <Articles filter={query} count={10} page={1} paginationTop />
-        </div>
+
+        <section className="grid gap-12">
+          <Articles
+            filter={query}
+            className="grid grid-cols-1 gap-8 animate-fade"
+            paginationTheme={{
+              pages: {
+                base: "inline-flex items-center -space-x-px ",
+              },
+            }}
+          />
+        </section>
       </section>
     </section>
   );
