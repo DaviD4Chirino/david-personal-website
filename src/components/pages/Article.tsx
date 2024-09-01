@@ -95,8 +95,9 @@ function Document({ title }: { title: string }) {
         mt-36 mx-auto
         grid gap-6
         leading-relaxed 
-        max-w-[80ch] min-h-screen
+        max-w-[80ch] w-fit min-h-screen
         animate-fade-up
+        break-words whitespace-break-spaces
         article-md
       "
     >
