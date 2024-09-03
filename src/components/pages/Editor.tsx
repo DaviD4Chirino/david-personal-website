@@ -16,7 +16,6 @@ import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
 import { useToast } from "../../context/Toast/useToast";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Datepicker } from "flowbite-react";
 
 export default function Editor() {
   let [articleQuery] = useSearchParams();
@@ -53,7 +52,6 @@ export default function Editor() {
     }
 
     setSelectedArticle(art);
-    console.log("🚀 ~ useEffect ~ art:", art.date);
   }, [articleQuery]);
 
   useEffect(() => {
@@ -105,6 +103,7 @@ function Form({
   markdownContent?: string;
 }) {
   const [mdContent, setMdContent] = useState(markdownContent || "");
+  const [updating, setUpdating] = useState<boolean>(false);
   const toast = useToast();
 
   const defaultValues = {
@@ -126,7 +125,6 @@ function Form({
     handleSubmit,
     reset,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<ArticleObject>({
     resolver: yupResolver(ArticleSchema),
@@ -174,33 +172,22 @@ function Form({
     const { githubApiKey, document, ...rest } = data;
     rest.file = rest.name + ".md";
 
-    // const [year, month, day] = data.date.split("-");
-    // console.log("🚀 ~ data.date:", data.date);
-    // console.log("🚀 ~ data.date:", new Date(data.date.replaceAll("-", "/")));
-
-    // console.log(data.date);
-    // console.log(data.date);
-    // data.date = new Date(data.date).toLocaleDateString("en");
-    /*  console.log(
-      "🚀 ~ new Date(data.date).toLocaleDateString('en'):",
-      new Date(data.date).toLocaleDateString("en")
-    ); */
-
     async function sendData() {
-      updateArticle(rest, githubApiKey)
+      setUpdating(true);
+
+      await updateArticle(rest, githubApiKey)
         .then(() => toast.success("Article updated!"))
         .catch((err) => toast.error(`Article Error ${err}`));
 
-      updateDocument(rest.file, document, githubApiKey)
+      await updateDocument(rest.file, document, githubApiKey)
         .then(() => toast.success("Document updated!"))
         .catch((err) => toast.error(`Document Error ${err}`));
-      // if(articleRes)
+
+      setUpdating(false);
     }
 
     sendData();
   };
-
-  // useUpdateEffect(() => {}, [article]);
 
   return (
     <form
@@ -215,6 +202,7 @@ function Form({
         {...register("name")}
         helperText={errors["name"]?.message}
         color={errors["name"] ? "failure" : ""}
+        disabled={updating}
       />
       <InputLabel
         title="Title of the Article"
@@ -222,6 +210,7 @@ function Form({
         {...register("title")}
         helperText={errors["title"]?.message}
         color={errors["title"] ? "failure" : ""}
+        disabled={updating}
       />
       <InputLabel
         title="Description"
@@ -229,6 +218,7 @@ function Form({
         {...register("description")}
         helperText={errors["description"]?.message}
         color={errors["description"] ? "failure" : ""}
+        disabled={updating}
       />
       <InputLabel
         title="Category"
@@ -236,6 +226,7 @@ function Form({
         {...register("category")}
         helperText={errors["category"]?.message}
         color={errors["category"] ? "failure" : ""}
+        disabled={updating}
       />
 
       <InputLabel
@@ -244,6 +235,7 @@ function Form({
         {...register("tags")}
         helperText={errors["tags"]?.message}
         color={errors["tags"] ? "failure" : ""}
+        disabled={updating}
       />
 
       <InputLabel
@@ -252,6 +244,7 @@ function Form({
         {...register("date")}
         helperText={errors["date"]?.message}
         color={errors["date"] ? "failure" : ""}
+        disabled={updating}
       />
 
       {/* <InputLabel
@@ -277,13 +270,18 @@ function Form({
         {...register("githubApiKey")}
         helperText={errors["githubApiKey"]?.message}
         color={errors["githubApiKey"] ? "failure" : ""}
+        disabled={updating}
       />
       <MDEditor
         value={mdContent}
         onChange={(markdown) => setMdContent(markdown || "")}
         className="col-span-full mt-8 "
         height={"20rem"}
-        textareaProps={{ spellCheck: true, autoCapitalize: "on" }}
+        textareaProps={{
+          spellCheck: true,
+          autoCapitalize: "on",
+          disabled: updating,
+        }}
       />
       <InputLabel title="" type="hidden" {...register("document")} />
       <input
@@ -297,7 +295,9 @@ function Form({
             col-span-full 
             cursor-pointer active:cursor-default 
             transition-colors
+            disabled:cursor-not-allowed disabled:text-tertiary-light disabled:hover:bg-tertiary-lightest
           "
+        disabled={updating}
       />
       <Link
         to={{ search: "" }}

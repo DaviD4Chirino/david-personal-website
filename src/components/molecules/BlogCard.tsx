@@ -43,12 +43,6 @@ export default function BlogCard({
     DateTime.DATETIME_HUGE
   );
 
-  /*  new Date(date).toLocaleDateString("en", {
-    day: "2-digit",
-    month: "long",
-    year: "2-digit",
-  }); */
-
   const tagsArray: string[] = breakText(tags, ",");
 
   const compactStyle = "grid grid-cols-1 ";
