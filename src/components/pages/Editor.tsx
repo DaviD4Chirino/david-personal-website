@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { DateTime } from "luxon";
 
 import BlogCard from "../molecules/BlogCard";
 import { Link } from "react-router-dom";
@@ -138,8 +139,11 @@ function Form({
       tags: article?.tags || "",
       file: article?.file || "",
       date: article
-        ? new Date(article.date).toLocaleDateString("en-CA")
-        : new Date().toLocaleDateString("en-CA"),
+        ? DateTime.fromFormat(article.date, "yyyy-MM-dd").toFormat(
+            "yyyy-MM-dd",
+            DateTime.DATETIME_HUGE
+          )
+        : DateTime.now().toFormat("yyyy-MM-dd", DateTime.DATETIME_HUGE),
 
       githubApiKey: "",
       document: "",
@@ -170,9 +174,6 @@ function Form({
     const { githubApiKey, document, ...rest } = data;
     rest.file = rest.name + ".md";
 
-    console.log(data.date);
-    console.log(new Date(data.date).toUTCString());
-
     // const [year, month, day] = data.date.split("-");
     // console.log("🚀 ~ data.date:", data.date);
     // console.log("🚀 ~ data.date:", new Date(data.date.replaceAll("-", "/")));
@@ -196,7 +197,7 @@ function Form({
       // if(articleRes)
     }
 
-    // sendData();
+    sendData();
   };
 
   // useUpdateEffect(() => {}, [article]);

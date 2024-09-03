@@ -3,7 +3,6 @@ import Tag from "../atoms/Tag";
 import { Link, LinkProps } from "react-router-dom";
 import Markdown from "../atoms/Markdown";
 import { DateTime } from "luxon";
-
 const outlines = [
   "outline",
   "outline-dashed",
@@ -39,24 +38,16 @@ export default function BlogCard({
   tags,
   className = "",
 }: BlogCardProps) {
-  const formattedDate = new Date(date).toLocaleDateString("en", {
+  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toFormat(
+    "MMMM dd, yyyy",
+    DateTime.DATETIME_HUGE
+  );
+
+  /*  new Date(date).toLocaleDateString("en", {
     day: "2-digit",
     month: "long",
     year: "2-digit",
-  });
-
-  console.log(
-    "BlogCard Wed, 07 Aug 2024 00:00:00 GMT",
-
-    new Date(Date.parse("Wed, 07 Aug 2024 00:00:00 GMT")).toLocaleDateString(
-      "en-ca",
-      {
-        day: "2-digit",
-        month: "long",
-        year: "2-digit",
-      }
-    )
-  );
+  }); */
 
   const tagsArray: string[] = breakText(tags, ",");
 
