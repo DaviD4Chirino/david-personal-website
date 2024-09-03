@@ -87,3 +87,20 @@ export function paginate(
     ),
   };
 }
+
+export function sortAlphabetically(a: string, b: string) {
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+}
+export function sortByNumberSize(
+  a: number,
+  b: number,
+  order: "bigger" | "lower"
+) {
+  return order == "bigger" ? (a <= b ? 1 : -1) : a >= b ? 1 : -1;
+}

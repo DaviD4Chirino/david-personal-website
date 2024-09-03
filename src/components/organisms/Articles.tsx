@@ -3,9 +3,10 @@ import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { useEffectOnce } from "react-use";
-import { paginate } from "../../utils";
+import { paginate, sortAlphabetically, sortByNumberSize } from "../../utils";
 import { Pagination, PaginationProps } from "flowbite-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { DateTime } from "luxon";
 
 type ArticlesProps = {
   /** The things to add to the Articles Wrapper */
@@ -25,6 +26,35 @@ type ArticlesProps = {
   paginationTop?: boolean;
   paginationBelow?: boolean;
   paginationTheme?: PaginationProps["theme"];
+  orderBy:
+    | "date-newest-first"
+    | "date-oldest-first"
+    | "alphabetically"
+    | "category";
+};
+type Filters = {
+  [type in ArticlesProps["orderBy"]]: (a: Article, b: Article) => number;
+};
+const filters: Filters = {
+  alphabetically: (a: Article, b: Article) =>
+    sortAlphabetically(a.title, b.title),
+
+  category: (a: Article, b: Article) =>
+    sortAlphabetically(a.category, b.category),
+
+  "date-newest-first": (a: Article, b: Article) =>
+    sortByNumberSize(
+      DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
+      DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),
+      "bigger"
+    ),
+
+  "date-oldest-first": (a: Article, b: Article) =>
+    sortByNumberSize(
+      DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
+      DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),
+      "lower"
+    ),
 };
 
 /**
@@ -41,6 +71,7 @@ export default function Articles({
   paginationBelow = true,
   paginationTop = false,
   paginationTheme,
+  orderBy = "date-newest-first",
 }: ArticlesProps) {
   const { isLoading, data } = useQuery({
     queryKey: ["articles"],
@@ -48,25 +79,27 @@ export default function Articles({
   });
 
   const articles: Article[] = data ? Object.values(data) : [];
+  const order = articles.sort(filters[orderBy]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const articlePage = searchParams.get("articlePage");
 
   const filteredArticles =
-    articles.length > 0
-      ? articles.filter(
+    order.length > 0
+      ? order.filter(
           (art) =>
             art.title.toLowerCase().includes(filter.toLowerCase()) ||
             art.tags.toLocaleLowerCase().includes(filter.toLowerCase()) ||
             art.category.toLocaleLowerCase().includes(filter.toLowerCase())
         )
-      : articles;
+      : order;
 
   const { items, current_page, total } = paginate(
     filteredArticles,
     count >= 0 ? Number(articlePage) : page,
     count <= -1 ? articles.length : count
   );
+
   /*  console.log(
     "🚀 ~ count <= -1? articles.length: count:",
     count <= -1 ? articles.length : count
