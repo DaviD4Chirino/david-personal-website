@@ -15,6 +15,7 @@ import DeleteArticleButton from "../molecules/editor/DeleteArticleButton";
 import { useToast } from "../../context/Toast/useToast";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Datepicker } from "flowbite-react";
 
 export default function Editor() {
   let [articleQuery] = useSearchParams();
@@ -51,6 +52,7 @@ export default function Editor() {
     }
 
     setSelectedArticle(art);
+    console.log("🚀 ~ useEffect ~ art:", art.date);
   }, [articleQuery]);
 
   useEffect(() => {
@@ -123,6 +125,7 @@ function Form({
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<ArticleObject>({
     resolver: yupResolver(ArticleSchema),
@@ -143,6 +146,9 @@ function Form({
       // githubApiKey: ,
     },
   });
+  // watch(({ date }) => {
+  //   console.log(date);
+  // });
 
   useEffect(() => {
     if ((article && !String(article.id)) || !article) {
@@ -164,6 +170,21 @@ function Form({
     const { githubApiKey, document, ...rest } = data;
     rest.file = rest.name + ".md";
 
+    console.log(data.date);
+    console.log(new Date(data.date).toUTCString());
+
+    // const [year, month, day] = data.date.split("-");
+    // console.log("🚀 ~ data.date:", data.date);
+    // console.log("🚀 ~ data.date:", new Date(data.date.replaceAll("-", "/")));
+
+    // console.log(data.date);
+    // console.log(data.date);
+    // data.date = new Date(data.date).toLocaleDateString("en");
+    /*  console.log(
+      "🚀 ~ new Date(data.date).toLocaleDateString('en'):",
+      new Date(data.date).toLocaleDateString("en")
+    ); */
+
     async function sendData() {
       updateArticle(rest, githubApiKey)
         .then(() => toast.success("Article updated!"))
@@ -175,7 +196,7 @@ function Form({
       // if(articleRes)
     }
 
-    sendData();
+    // sendData();
   };
 
   // useUpdateEffect(() => {}, [article]);
@@ -226,7 +247,7 @@ function Form({
 
       <InputLabel
         title="Date"
-        type="Date"
+        type="date"
         {...register("date")}
         helperText={errors["date"]?.message}
         color={errors["date"] ? "failure" : ""}

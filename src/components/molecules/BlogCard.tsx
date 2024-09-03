@@ -38,11 +38,24 @@ export default function BlogCard({
   tags,
   className = "",
 }: BlogCardProps) {
-  const formattedDate = new Date(date).toLocaleString("en", {
+  const formattedDate = new Date(date).toLocaleDateString("en", {
     day: "2-digit",
     month: "long",
     year: "2-digit",
   });
+
+  console.log(
+    "BlogCard Wed, 07 Aug 2024 00:00:00 GMT",
+
+    new Date(Date.parse("Wed, 07 Aug 2024 00:00:00 GMT")).toLocaleDateString(
+      "en-ca",
+      {
+        day: "2-digit",
+        month: "long",
+        year: "2-digit",
+      }
+    )
+  );
 
   const tagsArray: string[] = breakText(tags, ",");
 
