@@ -26,35 +26,26 @@ type ArticlesProps = {
   paginationTop?: boolean;
   paginationBelow?: boolean;
   paginationTheme?: PaginationProps["theme"];
-  orderBy:
-    | "date-newest-first"
-    | "date-oldest-first"
-    | "alphabetically"
-    | "category";
+  orderBy: "date" | "alphabetically" | "category";
+  /** Can be use to reverse sorting */
+  reverseArticles?: boolean;
 };
 type Filters = {
   [type in ArticlesProps["orderBy"]]: (a: Article, b: Article) => number;
 };
 const filters: Filters = {
-  alphabetically: (a: Article, b: Article) =>
-    sortAlphabetically(a.title, b.title),
-
-  category: (a: Article, b: Article) =>
-    sortAlphabetically(a.category, b.category),
-
-  "date-newest-first": (a: Article, b: Article) =>
+  date: (a: Article, b: Article): number =>
     sortByNumberSize(
       DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
       DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),
       "bigger"
     ),
-
-  "date-oldest-first": (a: Article, b: Article) =>
-    sortByNumberSize(
-      DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
-      DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),
-      "lower"
-    ),
+  alphabetically: (a: Article, b: Article): number => {
+    return sortAlphabetically(a.title, b.title);
+  },
+  category: (a: Article, b: Article): number => {
+    return sortAlphabetically(a.category, b.category);
+  },
 };
 
 /**
@@ -71,7 +62,8 @@ export default function Articles({
   paginationBelow = true,
   paginationTop = false,
   paginationTheme,
-  orderBy = "date-newest-first",
+  orderBy = "date",
+  reverseArticles = false,
 }: ArticlesProps) {
   const { isLoading, data } = useQuery({
     queryKey: ["articles"],
@@ -99,6 +91,8 @@ export default function Articles({
     count >= 0 ? Number(articlePage) : page,
     count <= -1 ? articles.length : count
   );
+
+  const displayArticles = reverseArticles ? items.reverse() : items;
 
   /*  console.log(
     "🚀 ~ count <= -1? articles.length: count:",
@@ -131,7 +125,7 @@ export default function Articles({
         />
       )}
       <div className={className}>
-        {items?.map((article) => (
+        {displayArticles?.map((article) => (
           <BlogCard
             title={article.title}
             to={`/blogs/article/${article.name}`}

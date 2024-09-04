@@ -44,7 +44,8 @@ export default function Blog() {
                 base: "inline-flex items-center -space-x-px ",
               },
             }}
-            orderBy="date-newest-first"
+            orderBy="date"
+            reverseArticles
           />
         </section>
       </section>
