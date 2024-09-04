@@ -1,3 +1,8 @@
+export function startsWithVowel(word: string): boolean {
+  var vowels = "aeiouAEIOU";
+  return vowels.indexOf(word[0]) !== -1;
+}
+
 /**
  * Erases all special characters in a text and replaces them with spaces
  * @param text

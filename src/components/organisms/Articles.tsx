@@ -8,7 +8,7 @@ import { Pagination, PaginationProps } from "flowbite-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { DateTime } from "luxon";
 
-type ArticlesProps = {
+export type ArticlesProps = {
   /** The things to add to the Articles Wrapper */
   className?: string;
   /** A string to filter the articles by their title, tag or category */
@@ -33,6 +33,7 @@ type ArticlesProps = {
 type Filters = {
   [type in ArticlesProps["orderBy"]]: (a: Article, b: Article) => number;
 };
+
 const filters: Filters = {
   date: (a: Article, b: Article): number =>
     sortByNumberSize(

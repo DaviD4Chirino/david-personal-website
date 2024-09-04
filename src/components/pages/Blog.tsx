@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import {random}
-
-import Articles from "../organisms/Articles";
+import Articles, { ArticlesProps } from "../organisms/Articles";
 import Navlinks from "../molecules/Navlinks";
+import { Dropdown } from "flowbite-react";
+import LabelFormElement from "../templates/InputWIthLabel";
+import { useToggle } from "react-use";
+import { capitalize, startsWithVowel } from "../../utils";
+
+import { IoIosArrowDown as ArrowDownI } from "react-icons/io";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 
 export default function Blog() {
   const [query, setQuery] = useState("");
@@ -66,13 +72,24 @@ function Filter({
 
   return (
     <form
-      className=" grid-rows-[auto_1fr] gap-2 grid h-max"
+      className=" grid-rows-[auto_1fr] gap-5 grid h-max "
       onSubmit={(e) => {
         e.preventDefault();
         setQuery(searchQuery);
       }}
     >
-      <label htmlFor="article_search" className="block">
+      <LabelFormElement title="Filter" name="filter">
+        <input
+          name="filter"
+          type="text"
+          id="article_search"
+          className="p-2 rounded transition-all   bg-grey-100"
+          placeholder="Search Categories, Titles and Tags"
+          onChange={handleOnChange}
+          value={searchQuery}
+        />
+      </LabelFormElement>
+      {/* <label htmlFor="article_search" className="block">
         Filter
       </label>
       <input
@@ -82,7 +99,103 @@ function Filter({
         placeholder="Search Categories, Titles and Tags"
         onChange={handleOnChange}
         value={searchQuery}
-      />
+      /> */}
+      <FilterDropdown />
     </form>
+  );
+}
+
+function FilterDropdown() {
+  const options: Array<ArticlesProps["orderBy"]> = [
+    "date",
+    "alphabetically",
+    "category",
+  ];
+  const [selectedOption, setSelectedOption] = useState<string>("date");
+  const [reverse, toggleReverse] = useToggle(false);
+
+  function handleClick(value: string) {
+    if (value == selectedOption) {
+      toggleReverse();
+    }
+    setSelectedOption(value);
+  }
+
+  useEffect(() => {
+    console.log(selectedOption);
+    console.log(reverse);
+
+    return () => {};
+  }, [selectedOption, reverse]);
+
+  return (
+    <LabelFormElement title="Sort" name={"sort-options"}>
+      <Dropdown
+        label="Dropdown button"
+        name="sort-options"
+        dismissOnClick={false}
+        renderTrigger={() => (
+          <button
+            className="
+          text-left 
+          outline-grey-900 outline outline-1 text-grey-900
+          bg-grey-100
+          p-2 rounded
+          flex items-center gap-1
+          "
+          >
+            {startsWithVowel(selectedOption) ? "" : "By "}
+            {capitalize(selectedOption)} <ArrowDownI />
+          </button>
+        )}
+      >
+        {options.sort().map((opt) => (
+          <DropItem
+            name={opt}
+            title={capitalize(opt)}
+            onClick={handleClick}
+            key={opt}
+            icon={
+              selectedOption == opt
+                ? reverse
+                  ? FaArrowDown
+                  : FaArrowUp
+                : undefined
+            }
+          />
+        ))}
+      </Dropdown>
+
+      {/*   <div className="grid grid-cols-[1fr_.2fr] gap-x-2">
+        <select
+          name="sort-options"
+          id="Sorting"
+          className="bg-grey-100 rounded "
+        >
+          <option value="date">By Date</option>
+          <option value="alphabetically">Alphabetically</option>
+          <option value="category">By Category</option>
+        </select>
+        <button className="bg-grey-700">-{">"}</button>
+      </div> */}
+    </LabelFormElement>
+  );
+}
+
+function DropItem({
+  name,
+  title,
+  onClick,
+  icon,
+}: {
+  name: string;
+  title: string;
+  onClick: (name: string) => void;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+}) {
+  return (
+    <Dropdown.Item onClick={() => onClick(name)} icon={icon}>
+      {title}
+    </Dropdown.Item>
   );
 }
