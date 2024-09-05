@@ -2,10 +2,10 @@ import { useState } from "react";
 import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
-import { useEffectOnce, useUpdateEffect } from "react-use";
+import { useEffectOnce } from "react-use";
 import { paginate, sortAlphabetically, sortByNumberSize } from "../../utils";
 import { Pagination, PaginationProps } from "flowbite-react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { DateTime } from "luxon";
 
 export type ArticlesProps = {
@@ -75,8 +75,6 @@ export default function Articles({
   const [showLoading, _setShowLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const articlePage = searchParams.get("articlePage");
-
-  console.log(reverseArticles);
 
   let articles: Article[] = data ? Object.values(data) : [];
 

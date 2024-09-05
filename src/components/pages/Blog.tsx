@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 // import {random}
 import Articles, { ArticlesProps } from "../organisms/Articles";
 import Navlinks from "../molecules/Navlinks";
@@ -13,7 +13,7 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Blog() {
   const [query, setQuery] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const orderBy: string = searchParams.get("orderBy") || "date";
   const reverse: string = searchParams.get("reverse") || "";
 
@@ -32,7 +32,7 @@ export default function Blog() {
           container
           grid-rows-none md:grid-rows-[.5fr_1fr] 
           grid grid-cols-1 md:grid-cols-[.5fr_1fr] 
-          gap-10
+          gap-16
         "
         id="ArticlesContainer"
       >
@@ -48,13 +48,12 @@ export default function Blog() {
         <section className="grid gap-12">
           <Articles
             filter={query}
-            className="grid grid-cols-1 gap-8 animate-fade"
+            className="grid grid-cols-1 gap-10 animate-fade"
             paginationTheme={{
               pages: {
                 base: "inline-flex items-center -space-x-px ",
               },
             }}
-            count={2}
             orderBy={orderBy as ArticlesProps["orderBy"]}
             reverseArticles={reverse === "true"}
           />
@@ -83,7 +82,7 @@ function Filter({
         setQuery(searchQuery);
       }}
     >
-      <LabelFormElement title="Filter" name="filter">
+      <LabelFormElement title="Filter" name="article_search">
         <input
           name="filter"
           type="text"
@@ -116,9 +115,13 @@ function FilterDropdown() {
     "alphabetically",
     "category",
   ];
-  const [selectedOption, setSelectedOption] = useState<string>("date");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedOption, setSelectedOption] = useState<string>(
+    searchParams.get("orderBy") || ""
+  );
   const [reverse, toggleReverse] = useToggle(false);
-  let [searchParams, setSearchParams] = useSearchParams();
+
+  const Icon = reverse ? FaArrowDown : FaArrowUp;
 
   function handleClick(value: string) {
     if (value == selectedOption) {
@@ -145,9 +148,9 @@ function FilterDropdown() {
 
   return (
     <LabelFormElement title="Sort" name={"sort-options"}>
+      <input type="text" hidden id="sort-options" />
       <Dropdown
         label="Dropdown button"
-        name="sort-options"
         dismissOnClick={false}
         renderTrigger={() => (
           <button
@@ -170,13 +173,7 @@ function FilterDropdown() {
             title={capitalize(opt)}
             onClick={handleClick}
             key={opt}
-            icon={
-              selectedOption == opt
-                ? reverse
-                  ? FaArrowDown
-                  : FaArrowUp
-                : undefined
-            }
+            icon={selectedOption == opt ? Icon : undefined}
           />
         ))}
       </Dropdown>
