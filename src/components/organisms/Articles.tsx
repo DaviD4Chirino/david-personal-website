@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
-import { useEffectOnce } from "react-use";
+import { useEffectOnce, useUpdateEffect } from "react-use";
 import { paginate, sortAlphabetically, sortByNumberSize } from "../../utils";
 import { Pagination, PaginationProps } from "flowbite-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -71,42 +71,47 @@ export default function Articles({
     queryFn: () => getAllArticles(),
   });
 
-  const articles: Article[] = data ? Object.values(data) : [];
-  const order = articles.sort(filters[orderBy]);
-
+  // We get the current page
+  const [showLoading, _setShowLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const articlePage = searchParams.get("articlePage");
 
-  const filteredArticles =
-    order.length > 0
-      ? order.filter(
+  console.log(reverseArticles);
+
+  let articles: Article[] = data ? Object.values(data) : [];
+
+  // First we sort the articles
+  articles = articles.sort(filters[orderBy]);
+
+  // Second we filter them
+  articles =
+    articles.length > 0
+      ? articles.filter(
           (art) =>
+            // not elegant but its the easiest way
+            // check for either the title, tags or category
             art.title.toLowerCase().includes(filter.toLowerCase()) ||
             art.tags.toLocaleLowerCase().includes(filter.toLowerCase()) ||
             art.category.toLocaleLowerCase().includes(filter.toLowerCase())
         )
-      : order;
+      : articles;
 
+  // Third we reverse them in case we want them descending or ascending
+  articles = reverseArticles ? articles.reverse() : articles;
+
+  // Fourth we Paginate them
   const { items, current_page, total } = paginate(
-    filteredArticles,
+    articles,
     count >= 0 ? Number(articlePage) : page,
     count <= -1 ? articles.length : count
   );
 
-  const displayArticles = reverseArticles ? items.reverse() : items;
-
-  /*  console.log(
-    "🚀 ~ count <= -1? articles.length: count:",
-    count <= -1 ? articles.length : count
-  );
-  console.log("🚀 ~ articles.length:", articles.length);
-  console.log("🚀 ~ count:", count); */
-
-  const [showLoading, _setShowLoading] = useState(false);
-
   useEffectOnce(() => {
     if (count <= 0) return;
-    setSearchParams(`articlePage=${page}`);
+    setSearchParams((prevParams) => {
+      prevParams.set("articlePage", `${page}`);
+      return searchParams;
+    });
   });
 
   if (articles.length <= 0) {
@@ -126,7 +131,7 @@ export default function Articles({
         />
       )}
       <div className={className}>
-        {displayArticles?.map((article) => (
+        {items?.map((article) => (
           <BlogCard
             title={article.title}
             to={`/blogs/article/${article.name}`}
@@ -159,7 +164,7 @@ function PaginationComponent({
   totalPages: number;
   theme?: PaginationProps["theme"];
 }) {
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <Pagination
       theme={theme}
@@ -167,7 +172,10 @@ function PaginationComponent({
       currentPage={currentPage}
       totalPages={totalPages}
       onPageChange={(page: number) => {
-        navigate({ search: `articlePage=${page}` });
+        setSearchParams((prevParams) => {
+          prevParams.set("articlePage", `${page}`);
+          return searchParams;
+        });
       }}
     />
   );

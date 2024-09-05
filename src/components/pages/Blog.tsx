@@ -9,9 +9,13 @@ import { capitalize, startsWithVowel } from "../../utils";
 
 import { IoIosArrowDown as ArrowDownI } from "react-icons/io";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
+import { useSearchParams } from "react-router-dom";
 
 export default function Blog() {
   const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const orderBy: string = searchParams.get("orderBy") || "date";
+  const reverse: string = searchParams.get("reverse") || "";
 
   return (
     <section id="Blog" className="grid isolate relative gap-16 mb-3">
@@ -50,8 +54,9 @@ export default function Blog() {
                 base: "inline-flex items-center -space-x-px ",
               },
             }}
-            orderBy="date"
-            reverseArticles
+            count={2}
+            orderBy={orderBy as ArticlesProps["orderBy"]}
+            reverseArticles={reverse === "true"}
           />
         </section>
       </section>
@@ -113,6 +118,7 @@ function FilterDropdown() {
   ];
   const [selectedOption, setSelectedOption] = useState<string>("date");
   const [reverse, toggleReverse] = useToggle(false);
+  let [searchParams, setSearchParams] = useSearchParams();
 
   function handleClick(value: string) {
     if (value == selectedOption) {
@@ -122,8 +128,17 @@ function FilterDropdown() {
   }
 
   useEffect(() => {
-    console.log(selectedOption);
-    console.log(reverse);
+    // setSearchParams((prevParams) => {});
+    setSearchParams((prevParams) => {
+      prevParams.set("orderBy", selectedOption);
+      prevParams.set("reverse", `${reverse}`);
+      return searchParams;
+    });
+
+    /*  navigate({
+      search: `sortBy=${selectedOption}&reverse=${reverse}`,
+    });
+ */
 
     return () => {};
   }, [selectedOption, reverse]);
@@ -138,7 +153,7 @@ function FilterDropdown() {
           <button
             className="
           text-left 
-          outline-grey-900 outline outline-1 text-grey-900
+          outline-grey-600 outline outline-1 text-grey-900
           bg-grey-100
           p-2 rounded
           flex items-center gap-1
