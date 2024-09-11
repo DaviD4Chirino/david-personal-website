@@ -5,9 +5,22 @@
     "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noEmit": true
+    "noEmit": true,
+    "jsx": "preserve",
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "plugins": [{ "name": "next" }]
   },
-  "include": ["vite.config.ts"]
+
+  "include": [
+    "vite.config.ts",
+    "./dist/types/**/*.ts",
+    "./next-env.d.ts",
+    "./src"
+  ],
+  "exclude": ["./node_modules"]
 }

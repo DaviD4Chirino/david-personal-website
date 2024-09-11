@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import MUIThemeProvider from "./MUIThemeProvider.tsx";
-import AppRoutes from "./routes/router.tsx";
+import MUIThemeProvider from "./MUIThemeProvider";
+import AppRoutes from "./routes/router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ToastContextProvider } from "./context/Toast/ToastContext.tsx";
+import { ToastContextProvider } from "./context/Toast/ToastContext";
 
 const queryClient = new QueryClient();
 

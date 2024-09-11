@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
@@ -5,8 +6,8 @@ import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { useEffectOnce } from "react-use";
 import { paginate, sortAlphabetically, sortByNumberSize } from "../../utils";
 import { Pagination, PaginationProps } from "flowbite-react";
-import { useSearchParams } from "react-router-dom";
 import { DateTime } from "luxon";
+import { useSearchParams } from "next/navigation";
 
 export type ArticlesProps = {
   /** The things to add to the Articles Wrapper */
@@ -73,7 +74,8 @@ export default function Articles({
 
   // We get the current page
   const [showLoading, _setShowLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearchParams();
+
   const articlePage = searchParams.get("articlePage");
 
   let articles: Article[] = data ? Object.values(data) : [];
@@ -106,10 +108,10 @@ export default function Articles({
 
   useEffectOnce(() => {
     if (count <= 0) return;
-    setSearchParams((prevParams) => {
+    /*  setSearchParams((prevParams) => {
       prevParams.set("articlePage", `${page}`);
       return searchParams;
-    });
+    }); */
   });
 
   if (articles.length <= 0) {
@@ -162,7 +164,7 @@ function PaginationComponent({
   totalPages: number;
   theme?: PaginationProps["theme"];
 }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   return (
     <Pagination
       theme={theme}
@@ -170,10 +172,10 @@ function PaginationComponent({
       currentPage={currentPage}
       totalPages={totalPages}
       onPageChange={(page: number) => {
-        setSearchParams((prevParams) => {
+        /* setSearchParams((prevParams) => {
           prevParams.set("articlePage", `${page}`);
           return searchParams;
-        });
+        }); */
       }}
     />
   );

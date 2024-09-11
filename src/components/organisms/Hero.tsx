@@ -1,5 +1,4 @@
-import { NavLink as Link } from "react-router-dom";
-import { routes } from "../../staticData/pages.json";
+"use client";
 import RandomQuote from "../atoms/RandomQuote";
 
 export default function Hero() {
@@ -42,7 +41,7 @@ export default function Hero() {
           </Link> */}
         </li>
         <li>
-          <Link to={routes.blogs.path}>Yapper</Link>
+          <a href="#">Yapper</a>
         </li>
       </ul>
     </header>

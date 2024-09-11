@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useReducer } from "react";
 import { toastReducer } from "./ToastReducer";
 import { ToastProps } from "./Toast";
