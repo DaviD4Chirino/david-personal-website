@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import RandomQuote from "../RandomQuote.jsx";
+import routes from "../../../routes.json";
 
 export default function Hero() {
   const textClassNames: string =
@@ -41,7 +42,7 @@ export default function Hero() {
           </Link> */}
         </li>
         <li>
-          <a href="#">Yapper</a>
+          <a href={routes.blogs}>Yapper</a>
         </li>
       </ul>
     </header>
