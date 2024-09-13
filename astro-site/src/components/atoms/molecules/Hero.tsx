@@ -1,5 +1,5 @@
-import RandomQuote from "./RandomQuote";
 import { v4 as uuid } from "uuid";
+import RandomQuote from "../RandomQuote.jsx";
 
 export default function Hero() {
   const textClassNames: string =
@@ -22,10 +22,9 @@ export default function Hero() {
 
         <RandomQuote
           className="
-        absolute top-[140%] md:top-36 right-0 
-        text-xs text-right animate-fade
-        "
-          key={uuid()}
+            absolute top-[140%] md:top-36 right-0 
+            text-xs text-right animate-fade
+            "
         />
       </div>
       <ul className="flex gap-2 place-content-center w-full text-xl">
