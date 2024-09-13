@@ -5,7 +5,7 @@ import Navlinks from "../molecules/Navlinks";
 import { Dropdown } from "flowbite-react";
 import LabelFormElement from "../templates/InputWIthLabel";
 import { useToggle } from "react-use";
-import { capitalize, startsWithVowel } from "../../utils";
+import { capitalize, startsWithVowel } from "../../../astro-site/src/utils";
 
 import { IoIosArrowDown as ArrowDownI } from "react-icons/io";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";

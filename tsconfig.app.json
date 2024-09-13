@@ -24,5 +24,9 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "astro-site/src/components/atoms",
+    "astro-site/src/utils.ts"
+  ]
 }

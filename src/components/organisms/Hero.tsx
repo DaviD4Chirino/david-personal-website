@@ -1,6 +1,6 @@
 import { NavLink as Link } from "react-router-dom";
 import { routes } from "../../staticData/pages.json";
-import RandomQuote from "../atoms/RandomQuote";
+import RandomQuote from "../../../astro-site/src/components/atoms/RandomQuote";
 
 export default function Hero() {
   const textClassNames: string =

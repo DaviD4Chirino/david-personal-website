@@ -1,7 +1,11 @@
-import { breakText, capitalize, cleanString } from "../../utils";
-import Tag from "../atoms/Tag";
+import {
+  breakText,
+  capitalize,
+  cleanString,
+} from "../../../astro-site/src/utils";
+import Tag from "../../../astro-site/src/components/atoms/Tag";
 import { Link, LinkProps } from "react-router-dom";
-import Markdown from "../atoms/Markdown";
+import Markdown from "../../../astro-site/src/components/atoms/Markdown";
 import { DateTime } from "luxon";
 const outlines = [
   "outline",

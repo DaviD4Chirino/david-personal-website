@@ -1,6 +1,6 @@
-import Parser, { Components, Options } from "react-markdown";
+import Parser, { type Components, type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
-import FigureImg from "../molecules/FigureImg";
+import FigureImg from "../../../../src/components/molecules/FigureImg";
 import { isValidElement } from "react";
 import { HashLink } from "react-router-hash-link";
 

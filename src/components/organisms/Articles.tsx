@@ -3,7 +3,11 @@ import { getAllArticles } from "../../database/get";
 import { useQuery } from "@tanstack/react-query";
 import BlogCard, { BlogCardProps } from "../molecules/BlogCard";
 import { useEffectOnce } from "react-use";
-import { paginate, sortAlphabetically, sortByNumberSize } from "../../utils";
+import {
+  paginate,
+  sortAlphabetically,
+  sortByNumberSize,
+} from "../../../astro-site/src/utils";
 import { Pagination, PaginationProps } from "flowbite-react";
 import { useSearchParams } from "react-router-dom";
 import { DateTime } from "luxon";

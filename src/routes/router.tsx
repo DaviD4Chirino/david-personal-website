@@ -4,7 +4,7 @@ import App from "../App";
 import Blog from "../components/pages/Blog";
 import Article from "../components/pages/Article";
 import Article404 from "../components/pages/Article404";
-import ScrollToTop from "../components/atoms/ScrollToTop";
+import ScrollToTop from "../../astro-site/src/components/atoms/ScrollToTop";
 import Editor from "../components/pages/Editor";
 
 export default function AppRoutes() {
