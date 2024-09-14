@@ -3,11 +3,11 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import BlogCard from "../templates/BlogCard.astro";
 import { sortAlphabetically, sortByNumberSize } from "../../utils";
 import { DateTime } from "luxon";
-import type { GetStaticPaths } from "astro";
 
 interface Props {
   revese?: boolean;
   orderBy?: orders;
+  maxPosts?: number;
 }
 type orders = "date" | "alphabetically" | "category";
 
@@ -17,8 +17,6 @@ type Filters = {
     b: CollectionEntry<"posts">
   ) => number;
 };
-
-const { orderBy = "date", revese = false } = Astro.props;
 
 const filters: Filters = {
   date: (a: CollectionEntry<"posts">, b: CollectionEntry<"posts">): number =>
@@ -40,10 +38,12 @@ const filters: Filters = {
     return sortAlphabetically(a.data.category, b.data.category);
   },
 };
+const { orderBy = "date", revese = false, maxPosts = 1000 } = Astro.props;
 
 let posts: CollectionEntry<"posts"> = await getCollection("posts");
+
 posts = posts.sort(filters[orderBy]);
 posts = revese ? posts.reverse() : posts;
 ---
 
-{posts.map((post: any) => <BlogCard post={post} />)}
+{posts.slice(0, maxPosts).map((post: any) => <BlogCard post={post} />)}
