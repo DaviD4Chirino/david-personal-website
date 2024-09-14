@@ -62,5 +62,6 @@ export default {
 	
 		extend: {},
 	  },
-	  plugins: [require('tailwindcss-animated'),  flowbite.plugin(),]
-}
+	  plugins: [require('tailwindcss-animated'),  flowbite.plugin(),require("@tailwindcss/typography")]
+
+	}
