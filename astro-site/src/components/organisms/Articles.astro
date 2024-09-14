@@ -1,0 +1,8 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "../templates/BlogCard.astro";
+
+const posts = await getCollection("posts");
+---
+
+{posts.map((post) => <BlogCard post={post} />)}
