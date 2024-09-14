@@ -1,0 +1,75 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { DateTime } from "luxon";
+import { breakText, capitalize, cleanString } from "../../utils";
+import routes from "../../routes.json";
+import Tag from "../atoms/Tag.astro";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const post = Astro.props.post;
+
+const { date, tags, category, description, id, title } = post.data;
+
+const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toFormat(
+  "MMMM dd, yyyy",
+  DateTime.DATETIME_HUGE
+);
+
+const tagsArray: string[] = breakText(tags, ",");
+const outlines = [
+  "outline",
+  "outline-dashed",
+  "outline-dotted",
+  "outline-double",
+];
+const categoryOutlines = {
+  Godot: "outline-dotted",
+  Article: "outline",
+  Personal: "outline-double",
+  "Post-Mortem": "outline-dashed",
+};
+
+function getOutline(name: string): string {
+  const hasNameIndex = Object.keys(categoryOutlines).findIndex(
+    (category) =>
+      capitalize(cleanString(category)) == capitalize(cleanString(name))
+  );
+
+  if (hasNameIndex > -1) {
+    return Object.values(categoryOutlines)[hasNameIndex];
+  }
+
+  return outlines[name.length % outlines.length];
+}
+---
+
+<article
+  class={`p-3 no-underline rounded-2xl transition-transform ${getOutline(
+    category
+  )} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-100`}
+  id="BlogCard"
+>
+  <a
+    href={`${routes.article}/${post.slug}`}
+    class="grid gap-5 no-underline h-[100%]"
+  >
+    <div class="flex flex-wrap gap-3 justify-between w-full">
+      <b
+        class="hover:cursor-pointer leading-5 no-underline [align-self:baseline]"
+      >
+        <h5 id="Title">{title}</h5>
+      </b>
+      <p class="text-sm text-right text-grey-600 text-kanit" id="Date">
+        {formattedDate}
+      </p>
+    </div>
+    {description}
+    <div class="flex overflow-x-auto gap-2 py-1 h-max" id="Tags">
+      <Tag title={capitalize(cleanString(category))} variant="filled" />
+      {tagsArray.map((tag, i) => tag && <Tag title={tag} />)}
+    </div>
+  </a>
+</article>
