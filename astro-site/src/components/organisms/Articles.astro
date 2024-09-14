@@ -1,8 +1,49 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import BlogCard from "../templates/BlogCard.astro";
+import { sortAlphabetically, sortByNumberSize } from "../../utils";
+import { DateTime } from "luxon";
+import type { GetStaticPaths } from "astro";
 
-const posts = await getCollection("posts");
+interface Props {
+  revese?: boolean;
+  orderBy?: orders;
+}
+type orders = "date" | "alphabetically" | "category";
+
+type Filters = {
+  [type in orders]: (
+    a: CollectionEntry<"posts">,
+    b: CollectionEntry<"posts">
+  ) => number;
+};
+
+const { orderBy = "date", revese = false } = Astro.props;
+
+const filters: Filters = {
+  date: (a: CollectionEntry<"posts">, b: CollectionEntry<"posts">): number =>
+    sortByNumberSize(
+      DateTime.fromFormat(a.data.date, "yyyy-MM-dd").toUnixInteger(),
+      DateTime.fromFormat(b.data.date, "yyyy-MM-dd").toUnixInteger(),
+      "bigger"
+    ),
+  alphabetically: (
+    a: CollectionEntry<"posts">,
+    b: CollectionEntry<"posts">
+  ): number => {
+    return sortAlphabetically(a.data.title, b.data.title);
+  },
+  category: (
+    a: CollectionEntry<"posts">,
+    b: CollectionEntry<"posts">
+  ): number => {
+    return sortAlphabetically(a.data.category, b.data.category);
+  },
+};
+
+let posts: CollectionEntry<"posts"> = await getCollection("posts");
+posts = posts.sort(filters[orderBy]);
+posts = revese ? posts.reverse() : posts;
 ---
 
-{posts.map((post) => <BlogCard post={post} />)}
+{posts.map((post: any) => <BlogCard post={post} />)}

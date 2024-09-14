@@ -20,6 +20,8 @@ export const getStaticPaths = (async () => {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+console.log(post);
 ---
 
 <Layout title=`${post.data.title} - David'Space`>
