@@ -1,9 +1,16 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
 ---
 
-<Layout title="blogs - David'Space">
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est velit facere
-  distinctio cupiditate quam delectus nam porro pariatur saepe nihil libero
-  eveniet molestiae voluptatibus, accusantium inventore animi totam iure nisi.
+<Layout title="Blogs - David'Space">
+  {
+    posts.map((post) => (
+      <a href={post.slug}>
+        <h2>{post.data.title}</h2>
+      </a>
+    ))
+  }
 </Layout>
