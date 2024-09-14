@@ -1,0 +1,13 @@
+---
+interface Props extends astroHTML.JSX.ButtonHTMLAttributes {}
+
+const props = Astro.props;
+---
+
+<button
+  {...props}
+  class="bg-primary-darkest hover:bg-primary-dark transition-colors text-primary-lightest
+   px-2 py-1 rounded"
+>
+  <slot /></button
+>

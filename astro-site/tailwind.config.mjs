@@ -1,9 +1,9 @@
  /** @type {Config} */ 
 /** @typedef {import('tailwindcss').Config} Config */
-const flowbite = require("flowbite-react/tailwind");
+import flowbite from "flowbite-react/tailwind";
 
 export default {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',flowbite.content(),],
 	theme: {
 		colors: {
 		  text: "#050315",

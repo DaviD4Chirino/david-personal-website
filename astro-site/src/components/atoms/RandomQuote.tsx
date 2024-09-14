@@ -1,9 +1,6 @@
 import type { ClassAttributes, HTMLAttributes } from "react";
-import { getGistFile } from "../../../../src/database";
 import type { JSX } from "react/jsx-runtime";
-import { useQuery } from "@tanstack/react-query";
 import { getRandomInArray } from "../../utils";
-import type { AstroAssets } from "astro:assets";
 
 const quotes = [
   "No war, Not here",

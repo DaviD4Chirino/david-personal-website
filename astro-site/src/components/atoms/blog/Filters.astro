@@ -1,0 +1,15 @@
+---
+import InputQuery from "../urlQueryElements/InputQuery.astro";
+import LabelInput from "../../templates/formInputs/LabelInput.astro";
+import Button from "../Button.astro";
+import { FaArrowUp } from "react-icons/fa6";
+let ascending: boolean = false;
+---
+
+<LabelInput nameFor="search" title="Search">
+  <InputQuery
+    name="search"
+    type="text"
+    placeholder="Search Categories, Titles and Tags"
+  />
+</LabelInput>

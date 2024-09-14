@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
-import RandomQuote from "../RandomQuote.jsx";
-import routes from "../../../routes.json";
+import RandomQuote from "./RandomQuote";
+import routes from "../../routes.json";
 
 export default function Hero() {
   const textClassNames: string =

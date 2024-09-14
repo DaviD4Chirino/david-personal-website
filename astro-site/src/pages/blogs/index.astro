@@ -4,6 +4,9 @@ import LabelInput from "../../components/templates/formInputs/LabelInput.astro";
 import Layout from "../../layouts/Layout.astro";
 import InputQuery from "../../components/atoms/urlQueryElements/InputQuery.astro";
 import SelectQuery from "../../components/atoms/urlQueryElements/SelectQuery.astro";
+import { Dropdown } from "flowbite-react";
+import Filters from "../../components/atoms/blog/Filters.astro";
+import Button from "../../components/atoms/Button.astro";
 ---
 
 <Layout title="Blogs - David'Space">
@@ -32,16 +35,17 @@ import SelectQuery from "../../components/atoms/urlQueryElements/SelectQuery.ast
           onsubmit=""
           name="filter"
         >
-          <LabelInput nameFor="search" title="Search">
-            <InputQuery
-              name="search"
-              type="text"
-              placeholder="Search Categories, Titles and Tags"
+          <Filters />
+          <div class="grid grid-cols-[0.3fr_1fr] gap-3">
+            <input
+              type="reset"
+              value="Clean"
+              class="border border-primary-darkest hover:border-primary-dark transition-colors text-primary-darkest cursor-pointer
+            px-2 py-1 rounded"
             />
-          </LabelInput>
-          <LabelInput nameFor="sort-by" title="Sort">
-            <SelectQuery name="sort-by" />
-          </LabelInput>
+            <Button type="submit">Search</Button>
+          </div>
+
           {
             /* <label htmlFor="article_search" className="block">
         Filter
