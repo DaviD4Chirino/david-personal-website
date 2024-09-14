@@ -73,25 +73,25 @@ export function inRange(num: number, min: number, max: number): boolean {
   return num >= min && num <= max;
 }
 
-export function paginate(
-  array: any[],
-  currentPage: number,
-  itemsPerPage: number
-): Paginate {
-  const length: number = array.length;
-  return {
-    total: Math.ceil(array.length / itemsPerPage),
-    per_page: itemsPerPage,
-    current_page: currentPage,
-    last_page: Math.ceil(length / itemsPerPage),
-    from: (currentPage - 1) * itemsPerPage,
-    to: currentPage * itemsPerPage,
-    items: array.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    ),
-  };
-}
+// export function paginate(
+//   array: any[],
+//   currentPage: number,
+//   itemsPerPage: number
+// ): Paginate {
+//   const length: number = array.length;
+//   return {
+//     total: Math.ceil(array.length / itemsPerPage),
+//     per_page: itemsPerPage,
+//     current_page: currentPage,
+//     last_page: Math.ceil(length / itemsPerPage),
+//     from: (currentPage - 1) * itemsPerPage,
+//     to: currentPage * itemsPerPage,
+//     items: array.slice(
+//       (currentPage - 1) * itemsPerPage,
+//       currentPage * itemsPerPage
+//     ),
+//   };
+// }
 
 export function sortAlphabetically(a: string, b: string) {
   return a.localeCompare(b);
@@ -102,4 +102,11 @@ export function sortByNumberSize(
   order: "bigger" | "lower"
 ) {
   return order == "bigger" ? (a <= b ? 1 : -1) : a >= b ? 1 : -1;
+}
+
+export function stringIncludes(text: string, compareText: string): boolean {
+  if (text.toLowerCase().trim().includes(compareText.toLowerCase().trim())) {
+    return true;
+  }
+  return false;
 }

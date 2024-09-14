@@ -1,0 +1,13 @@
+---
+interface Props extends astroHTML.JSX.InputHTMLAttributes {}
+
+const { name = "", value, ...rest } = Astro.props;
+const search: string = Astro.url.searchParams.get(name || "") || "";
+---
+
+<input
+  {...rest}
+  name={name}
+  value={search}
+  class="p-2 rounded transition-all bg-grey-100"
+/>

@@ -1,7 +1,11 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BlogCard from "../templates/BlogCard.astro";
-import { sortAlphabetically, sortByNumberSize } from "../../utils";
+import {
+  sortAlphabetically,
+  sortByNumberSize,
+  stringIncludes,
+} from "../../utils";
 import { DateTime } from "luxon";
 
 interface Props {
@@ -38,9 +42,17 @@ const filters: Filters = {
     return sortAlphabetically(a.data.category, b.data.category);
   },
 };
-const { orderBy = "date", revese = false, maxPosts = 1000 } = Astro.props;
 
-let posts: CollectionEntry<"posts"> = await getCollection("posts");
+const { orderBy = "date", revese = false, maxPosts = 1000 } = Astro.props;
+const search: string = Astro.url.searchParams.get("search") || "";
+
+let posts: CollectionEntry<"posts"> = await getCollection(
+  "posts",
+  ({ data }: CollectionEntry<"posts">) =>
+    stringIncludes(data.title, search) ||
+    stringIncludes(data.category, search) ||
+    stringIncludes(data.tags, search)
+);
 
 posts = posts.sort(filters[orderBy]);
 posts = revese ? posts.reverse() : posts;

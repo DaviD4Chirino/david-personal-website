@@ -2,6 +2,8 @@
 import Articles from "../../components/organisms/Articles.astro";
 import LabelInput from "../../components/templates/formInputs/LabelInput.astro";
 import Layout from "../../layouts/Layout.astro";
+import InputQuery from "../../components/atoms/urlQueryElements/InputQuery.astro";
+import SelectQuery from "../../components/atoms/urlQueryElements/SelectQuery.astro";
 ---
 
 <Layout title="Blogs - David'Space">
@@ -25,15 +27,20 @@ import Layout from "../../layouts/Layout.astro";
         class="grid grid-rows-[auto_auto] h-max gap-5 outline outline-1
       rounded-sm p-4"
       >
-        <form class="grid-rows-[auto_1fr] gap-5 grid h-max" onsubmit="">
-          <LabelInput nameFor="article_search" title="Search">
-            <input
-              name="filter"
+        <form
+          class="grid-rows-[auto_1fr] gap-5 grid h-max"
+          onsubmit=""
+          name="filter"
+        >
+          <LabelInput nameFor="search" title="Search">
+            <InputQuery
+              name="search"
               type="text"
-              id="article_search"
-              class="p-2 rounded transition-all bg-grey-100"
               placeholder="Search Categories, Titles and Tags"
             />
+          </LabelInput>
+          <LabelInput nameFor="sort-by" title="Sort">
+            <SelectQuery name="sort-by" />
           </LabelInput>
           {
             /* <label htmlFor="article_search" className="block">
@@ -52,7 +59,7 @@ import Layout from "../../layouts/Layout.astro";
         <!-- <Filter setQuery={setQuery} /> -->
       </div>
       <section class="grid gap-12">
-        <Articles orderBy="date" maxPosts={2} />
+        <Articles orderBy="date" />
       </section>
     </section>
     <div class="grid gap-16 container"></div>
