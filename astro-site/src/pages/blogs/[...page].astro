@@ -1,12 +1,19 @@
 ---
-import Articles from "../../components/organisms/Articles.astro";
-import LabelInput from "../../components/templates/formInputs/LabelInput.astro";
+export const prerender = true;
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Articles from "../../components/organisms/Articles";
 import Layout from "../../layouts/Layout.astro";
-import InputQuery from "../../components/atoms/urlQueryElements/InputQuery.astro";
-import SelectQuery from "../../components/atoms/urlQueryElements/SelectQuery.astro";
-import { Dropdown } from "flowbite-react";
-import Filters from "../../components/atoms/blog/Filters.astro";
-import Button from "../../components/atoms/Button.astro";
+import Pagination from "../../components/molecules/Pagination.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("posts");
+  return paginate(posts, { pageSize: 2 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+// console.log(posts);
 ---
 
 <Layout title="Blogs - David'Space">
@@ -35,8 +42,8 @@ import Button from "../../components/atoms/Button.astro";
           onsubmit=""
           name="filter"
         >
-          <Filters />
-          <div class="grid grid-cols-[0.3fr_1fr] gap-3">
+          <!-- <Filters /> -->
+          <!-- <div class="grid grid-cols-[0.3fr_1fr] gap-3">
             <input
               type="reset"
               value="Clean"
@@ -44,7 +51,7 @@ import Button from "../../components/atoms/Button.astro";
             px-2 py-1 rounded"
             />
             <Button type="submit">Search</Button>
-          </div>
+          </div> -->
 
           {
             /* <label htmlFor="article_search" className="block">
@@ -63,7 +70,9 @@ import Button from "../../components/atoms/Button.astro";
         <!-- <Filter setQuery={setQuery} /> -->
       </div>
       <section class="grid gap-12">
-        <Articles orderBy="date" />
+        <!-- <Articles orderBy="date" /> -->
+        <Pagination {...page.url} />
+        <Articles posts={page.data} client:idle />
       </section>
     </section>
     <div class="grid gap-16 container"></div>

@@ -1,0 +1,19 @@
+---
+interface Props extends PageUrl {}
+const { next, prev, last, current, first } = Astro.props;
+const WORD_REGEX: RegExp = /([a-zA-Z\/]+)/gm;
+const currentIndex = current.replace(WORD_REGEX, "")
+  ? current.replace(WORD_REGEX, "")
+  : "1";
+const lastIndex = last?.replace(WORD_REGEX, "")
+  ? last?.replace(WORD_REGEX, "")
+  : currentIndex;
+
+console.log(currentIndex);
+---
+
+<nav id="Pagination">
+  {prev && <a href={prev}>Prev</a>}
+  {currentIndex} of {lastIndex}
+  {next && <a href={next}>Next</a>}
+</nav>
