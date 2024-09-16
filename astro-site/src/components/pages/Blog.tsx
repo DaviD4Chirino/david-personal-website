@@ -1,13 +1,11 @@
-import React, { Fragment } from "react";
+import type { CollectionEntry } from "astro:content";
+import React, { Fragment, useEffect, useState, type Dispatch } from "react";
 import Pagination from "../molecules/Pagination";
 import Articles from "../organisms/Articles";
-import reactUse from "react-use";
-import type { CollectionEntry } from "astro:content";
 import LabelInput from "../templates/formInputs/LabelInput";
 import Input from "../atoms/Input";
 import Datalist from "../atoms/Datalist";
-
-const { useToggle } = reactUse;
+import { stringIncludes } from "../../utils";
 
 interface Props {
   page: PaginatedCollection<"posts">;
@@ -15,13 +13,19 @@ interface Props {
 }
 
 export default function Blog({ page, totalPosts }: Props) {
-  const [filtering, toggleFiltering] = useToggle(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const filtering: boolean = searchQuery != "";
 
-  const titles = totalPosts.map((post) => post.data.title);
   // const tags = totalPosts.map((post) => post.data.tags);
   // console.log("🚀 ~ Blog ~ tags:", tags);
 
-  const posts: CollectionEntry<"posts">[] = filtering ? totalPosts : page.data;
+  let posts: CollectionEntry<"posts">[] = filtering ? totalPosts : page.data;
+
+  if (filtering) {
+    posts = posts.filter((post) =>
+      stringIncludes(post.data.title, searchQuery)
+    );
+  }
 
   return (
     <section id="Blogs" className="grid isolate relative gap-16 mb-3">
@@ -44,29 +48,50 @@ export default function Blog({ page, totalPosts }: Props) {
           className="grid grid-rows-[auto_auto] h-max gap-5 outline outline-1
     rounded-sm p-4"
         >
-          <form
-            className="grid-rows-[auto_1fr] gap-5 grid h-max"
-            name="filter"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <LabelInput name="search" title="Search">
-              <Input
-                name="search2"
-                type="text"
-                placeholder="Search Categories, Titles and Tags"
-                list="search-datalist"
-              />
-              <Datalist array={titles} id="search-datalist" />
-            </LabelInput>
-          </form>
+          <div className="grid-rows-[auto_1fr] gap-5 grid h-max">
+            <SearchFilter
+              totalPosts={totalPosts}
+              setSearchQuery={setSearchQuery}
+              searchQueryValue={searchQuery}
+            />
+          </div>
         </div>
         <section className="grid gap-12">
-          <Pagination pageData={page.url} />
+          {!filtering && <Pagination pageData={page.url} />}
           <Articles posts={posts} />
-          <Pagination pageData={page.url} />
+          {!filtering && <Pagination pageData={page.url} />}
         </section>
       </section>
       <div className="grid gap-16 container"></div>
     </section>
+  );
+}
+
+function SearchFilter({
+  totalPosts,
+  setSearchQuery,
+  searchQueryValue,
+}: {
+  totalPosts: CollectionEntry<"posts">[];
+  setSearchQuery: Dispatch<React.SetStateAction<string>>;
+  searchQueryValue: string;
+}) {
+  const titles = totalPosts.map((post) => post.data.title);
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchQuery(e.target.value);
+  }
+  return (
+    <LabelInput name="search" title="Search">
+      <Input
+        name="search2"
+        type="text"
+        placeholder="Search Categories, Titles and Tags"
+        list="search-datalist"
+        value={searchQueryValue}
+        onChange={handleOnChange}
+        aria-controls="articles search"
+      />
+      <Datalist array={titles} id="search-datalist" />
+    </LabelInput>
   );
 }
