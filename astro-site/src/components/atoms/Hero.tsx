@@ -1,4 +1,3 @@
-import { v4 as uuid } from "uuid";
 import RandomQuote from "./RandomQuote";
 import routes from "../../routes.json";
 

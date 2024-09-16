@@ -1,7 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import routes from "../../routes.json";
 import Tag from "../atoms/Tag";
-import { DateTime } from "luxon";
 import { capitalize, cleanString } from "../../utils";
 import dayjs from "dayjs";
 import { v4 as uuid } from "uuid";

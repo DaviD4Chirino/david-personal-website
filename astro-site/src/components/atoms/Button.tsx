@@ -1,7 +1,3 @@
-import React from "react";
-
-interface Props {}
-
 export default function Button(
   props: JSX.IntrinsicElements["button"] & { href?: string }
 ) {

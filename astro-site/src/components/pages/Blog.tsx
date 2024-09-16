@@ -21,7 +21,8 @@ interface Props {
 }
 
 const filters: Filters<"posts"> = {
-  date: (a: CollectionEntry<"posts">, b: CollectionEntry<"posts">): number => 0,
+  date: (_a: CollectionEntry<"posts">, _b: CollectionEntry<"posts">): number =>
+    0,
   /* sortByNumberSize(
       DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
       DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),

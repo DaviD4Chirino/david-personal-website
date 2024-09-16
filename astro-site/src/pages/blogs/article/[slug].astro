@@ -3,14 +3,14 @@ interface Props {
   post: CollectionEntry<"posts">;
 }
 import Layout from "../../../layouts/Layout.astro";
-import { getEntry, getEntryBySlug, type CollectionEntry } from "astro:content";
+import { getEntry, type CollectionEntry } from "astro:content";
 
 const { slug } = Astro.params;
 
 if (!slug) {
   return Astro.redirect("/404");
 }
-const post = await getEntryBySlug("posts", slug);
+const post = await getEntry("posts", slug);
 
 if (!post) {
   return Astro.redirect("/404");

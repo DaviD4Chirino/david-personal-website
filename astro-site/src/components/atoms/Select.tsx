@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Select(props: JSX.IntrinsicElements["select"]) {
   const { children, ...rest } = props;
   return (
