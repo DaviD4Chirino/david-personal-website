@@ -8,7 +8,7 @@ export default function ButtonLink(
   if (disabled) {
     return (
       <span
-        className={`bg-tertiary-lightest text-tertiary-light cursor-not-allowed h-min w-min ${sharedClasses}`}
+        className={`bg-tertiary-lightest text-tertiary-lightest cursor-not-allowed h-min w-min ${sharedClasses}`}
       >
         {props.children}
       </span>

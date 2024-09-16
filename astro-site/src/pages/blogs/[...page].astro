@@ -4,7 +4,7 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Articles from "../../components/organisms/Articles";
 import Layout from "../../layouts/Layout.astro";
-import Pagination from "../../components/molecules/Pagination.astro";
+import Pagination from "../../components/molecules/Pagination";
 import Input from "../../components/atoms/Input";
 import Select from "../../components/atoms/Select";
 import LabelInput from "../../components/templates/formInputs/LabelInput";
@@ -59,44 +59,12 @@ const { page } = Astro.props;
               {posts.map((post) => <option value={post.data.title} />)}
             </datalist>
           </LabelInput>
-          <!-- <LabelInput name="order-by" title="Order By">
-            <Select name="order-by">
-              {posts.map((post) => <option value="">{post.data.title}</option>)}
-            </Select>
-          </LabelInput> -->
-
-          <!-- <Filters /> -->
-          <!-- <div class="grid grid-cols-[0.3fr_1fr] gap-3">
-            <input
-              type="reset"
-              value="Clean"
-              class="border border-primary-darkest hover:border-primary-dark transition-colors text-primary-darkest cursor-pointer
-            px-2 py-1 rounded"
-            />
-            <Button type="submit">Search</Button>
-          </div> -->
-
-          {
-            /* <label htmlFor="article_search" className="block">
-        Filter
-      </label>
-      <input
-        type="text"
-        id="article_search"
-        className="p-2 rounded-full transition-all outline outline-2 outline-offset-0 outline-tertiary-light hover:outline-offset-2 focus:outline-offset-4 bg-grey-100"
-        placeholder="Search Categories, Titles and Tags"
-        onChange={handleOnChange}
-        value={searchQuery}
-      /> */
-          }
         </form>
-        <!-- <Filter setQuery={setQuery} /> -->
       </div>
       <section class="grid gap-12">
-        <!-- <Articles orderBy="date" /> -->
-        <Pagination {...page.url} />
+        <Pagination pageData={page.url} />
         <Articles posts={page.data} />
-        <Pagination {...page.url} />
+        <Pagination pageData={page.url} />
       </section>
     </section>
     <div class="grid gap-16 container"></div>
