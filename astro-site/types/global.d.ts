@@ -1,5 +1,9 @@
 type orders = "date" | "alphabetically" | "category";
 
+interface Filters<C extends CollectionKey> {
+  [type in orders]: (a: CollectionEntry<C>, b: CollectionEntry<C>) => number;
+}
+
 type Pagination = {
   start: number;
   end: number;

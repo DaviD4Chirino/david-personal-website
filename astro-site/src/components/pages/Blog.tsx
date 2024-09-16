@@ -1,23 +1,52 @@
 import type { CollectionEntry } from "astro:content";
-import React, { Fragment, useEffect, useState, type Dispatch } from "react";
+import React, { useState, type Dispatch, type SetStateAction } from "react";
 import Pagination from "../molecules/Pagination";
 import Articles from "../organisms/Articles";
 import LabelInput from "../templates/formInputs/LabelInput";
 import Input from "../atoms/Input";
 import Datalist from "../atoms/Datalist";
-import { stringIncludes } from "../../utils";
+import {
+  capitalize,
+  sortAlphabetically,
+  sortByNumberSize,
+  startsWithVowel,
+  stringIncludes,
+} from "../../utils";
+import { Dropdown } from "flowbite-react";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { IoIosArrowDown as ArrowDownI } from "react-icons/io";
 
 interface Props {
   page: PaginatedCollection<"posts">;
   totalPosts: CollectionEntry<"posts">[];
 }
 
+const filters: Filters<"posts"> = {
+  date: (a: CollectionEntry<"posts">, b: CollectionEntry<"posts">): number => 0,
+  /* sortByNumberSize(
+      DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
+      DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),
+      "bigger"
+    ) */ alphabetically: (
+    a: CollectionEntry<"posts">,
+    b: CollectionEntry<"posts">
+  ): number => {
+    return sortAlphabetically(a.data.title, b.data.title);
+  },
+  category: (
+    a: CollectionEntry<"posts">,
+    b: CollectionEntry<"posts">
+  ): number => {
+    return sortAlphabetically(a.data.category, b.data.category);
+  },
+};
+
 export default function Blog({ page, totalPosts }: Props) {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const filtering: boolean = searchQuery != "";
+  const [orderBy, setOrderBy] = useState<orders>("alphabetically");
+  const [ascending, setAscending] = useState<boolean>(true);
 
-  // const tags = totalPosts.map((post) => post.data.tags);
-  // console.log("🚀 ~ Blog ~ tags:", tags);
+  const filtering: boolean = searchQuery != "";
 
   let posts: CollectionEntry<"posts">[] = filtering ? totalPosts : page.data;
 
@@ -27,8 +56,15 @@ export default function Blog({ page, totalPosts }: Props) {
     );
   }
 
+  // @ts-ignore
+  posts = posts.sort(filters[orderBy]);
+
+  if (!ascending) {
+    posts = posts.reverse();
+  }
+
   return (
-    <section id="Blogs" className="grid isolate relative gap-16 mb-3">
+    <section id="Blogs" className="grid isolate relative gap-16 mb-3 h-max">
       <header className="container isolate relative h-44">
         {/* <Navlinks classNameName="flex absolute top-5 right-5 gap-1" />  */}
         {/* <div classNameName="w-full opacity-60 bg-pattern-noisy"></div> */}
@@ -38,9 +74,8 @@ export default function Blog({ page, totalPosts }: Props) {
       </header>
       <section
         className="container
-    grid-rows-none md:grid-rows-[.5fr_1fr]
-    grid grid-cols-1 md:grid-cols-[.5fr_1fr]
-    gap-16"
+          grid grid-cols-1 md:grid-cols-[.5fr_1fr]
+          gap-16 h-max"
         id="ArticlesContainer"
       >
         <div
@@ -54,15 +89,20 @@ export default function Blog({ page, totalPosts }: Props) {
               setSearchQuery={setSearchQuery}
               searchQueryValue={searchQuery}
             />
+            <OrderBy
+              orderBy={orderBy}
+              setOrderBy={setOrderBy}
+              ascending={ascending}
+              setAscending={setAscending}
+            />
           </div>
         </div>
-        <section className="grid gap-12">
+        <section className="grid gap-12 h-min">
           {!filtering && <Pagination pageData={page.url} />}
           <Articles posts={posts} />
           {!filtering && <Pagination pageData={page.url} />}
         </section>
       </section>
-      <div className="grid gap-16 container"></div>
     </section>
   );
 }
@@ -90,8 +130,88 @@ function SearchFilter({
         value={searchQueryValue}
         onChange={handleOnChange}
         aria-controls="articles search"
+        role="combobox"
+        aria-expanded
       />
       <Datalist array={titles} id="search-datalist" />
     </LabelInput>
+  );
+}
+
+const options: orders[] = ["alphabetically", "category", "date"];
+
+function OrderBy({
+  orderBy,
+  setOrderBy,
+  ascending,
+  setAscending,
+}: {
+  orderBy: orders | "";
+  ascending: boolean;
+  setOrderBy: Dispatch<SetStateAction<orders>>;
+  setAscending: Dispatch<SetStateAction<boolean>>;
+}) {
+  const Icon = ascending ? FaArrowDown : FaArrowUp;
+
+  function handleClick(value: orders) {
+    if (value == orderBy) {
+      setAscending(!ascending);
+    }
+    setOrderBy(value);
+  }
+
+  return (
+    <LabelInput
+      name="order-by"
+      title="Order"
+      icon={Icon({ className: "size-3" })}
+    >
+      <input type="text" hidden id="order-by" />
+      <Dropdown
+        label="Dropdown button"
+        dismissOnClick={false}
+        renderTrigger={() => (
+          <button
+            className="
+          text-left 
+          outline-grey-600 outline outline-1 text-grey-900
+          bg-grey-100
+          p-2 rounded
+          flex items-center gap-1
+          "
+          >
+            {startsWithVowel(orderBy) ? "" : "By "}
+            {capitalize(orderBy)} <ArrowDownI />
+          </button>
+        )}
+      >
+        {options.sort().map((opt) => (
+          <DropItem
+            name={opt}
+            title={capitalize(opt)}
+            onClick={handleClick}
+            key={opt}
+            icon={orderBy == opt ? Icon : undefined}
+          />
+        ))}
+      </Dropdown>
+    </LabelInput>
+  );
+}
+function DropItem({
+  name,
+  title,
+  onClick,
+  icon,
+}: {
+  name: orders;
+  title: string;
+  onClick: (name: orders) => void;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+}) {
+  return (
+    <Dropdown.Item onClick={() => onClick(name)} icon={icon}>
+      {title}
+    </Dropdown.Item>
   );
 }
