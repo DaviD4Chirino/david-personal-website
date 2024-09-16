@@ -49,9 +49,16 @@
 }
 
 a:not(.no-underline) {
-  text-decoration: underline;
+  text-decoration: none;
+  color: theme(colors.tertiary.DEFAULT);
   &:hover {
+    text-decoration: underline;
+  }
+  &:active {
     text-decoration: none;
+  }
+  &:visited {
+    color: theme(colors.tertiary.light);
   }
 }
 

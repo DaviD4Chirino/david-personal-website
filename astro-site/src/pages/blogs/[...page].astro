@@ -8,12 +8,13 @@ import Pagination from "../../components/molecules/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("posts");
-  return paginate(posts, { pageSize: 2 });
+  return paginate(posts, { pageSize: 10 });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
 
-// console.log(posts);
+// TODO: ADD SEARCH AND ORDER_BY FILTERS
+// IDEA: USE A FORM ELEMENT
 ---
 
 <Layout title="Blogs - David'Space">
@@ -73,6 +74,7 @@ const { page } = Astro.props;
         <!-- <Articles orderBy="date" /> -->
         <Pagination {...page.url} />
         <Articles posts={page.data} client:idle />
+        <Pagination {...page.url} />
       </section>
     </section>
     <div class="grid gap-16 container"></div>
