@@ -42,7 +42,12 @@ export default function Hero() {
           </Link> */}
         </li>
         <li>
-          <a href={routes.blogs}>Yapper</a>
+          <a
+            href={routes.blogs}
+            className="text-grey-900 skip-css hover:underline active:no-underline"
+          >
+            Yapper
+          </a>
         </li>
       </ul>
     </header>

@@ -5,16 +5,21 @@ import { getCollection } from "astro:content";
 import Articles from "../../components/organisms/Articles";
 import Layout from "../../layouts/Layout.astro";
 import Pagination from "../../components/molecules/Pagination.astro";
+import Input from "../../components/atoms/Input";
+import Select from "../../components/atoms/Select";
+import LabelInput from "../../components/templates/formInputs/LabelInput";
 
+const posts = await getCollection("posts");
 export const getStaticPaths = (async ({ paginate }) => {
-  const posts = await getCollection("posts");
-  return paginate(posts, { pageSize: 10 });
+  const _posts = await getCollection("posts");
+  return paginate(_posts, { pageSize: 1 });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
 
 // TODO: ADD SEARCH AND ORDER_BY FILTERS
 // IDEA: USE A FORM ELEMENT
+//IDEA: MAKE THIS IN REACT
 ---
 
 <Layout title="Blogs - David'Space">
@@ -40,9 +45,26 @@ const { page } = Astro.props;
       >
         <form
           class="grid-rows-[auto_1fr] gap-5 grid h-max"
-          onsubmit=""
           name="filter"
+          method="post"
         >
+          <LabelInput name="search" title="Search">
+            <Input
+              name="search2"
+              type="text"
+              placeholder="Search Categories, Titles and Tags"
+              list="search-datalist"
+            />
+            <datalist id="search-datalist">
+              {posts.map((post) => <option value={post.data.title} />)}
+            </datalist>
+          </LabelInput>
+          <!-- <LabelInput name="order-by" title="Order By">
+            <Select name="order-by">
+              {posts.map((post) => <option value="">{post.data.title}</option>)}
+            </Select>
+          </LabelInput> -->
+
           <!-- <Filters /> -->
           <!-- <div class="grid grid-cols-[0.3fr_1fr] gap-3">
             <input
@@ -73,7 +95,7 @@ const { page } = Astro.props;
       <section class="grid gap-12">
         <!-- <Articles orderBy="date" /> -->
         <Pagination {...page.url} />
-        <Articles posts={page.data} client:idle />
+        <Articles posts={page.data} />
         <Pagination {...page.url} />
       </section>
     </section>

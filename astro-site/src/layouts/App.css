@@ -48,7 +48,7 @@
   }
 }
 
-a:not(.no-underline) {
+a:not(.no-underline, .skip-css) {
   text-decoration: none;
   color: theme(colors.tertiary.DEFAULT);
   &:hover {
