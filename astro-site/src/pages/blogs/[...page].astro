@@ -1,17 +1,14 @@
 ---
 export const prerender = true;
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
-import Articles from "../../components/organisms/Articles";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Pagination from "../../components/molecules/Pagination";
-import Input from "../../components/atoms/Input";
-import Select from "../../components/atoms/Select";
-import LabelInput from "../../components/templates/formInputs/LabelInput";
+import Blog from "../../components/pages/Blog";
 
 const posts = await getCollection("posts");
+
 export const getStaticPaths = (async ({ paginate }) => {
-  const _posts = await getCollection("posts");
+  const _posts: CollectionEntry<"posts">[] = await getCollection("posts");
   return paginate(_posts, { pageSize: 1 });
 }) satisfies GetStaticPaths;
 
@@ -23,50 +20,6 @@ const { page } = Astro.props;
 ---
 
 <Layout title="Blogs - David'Space">
-  <section id="Blogs" class="grid isolate relative gap-16 mb-3">
-    <header class="container isolate relative h-44">
-      <!-- <Navlinks className="flex absolute top-5 right-5 gap-1" /> -->
-      {/* <div className="w-full opacity-60 bg-pattern-noisy"></div> */}
-      <div class="grid content-center h-full">
-        <h1>Blogs</h1>
-      </div>
-    </header>
-    <section
-      class="container
-      grid-rows-none md:grid-rows-[.5fr_1fr]
-      grid grid-cols-1 md:grid-cols-[.5fr_1fr]
-      gap-16"
-      id="ArticlesContainer"
-    >
-      <div
-        id="search"
-        class="grid grid-rows-[auto_auto] h-max gap-5 outline outline-1
-      rounded-sm p-4"
-      >
-        <form
-          class="grid-rows-[auto_1fr] gap-5 grid h-max"
-          name="filter"
-          method="post"
-        >
-          <LabelInput name="search" title="Search">
-            <Input
-              name="search2"
-              type="text"
-              placeholder="Search Categories, Titles and Tags"
-              list="search-datalist"
-            />
-            <datalist id="search-datalist">
-              {posts.map((post) => <option value={post.data.title} />)}
-            </datalist>
-          </LabelInput>
-        </form>
-      </div>
-      <section class="grid gap-12">
-        <Pagination pageData={page.url} />
-        <Articles posts={page.data} />
-        <Pagination pageData={page.url} />
-      </section>
-    </section>
-    <div class="grid gap-16 container"></div>
-  </section>
+  <!-- @ts-ignore-->
+  <Blog page={page} totalPosts={posts} client:load />
 </Layout>
