@@ -2,7 +2,8 @@ import type { CollectionEntry } from "astro:content";
 import routes from "../../routes.json";
 import Tag from "../atoms/Tag";
 import { DateTime } from "luxon";
-import { breakText, capitalize, cleanString } from "../../utils";
+import { capitalize, cleanString } from "../../utils";
+import dayjs from "dayjs";
 import { v4 as uuid } from "uuid";
 
 interface Props {
@@ -22,12 +23,8 @@ const categoryOutlines = {
 };
 export default function BlogCard({ post }: Props) {
   const { date, tags, category, description, title } = post.data;
-  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toFormat(
-    "MMMM dd, yyyy",
-    DateTime.DATETIME_HUGE
-  );
-
-  const tagsArray: string[] = breakText(tags, ",");
+  // const formattedDate = new Date(date).to
+  const formattedDate = dayjs(date).add(4, "hour").format("MMMM D, YYYY");
 
   return (
     <article
@@ -51,7 +48,7 @@ export default function BlogCard({ post }: Props) {
         {description}
         <div className="flex overflow-x-auto gap-2 py-1 h-max" id="Tags">
           <Tag title={capitalize(cleanString(category))} variant="filled" />
-          {tagsArray.map((tag) => tag && <Tag title={tag} key={uuid()} />)}
+          {tags.map((tag: string) => tag && <Tag title={tag} key={uuid()} />)}
         </div>
       </a>
     </article>

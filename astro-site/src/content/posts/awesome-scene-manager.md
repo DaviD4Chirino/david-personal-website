@@ -3,8 +3,8 @@ id: "1"
 title: "Awesome Scene Manager"
 description: "In any game with more than 1 level you want to make sure to go the next level when the current ends, there's a lot of ways to do that"
 category: "Godot"
-tags: "4.x, Addon"
-date: "2024-08-05"
+tags: ["4.x", "Addon"]
+date: 2024-08-05
 ---
 
 # Awesome Scene Manager

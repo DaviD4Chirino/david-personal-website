@@ -3,8 +3,8 @@ id: "8ca067ab-ce3f-46c4-b864-b763c823c29a"
 title: "Awesome Inputs Icons "
 description: "Have you noticed that most games when they tell you to press X button they usually show an icon?"
 category: "Godot"
-tags: "4.x, Addon, Post-mortem"
-date: "2024-08-25"
+tags: ["4.x", "Addon", "Post-mortem"]
+date: 2024-08-25
 ---
 
 # Awesome Inputs Icons

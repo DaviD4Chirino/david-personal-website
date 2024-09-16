@@ -1,10 +1,10 @@
 ---
 id: "0"
 title: "Awesome Custom Cursor"
-description: "I made this Godot 4.x addon to facilitate custom cursors in my games _(notice how I have more addons than games)_ and it turned better than expected."
+description: "I made this Godot 4.x addon to facilitate custom cursors in my games (notice how I have more addons than games) and it turned better than expected."
 category: "Godot"
-tags: "4.x, Addon, Cursor"
-date: "2024-08-08"
+tags: ["4.x", "Addon", "Cursor"]
+date: 2024-08-08
 ---
 
 # Awesome Custom Cursor

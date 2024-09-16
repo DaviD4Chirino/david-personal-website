@@ -3,8 +3,8 @@ id: "e1d3cac9-40a6-4ea1-b8c4-ba48e23ac569"
 title: "The boys and progressivism lite"
 description: "A critique of The Boys Season 4 and the way they treated my boy Hughie"
 category: "Critique"
-tags: "Opinion, review, The Boys, Series"
-date: "2024-08-30"
+tags: ["Opinion", "review", "The Boys", "Series"]
+date: 2024-08-30
 ---
 
 # The boys and progressivism lite

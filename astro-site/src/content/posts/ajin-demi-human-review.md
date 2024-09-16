@@ -3,8 +3,8 @@ id: "2"
 title: "Ajin: Demi-Human - Review"
 description: "I've recently finished Ajin and I loved it, here are my thoughts"
 category: "Review"
-tags: "Manga, Opinion"
-date: "2024-08-13"
+tags: ["Manga", "Opinion"]
+date: 2024-08-13
 ---
 
 # Ajin: Demi-Human - Review

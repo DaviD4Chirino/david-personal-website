@@ -3,8 +3,8 @@ id: "dcdb495c-245d-44c7-adfd-3ed3b4b46c0d"
 title: "I can't stand when you break my spine "
 description: "Recently, my back had been hurting a lot due to a chance in my life, and it hurts"
 category: "Personal"
-tags: "Pain, Lost Opportunities "
-date: "2024-09-10"
+tags: ["Pain", "Lost Opportunities"]
+date: 2024-09-10
 ---
 
 # I can't stand when you break my spine

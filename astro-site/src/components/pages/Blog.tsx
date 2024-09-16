@@ -8,7 +8,6 @@ import Datalist from "../atoms/Datalist";
 import {
   capitalize,
   sortAlphabetically,
-  sortByNumberSize,
   startsWithVowel,
   stringIncludes,
 } from "../../utils";
