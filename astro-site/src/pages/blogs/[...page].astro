@@ -1,25 +1,33 @@
 ---
 export const prerender = true;
+
 import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Blog from "../../components/pages/Blog";
 
-const posts = await getCollection("posts");
+interface Props {
+  page: PaginatedCollection<"posts">;
+  allPosts: CollectionEntry<"posts">[];
+}
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const _posts: CollectionEntry<"posts">[] = await getCollection("posts");
-  return paginate(_posts, { pageSize: 10 });
+  const posts: CollectionEntry<"posts">[] = await getCollection("posts");
+  let paginated = paginate(posts, { pageSize: 10 });
+
+  paginated = paginated.map((pag) => {
+    return {
+      params: { ...pag.params },
+      props: { ...pag.props, allPosts: posts },
+    };
+  });
+
+  return paginated;
 }) satisfies GetStaticPaths;
 
-const { page } = Astro.props;
-
-// TODO: ADD SEARCH AND ORDER_BY FILTERS
-// IDEA: USE A FORM ELEMENT
-//IDEA: MAKE THIS IN REACT
+const { page, allPosts } = Astro.props;
 ---
 
 <Layout title="Blogs - David'Space">
-  <!-- @ts-ignore-->
-  <Blog page={page} totalPosts={posts} client:load />
+  <Blog page={page} totalPosts={allPosts} client:load />
 </Layout>
