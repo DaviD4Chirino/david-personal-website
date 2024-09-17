@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+
+type Props = HTMLAttributes<"figure"> & {
+  src: string;
+  alt: string;
+  caption?: string;
+  className?: string;
+  imgClassName?: string;
+};
+
+const {
+  src,
+  alt,
+  caption = alt,
+  className = "",
+  imgClassName = "",
+  ...props
+} = Astro.props;
+---
+
+<figure
+  {...props}
+  class={`
+        grid grid-rows-[1fr_auto] gap-2
+        justify-center 
+        ${className}
+        `}
+>
+  <img
+    src={src}
+    alt={alt}
+    loading="lazy"
+    class={`
+            p-3 mx-auto 
+            max-h-[80vh]
+            rounded-xl shadow
+            bg-grey-100
+            ${imgClassName}`}
+    title={caption}
+  />
+  <figcaption
+    class="text-sm leading-3 text-center text-kanit-light text-grey-600"
+  >
+    <a href={src} target="_blank">
+      {caption}
+    </a>
+  </figcaption>
+</figure>

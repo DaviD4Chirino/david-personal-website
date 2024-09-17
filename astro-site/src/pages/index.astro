@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Hero from "../components/atoms/Hero";
 import { getCollection } from "astro:content";
 import BlogCard from "../components/templates/BlogCard";
-import About from "../components/pages/index/About";
+import About from "../components/pages/index/About.astro";
 
 const posts = await getCollection("posts");
 
