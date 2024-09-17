@@ -1,4 +1,4 @@
-import FigureImg from "../molecules/FigureImg";
+import FigureImg from "../../organisms/FigureImg";
 
 export default function About() {
   return (

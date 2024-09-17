@@ -4,6 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import ContinueReadingLink from "../../../components/molecules/ContinueReading";
+import Navlinks from "../../../components/organisms/Navlinks.astro";
 
 interface Props {
   post: CollectionEntry<"posts">;
@@ -31,12 +32,13 @@ const { Content } = await post.render();
 ---
 
 <Layout title=`${post.data.title} - David'Space`>
+  <Navlinks class="flex absolute top-5 right-5 gap-1 z-10" />
   <section class="container">
     <article class="prose mx-auto mt-32 animate-fade-up">
       <Content />
     </article>
   </section>
-  <footer class="mx-auto mt-32 mb-16">
+  <footer class="mx-auto mt-32 mb-8">
     <section class="flex gap-3 flex-wrap justify-between px-[0.8rem]">
       {
         prevPost ? (

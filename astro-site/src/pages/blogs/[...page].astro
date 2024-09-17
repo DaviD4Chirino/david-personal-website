@@ -5,6 +5,7 @@ import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Blog from "../../components/pages/Blog";
+import Navlinks from "../../components/organisms/Navlinks.astro";
 
 interface Props {
   page: PaginatedCollection<"posts">;
@@ -29,5 +30,6 @@ const { page, allPosts } = Astro.props;
 ---
 
 <Layout title="Blogs - David'Space">
+  <Navlinks class="flex absolute top-5 right-5 gap-1 z-10" />
   <Blog page={page} totalPosts={allPosts} client:load />
 </Layout>

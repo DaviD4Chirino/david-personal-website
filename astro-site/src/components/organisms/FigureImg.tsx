@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps } from "react";
+import React, { type DetailedHTMLProps } from "react";
 
 interface FigureProps
   extends DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
@@ -39,7 +39,9 @@ export default function FigureImg({
         title={caption || alt}
       />
       <figcaption className="text-sm leading-3 text-center text-kanit-light text-grey-600">
-        <a href={src}>{caption || alt}</a>
+        <a href={src} target="_blank">
+          {caption || alt}
+        </a>
       </figcaption>
     </figure>
   );

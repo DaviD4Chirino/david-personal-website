@@ -27,6 +27,10 @@
   "include": [
     "src",
     "astro-site/src/components/atoms",
-    "astro-site/src/utils.ts"
+    "astro-site/src/utils.ts",
+    "astro-site/src/components/organisms/SharePage.tsx",
+    "astro-site/src/components/organisms/Navlinks.tsx",
+    "astro-site/src/components/organisms/FigureImg.tsx",
+    "astro-site/src/components/pages/About.tsx"
   ]
 }

@@ -1,10 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/atoms/Hero";
+import { getCollection } from "astro:content";
+import BlogCard from "../components/templates/BlogCard";
+import About from "../components/pages/index/About";
+
+const posts = await getCollection("posts");
+
+const firstSix = posts.slice(0, 6);
 ---
 
 <Layout title="David'Space">
-  <main>
+  <main class="grid gap-y-16 mb-8">
     <Hero client:idle />
+
+    <section
+      class="container grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
+      id="News"
+    >
+      {firstSix.map((post) => <BlogCard post={post} />)}
+    </section>
+    <About />
   </main>
 </Layout>

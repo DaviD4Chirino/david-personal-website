@@ -2,7 +2,7 @@
 // import axios from "axios";
 import "./App.css";
 import "./fonts.css";
-import About from "./components/organisms/About";
+import About from "../astro-site/src/components/pages/index/About";
 import Hero from "./components/organisms/Hero";
 import Updates from "./components/organisms/Updates";
 
