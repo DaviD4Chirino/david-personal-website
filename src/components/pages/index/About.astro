@@ -1,5 +1,6 @@
 ---
 import FigureImg from "../../organisms/FigureImg.astro";
+import sigil from "/sigilPixelFanart.jpg"
 ---
 
 <section class="container grid gap-5 px-5 mt-5" id="About">
@@ -9,7 +10,7 @@ import FigureImg from "../../organisms/FigureImg.astro";
     class="grid grid-cols-1 sm:grid-cols-[.5fr_1fr] gap-2"
   >
     <FigureImg
-      src="/sigilPixelFanart.jpg"
+      src={"/sigilPixelFanart.jpg"}
       alt="A badly preserved pixel fanart of a sigil from shadow of the colossus"
       imgClassName="max-h-[30rem]"
     />

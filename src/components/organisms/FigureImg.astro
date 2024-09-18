@@ -4,7 +4,7 @@ import type { HTMLAttributes } from "astro/types";
 import { Image } from "astro:assets";
 
 type Props = HTMLAttributes<"figure"> & {
-  src: string |ImageMetadata;
+  src: string | ImageMetadata;
   alt: string;
   caption?: string;
   className?: string;
@@ -20,7 +20,7 @@ const {
   className = "",
   imgClassName = "",
   width,
-height,
+  height,
   ...props
 } = Astro.props;
 ---
@@ -39,6 +39,7 @@ height,
   <img
     src={src}
     alt={alt}
+    decoding="async"
     loading="lazy"
     class={`
             p-3 mx-auto 
