@@ -6,9 +6,6 @@ export default config({
     kind: "github",
     repo: "DaviD4Chirino/david-personal-website",
   },
-  cloud: {
-    project: "me-myself-and-i/david-space",
-  },
   collections: {
     posts: collection({
       label: "Posts",
