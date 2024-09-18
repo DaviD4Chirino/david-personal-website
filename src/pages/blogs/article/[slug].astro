@@ -1,0 +1,68 @@
+---
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import ContinueReadingLink from "../../../components/molecules/ContinueReading";
+import Navlinks from "../../../components/organisms/Navlinks.astro";
+import FigureImg from "../../../components/organisms/FigureImg.astro";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  nextPost: CollectionEntry<"posts"> | undefined;
+  prevPost: CollectionEntry<"posts"> | undefined;
+}
+export const getStaticPaths = (async () => {
+  const posts: CollectionEntry<"posts">[] = await getCollection("posts");
+
+  const paths = posts.map((post, index) => {
+    const nextPost = index + 1 > posts.length ? undefined : posts[index + 1];
+
+    const prevPost = index - 1 < 0 ? undefined : posts[index - 1];
+    return {
+      params: { slug: post.slug },
+      props: { post, nextPost, prevPost },
+    };
+  });
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { post, nextPost, prevPost } = Astro.props;
+
+const { Content } = await post.render();
+---
+
+<Layout title=`${post.data.title} - David'Space`>
+  <Navlinks class="flex absolute top-5 right-5 gap-1 z-10" />
+  <section class="container">
+    <article class="prose mx-auto mt-32 animate-fade-up">
+      <Content />
+    </article>
+  </section>
+  <footer class="mx-auto mt-32 mb-8">
+    <section class="flex gap-3 flex-wrap justify-between px-[0.8rem]">
+      {
+        prevPost ? (
+          <ContinueReadingLink
+            title={prevPost.data.title}
+            articleSlug={prevPost.slug}
+          />
+        ) : (
+          <div />
+        )
+      }
+      {
+        nextPost ? (
+          <ContinueReadingLink
+            title={nextPost.data.title}
+            articleSlug={nextPost.slug}
+            prevOrNext="Next"
+            right
+          />
+        ) : (
+          <div />
+        )
+      }
+    </section>
+  </footer>
+</Layout>

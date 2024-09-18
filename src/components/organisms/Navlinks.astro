@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Navlink from "./Navlink.astro";
+import routes from "../../routes.json";
+
+type Props = HTMLAttributes<"ul">;
+const props = Astro.props;
+---
+
+<ul {...props} id="NavLinks">
+  <li class="list-none">
+    <Navlink href={routes.home} title="Home">Home</Navlink>
+  </li>
+  {
+    /* <li class="list-none">
+      <Link to={routes.library} title="Library" />
+    </li>
+    <li class="list-none">
+      <Link to={routes.projects} title="Projects" />
+    </li> */
+  }
+  <li class="list-none">
+    <Navlink href={routes.blogs} title="Blogs">Blogs</Navlink>
+  </li>
+</ul>

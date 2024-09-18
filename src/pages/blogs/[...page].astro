@@ -1,0 +1,35 @@
+---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Blog from "../../components/pages/Blog";
+import Navlinks from "../../components/organisms/Navlinks.astro";
+
+interface Props {
+  page: PaginatedCollection<"posts">;
+  allPosts: CollectionEntry<"posts">[];
+}
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts: CollectionEntry<"posts">[] = await getCollection("posts");
+  let paginated = paginate(posts, { pageSize: 10 });
+
+  paginated = paginated.map((pag) => {
+    return {
+      params: { ...pag.params },
+      props: { ...pag.props, allPosts: posts },
+    };
+  });
+
+  return paginated;
+}) satisfies GetStaticPaths;
+
+const { page, allPosts } = Astro.props;
+---
+
+<Layout title="Blogs - David'Space">
+  <Navlinks class="flex absolute top-5 right-5 gap-1 z-10" />
+  <Blog page={page} totalPosts={allPosts} client:load />
+</Layout>

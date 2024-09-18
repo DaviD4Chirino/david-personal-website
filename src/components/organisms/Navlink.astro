@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+type Props = HTMLAttributes<"a">;
+const props = Astro.props;
+const active = Astro.url.pathname == props.href;
+---
+
+<a
+  {...props}
+  class=` text-grey-900 skip-css hover:underline active:no-underline rounded-md  px-3 py-2 ${
+    active ? " bg-secondary no-underline hover:underline" : ""
+  }`
+>
+  <slot />
+</a>

@@ -20,7 +20,7 @@ export default function Tag({ title, variant }: TagProps) {
     textColor = getContrastHex(c);
   } else {
     const rand: number = new RNG(title).next();
-    color = `hsl(${lerp(0, 360, rand)}deg,100%,70%`;
+    color = `hsl(${lerp(0, 360, rand)}deg,100%,70%)`;
   }
 
   const variantFilled: string = `${color}`;
