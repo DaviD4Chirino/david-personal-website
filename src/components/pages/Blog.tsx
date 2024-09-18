@@ -1,154 +1,172 @@
-import { useEffect, useState } from "react";
-// import {random}
-import Articles, { ArticlesProps } from "../organisms/Articles";
-import Navlinks from "../molecules/Navlinks";
+import type { CollectionEntry } from "astro:content";
+import React, { useState, type Dispatch, type SetStateAction } from "react";
+import Pagination from "../molecules/Pagination";
+import Articles from "../organisms/Articles";
+import LabelInput from "../templates/formInputs/LabelInput";
+import Input from "../atoms/Input";
+import Datalist from "../atoms/Datalist";
+import {
+  capitalize,
+  sortAlphabetically,
+  startsWithVowel,
+  stringIncludes,
+} from "../../utils";
 import { Dropdown } from "flowbite-react";
-import LabelFormElement from "../templates/InputWIthLabel";
-import { useToggle } from "react-use";
-import { capitalize, startsWithVowel } from "../../../astro-site/src/utils";
-
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { IoIosArrowDown as ArrowDownI } from "react-icons/io";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
-import { useSearchParams } from "react-router-dom";
 
-export default function Blog() {
-  const [query, setQuery] = useState("");
-  const [searchParams] = useSearchParams();
-  const orderBy: string = searchParams.get("orderBy") || "date";
-  const reverse: string = searchParams.get("reverse") || "";
+interface Props {
+  page: PaginatedCollection<"posts">;
+  totalPosts: CollectionEntry<"posts">[];
+}
+
+const filters: Filters<"posts"> = {
+  date: (_a: CollectionEntry<"posts">, _b: CollectionEntry<"posts">): number =>
+    0,
+  /* sortByNumberSize(
+      DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
+      DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),
+      "bigger"
+    ) */ alphabetically: (
+    a: CollectionEntry<"posts">,
+    b: CollectionEntry<"posts">
+  ): number => {
+    return sortAlphabetically(a.data.title, b.data.title);
+  },
+  category: (
+    a: CollectionEntry<"posts">,
+    b: CollectionEntry<"posts">
+  ): number => {
+    return sortAlphabetically(a.data.category, b.data.category);
+  },
+};
+
+export default function Blog({ page, totalPosts }: Props) {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [orderBy, setOrderBy] = useState<orders>("alphabetically");
+  const [ascending, setAscending] = useState<boolean>(true);
+
+  const filtering: boolean = searchQuery != "";
+
+  let posts: CollectionEntry<"posts">[] = filtering ? totalPosts : page.data;
+
+  if (filtering) {
+    posts = posts.filter((post) =>
+      stringIncludes(post.data.title, searchQuery)
+    );
+  }
+
+  // @ts-ignore
+  posts = posts.sort(filters[orderBy]);
+
+  if (!ascending) {
+    posts = posts.reverse();
+  }
 
   return (
-    <section id="Blog" className="grid isolate relative gap-16 mb-3">
+    <section id="Blogs" className="grid isolate relative gap-16 mb-3 h-max">
       <header className="container isolate relative h-44">
-        <Navlinks className="flex absolute top-5 right-5 gap-1" />
-        {/* <div className="w-full opacity-60 bg-pattern-noisy"></div> */}
+        {/* <Navlinks classNameName="flex absolute top-5 right-5 gap-1" />  */}
+        {/* <div classNameName="w-full opacity-60 bg-pattern-noisy"></div> */}
         <div className="grid content-center h-full">
           <h1>Blogs</h1>
         </div>
       </header>
-
       <section
-        className="
-          container
-          grid-rows-none md:grid-rows-[.5fr_1fr] 
-          grid grid-cols-1 md:grid-cols-[.5fr_1fr] 
-          gap-16
-        "
+        className="container
+          grid grid-cols-1 md:grid-cols-[.5fr_1fr]
+          gap-16 h-max"
         id="ArticlesContainer"
       >
         <div
           id="search"
-          className="
-            grid grid-rows-[auto_auto] h-max gap-5 outline outline-1
-            rounded-sm p-4"
+          className="grid grid-rows-[auto_auto] h-max gap-5 outline outline-1
+    rounded-sm p-4"
         >
-          <Filter setQuery={setQuery} />
+          <div className="grid-rows-[auto_1fr] gap-5 grid h-max">
+            <SearchFilter
+              totalPosts={totalPosts}
+              setSearchQuery={setSearchQuery}
+              searchQueryValue={searchQuery}
+            />
+            <OrderBy
+              orderBy={orderBy}
+              setOrderBy={setOrderBy}
+              ascending={ascending}
+              setAscending={setAscending}
+            />
+          </div>
         </div>
-
-        <section className="grid gap-12">
-          <Articles
-            filter={query}
-            className="grid grid-cols-1 gap-10 animate-fade"
-            paginationTheme={{
-              pages: {
-                base: "inline-flex items-center -space-x-px ",
-              },
-            }}
-            orderBy={orderBy as ArticlesProps["orderBy"]}
-            reverseArticles={reverse === "true"}
-          />
+        <section className="grid gap-12 h-min">
+          {!filtering && <Pagination pageData={page.url} />}
+          <Articles posts={posts} />
+          {!filtering && <Pagination pageData={page.url} />}
         </section>
       </section>
     </section>
   );
 }
-function Filter({
-  setQuery,
+
+function SearchFilter({
+  totalPosts,
+  setSearchQuery,
+  searchQueryValue,
 }: {
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  totalPosts: CollectionEntry<"posts">[];
+  setSearchQuery: Dispatch<React.SetStateAction<string>>;
+  searchQueryValue: string;
 }) {
-  const [searchQuery, setSearchQuery] = useState("");
-
+  const titles = totalPosts.map((post) => post.data.title);
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchQuery(e.currentTarget.value);
-    setQuery(e.currentTarget.value);
+    setSearchQuery(e.target.value);
   }
-
   return (
-    <form
-      className=" grid-rows-[auto_1fr] gap-5 grid h-max "
-      onSubmit={(e) => {
-        e.preventDefault();
-        setQuery(searchQuery);
-      }}
-    >
-      <LabelFormElement title="Filter" name="article_search">
-        <input
-          name="filter"
-          type="text"
-          id="article_search"
-          className="p-2 rounded transition-all   bg-grey-100"
-          placeholder="Search Categories, Titles and Tags"
-          onChange={handleOnChange}
-          value={searchQuery}
-        />
-      </LabelFormElement>
-      {/* <label htmlFor="article_search" className="block">
-        Filter
-      </label>
-      <input
+    <LabelInput name="search" title="Search">
+      <Input
+        name="search2"
         type="text"
-        id="article_search"
-        className="p-2 rounded-full transition-all outline outline-2 outline-offset-0 outline-tertiary-light hover:outline-offset-2 focus:outline-offset-4 bg-grey-100"
         placeholder="Search Categories, Titles and Tags"
+        list="search-datalist"
+        value={searchQueryValue}
         onChange={handleOnChange}
-        value={searchQuery}
-      /> */}
-      <FilterDropdown />
-    </form>
+        aria-controls="articles search"
+        role="combobox"
+        aria-expanded
+      />
+      <Datalist array={titles} id="search-datalist" />
+    </LabelInput>
   );
 }
 
-function FilterDropdown() {
-  const options: Array<ArticlesProps["orderBy"]> = [
-    "date",
-    "alphabetically",
-    "category",
-  ];
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedOption, setSelectedOption] = useState<string>(
-    searchParams.get("orderBy") || ""
-  );
-  const [reverse, toggleReverse] = useToggle(false);
+const options: orders[] = ["alphabetically", "category", "date"];
 
-  const Icon = reverse ? FaArrowDown : FaArrowUp;
+function OrderBy({
+  orderBy,
+  setOrderBy,
+  ascending,
+  setAscending,
+}: {
+  orderBy: orders | "";
+  ascending: boolean;
+  setOrderBy: Dispatch<SetStateAction<orders>>;
+  setAscending: Dispatch<SetStateAction<boolean>>;
+}) {
+  const Icon = ascending ? FaArrowDown : FaArrowUp;
 
-  function handleClick(value: string) {
-    if (value == selectedOption) {
-      toggleReverse();
+  function handleClick(value: orders) {
+    if (value == orderBy) {
+      setAscending(!ascending);
     }
-    setSelectedOption(value);
+    setOrderBy(value);
   }
 
-  useEffect(() => {
-    // setSearchParams((prevParams) => {});
-    setSearchParams((prevParams) => {
-      prevParams.set("orderBy", selectedOption);
-      prevParams.set("reverse", `${reverse}`);
-      return searchParams;
-    });
-
-    /*  navigate({
-      search: `sortBy=${selectedOption}&reverse=${reverse}`,
-    });
- */
-
-    return () => {};
-  }, [selectedOption, reverse]);
-
   return (
-    <LabelFormElement title="Sort" name={"sort-options"}>
-      <input type="text" hidden id="sort-options" />
+    <LabelInput
+      name="order-by"
+      title="Order"
+      icon={Icon({ className: "size-3" })}
+    >
+      <input type="text" hidden id="order-by" />
       <Dropdown
         label="Dropdown button"
         dismissOnClick={false}
@@ -162,8 +180,8 @@ function FilterDropdown() {
           flex items-center gap-1
           "
           >
-            {startsWithVowel(selectedOption) ? "" : "By "}
-            {capitalize(selectedOption)} <ArrowDownI />
+            {startsWithVowel(orderBy) ? "" : "By "}
+            {capitalize(orderBy)} <ArrowDownI />
           </button>
         )}
       >
@@ -173,36 +191,22 @@ function FilterDropdown() {
             title={capitalize(opt)}
             onClick={handleClick}
             key={opt}
-            icon={selectedOption == opt ? Icon : undefined}
+            icon={orderBy == opt ? Icon : undefined}
           />
         ))}
       </Dropdown>
-
-      {/*   <div className="grid grid-cols-[1fr_.2fr] gap-x-2">
-        <select
-          name="sort-options"
-          id="Sorting"
-          className="bg-grey-100 rounded "
-        >
-          <option value="date">By Date</option>
-          <option value="alphabetically">Alphabetically</option>
-          <option value="category">By Category</option>
-        </select>
-        <button className="bg-grey-700">-{">"}</button>
-      </div> */}
-    </LabelFormElement>
+    </LabelInput>
   );
 }
-
 function DropItem({
   name,
   title,
   onClick,
   icon,
 }: {
-  name: string;
+  name: orders;
   title: string;
-  onClick: (name: string) => void;
+  onClick: (name: orders) => void;
   icon?: React.FC<React.SVGProps<SVGSVGElement>>;
 }) {
   return (
