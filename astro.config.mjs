@@ -17,13 +17,17 @@ import remarkToc from "remark-toc"
 import remarkGfm from "remark-gfm"
 
 
+import sitemap from '@astrojs/sitemap';
+
+
 // https://astro.build/config
 export default defineConfig({
+  site:"https://davidspace.vercel.app",
   markdown:{
     remarkPlugins :[remarkGfm,[remarkToc, { heading: "Contents"} ]],
     
   },
-  integrations: [react(), tailwind(), markdoc(),keystatic()],
+  integrations: [react(), tailwind(), markdoc(), keystatic(), sitemap()],
   output:"hybrid",
   adapter: vercel(),
 
