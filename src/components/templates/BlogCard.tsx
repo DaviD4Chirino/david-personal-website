@@ -4,6 +4,19 @@ import Tag from "../atoms/Tag";
 import { capitalize, cleanString } from "../../utils";
 import dayjs from "dayjs";
 import { v4 as uuid } from "uuid";
+type posts = {
+  slug: string;
+  entry: {
+    title: string;
+    description: string;
+    category: string;
+    tags: readonly string[];
+    date: string;
+    content: () => Promise<{
+      node: Node;
+    }>;
+  };
+};
 
 interface Props {
   post: CollectionEntry<"posts">;

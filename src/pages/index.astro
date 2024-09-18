@@ -27,7 +27,7 @@ posts.sort(
       class="container grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
       id="News"
     >
-      {posts.map((post) => <BlogCard post={post} />)}
+      {posts.map((post:CollectionEntry<"posts">) => <BlogCard post={post} />)}
     </section>
     <About />
   </main>

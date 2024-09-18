@@ -3,13 +3,17 @@ import { config, fields, collection } from "@keystatic/core";
 
 export default config({
   storage: {
-    kind: "local",
+    kind: "github",
+    repo: "DaviD4Chirino/david-personal-website",
+  },
+  cloud: {
+    project: "me-myself-and-i/david-space",
   },
   collections: {
     posts: collection({
       label: "Posts",
       slugField: "title",
-      path: "src/content/posts/*",
+      path: "https://github.com/DaviD4Chirino/david-personal-website/tree/main/src/content/posts/*",
       format: { contentField: "content" },
       schema: {
         title: fields.slug({
