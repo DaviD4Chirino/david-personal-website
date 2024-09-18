@@ -25,3 +25,15 @@ declare interface PaginatedCollection<C extends CollectionKey> {
   pagination: Pagination;
   url: PageUrl;
 }
+
+declare interface keystaticCollection<C extends CollectionKey> {
+  slug: string;
+  entry: {
+    title: string;
+    description: string;
+    category: string;
+    tags: string[];
+    date: Date;
+    content: AsyncFunction;
+  };
+}

@@ -1,11 +1,10 @@
 ---
-export const prerender = true;
-
 import type { GetStaticPaths } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Blog from "../../components/pages/Blog";
 import Navlinks from "../../components/organisms/Navlinks.astro";
+import keystaticReader from "../../keystaticReader"
 
 interface Props {
   page: PaginatedCollection<"posts">;
@@ -13,8 +12,8 @@ interface Props {
 }
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const posts: CollectionEntry<"posts">[] = await getCollection("posts");
-  let paginated = paginate(posts, { pageSize: 10 });
+let posts = await keystaticReader.collections.posts.all();
+let paginated = paginate(posts, { pageSize: 10 });
 
   paginated = paginated.map((pag) => {
     return {

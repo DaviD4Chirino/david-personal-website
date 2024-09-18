@@ -6,19 +6,15 @@ import BlogCard from "../components/templates/BlogCard";
 import About from "../components/pages/index/About.astro";
 import dayjs from "dayjs";
 import type { CollectionEntry } from "astro:content";
-import keystaticReader from "../keystaticReader"
 
-const slugs = await keystaticReader.collections.posts.list();
-console.log(slugs);
+let posts = await getCollection("posts");
 
-// let posts = await getCollection("posts");
+posts = posts.slice(0, 6);
 
-// posts = posts.slice(0, 6);
-
-// posts.sort(
-//   (a:CollectionEntry<"posts">,b:CollectionEntry<"posts">) => (
-//     dayjs(a.data.date).unix() < dayjs(b.data.date).unix() ? 1 : -1
-//   ))
+posts.sort(
+  (a:CollectionEntry<"posts">,b:CollectionEntry<"posts">) => (
+    dayjs(a.data.date).unix() < dayjs(b.data.date).unix() ? 1 : -1
+  ))
 
 
 ---
@@ -27,12 +23,12 @@ console.log(slugs);
   <main class="grid gap-y-16 mb-8">
     <Hero client:idle />
 
-    <!-- <section
+    <section
       class="container grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
       id="News"
     >
-      {posts.map((post:CollectionEntry<"posts">) => <BlogCard post={post} />)}
-    </section> -->
+      {posts.map((post) => <BlogCard post={post} />)}
+    </section>
     <About />
   </main>
 </Layout>
