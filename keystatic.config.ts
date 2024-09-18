@@ -36,7 +36,10 @@ export default config({
           label: "Publish Date",
           validation: { isRequired: true },
         }),
-        content: fields.markdoc({ label: "Content" }),
+        content: fields.markdoc({
+          label: "Content",
+          options: { image: { directory: "/articlesImages" } },
+        }),
 
         // category: { label:"a",kind:"form" },
       },
