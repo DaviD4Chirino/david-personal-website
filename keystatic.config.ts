@@ -40,9 +40,10 @@ export default config({
           label: "Content",
           options: {
             image: {
-              directory: "/articlesImages",
+              publicPath: "/articlesImages/",
+              directory: "./public/articlesImages/",
               transformFilename(originalFilename) {
-                return "/articlesImages/" + originalFilename;
+                return originalFilename;
               },
             },
           },
