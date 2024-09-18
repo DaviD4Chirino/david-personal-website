@@ -13,7 +13,7 @@ export default config({
     posts: collection({
       label: "Posts",
       slugField: "title",
-      path: "https://github.com/DaviD4Chirino/david-personal-website/tree/main/src/content/posts/*",
+      path: "src/content/posts/*",
       format: { contentField: "content" },
       schema: {
         title: fields.slug({
