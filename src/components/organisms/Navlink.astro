@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "astro/types";
 type Props = HTMLAttributes<"a">;
 const props = Astro.props;
-const active = Astro.url.pathname == props.href;
+const active = Astro.url.pathname.includes(props.href);
 
 console.log(Astro.url.pathname,props.href)
 ---
