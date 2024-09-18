@@ -38,7 +38,14 @@ export default config({
         }),
         content: fields.markdoc({
           label: "Content",
-          options: { image: { directory: "/articlesImages" } },
+          options: {
+            image: {
+              directory: "/articlesImages",
+              transformFilename(originalFilename) {
+                return "/articlesImages/" + originalFilename;
+              },
+            },
+          },
         }),
 
         // category: { label:"a",kind:"form" },
