@@ -13,5 +13,7 @@ console.log(Astro.url.pathname,props.href)
     active ? " bg-secondary no-underline hover:underline" : ""
   }`
 >
+{Astro.url.pathname} {props.href}
+
   <slot />
 </a>
