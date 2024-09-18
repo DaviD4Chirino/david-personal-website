@@ -14,6 +14,7 @@ import {
 import { Dropdown } from "flowbite-react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { IoIosArrowDown as ArrowDownI } from "react-icons/io";
+import dayjs from "dayjs";
 
 interface Props {
   page: PaginatedCollection<"posts">;
@@ -21,13 +22,9 @@ interface Props {
 }
 
 const filters: Filters<"posts"> = {
-  date: (_a: CollectionEntry<"posts">, _b: CollectionEntry<"posts">): number =>
-    0,
-  /* sortByNumberSize(
-      DateTime.fromFormat(a.date, "yyyy-MM-dd").toUnixInteger(),
-      DateTime.fromFormat(b.date, "yyyy-MM-dd").toUnixInteger(),
-      "bigger"
-    ) */ alphabetically: (
+  date: (a: CollectionEntry<"posts">, b: CollectionEntry<"posts">): number =>
+    dayjs(a.data.date).unix() < dayjs(b.data.date).unix() ? 1 : -1,
+  alphabetically: (
     a: CollectionEntry<"posts">,
     b: CollectionEntry<"posts">
   ): number => {
@@ -43,7 +40,7 @@ const filters: Filters<"posts"> = {
 
 export default function Blog({ page, totalPosts }: Props) {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [orderBy, setOrderBy] = useState<orders>("alphabetically");
+  const [orderBy, setOrderBy] = useState<orders>("date");
   const [ascending, setAscending] = useState<boolean>(true);
 
   const filtering: boolean = searchQuery != "";
@@ -63,11 +60,13 @@ export default function Blog({ page, totalPosts }: Props) {
     posts = posts.reverse();
   }
 
+  /*  posts.forEach((post) => {
+    console.log(post.data.title, dayjs(post.data.date).unix());
+  }); */
+
   return (
     <section id="Blogs" className="grid isolate relative gap-16 mb-3 h-max">
       <header className="container isolate relative h-44">
-        {/* <Navlinks classNameName="flex absolute top-5 right-5 gap-1" />  */}
-        {/* <div classNameName="w-full opacity-60 bg-pattern-noisy"></div> */}
         <div className="grid content-center h-full">
           <h1>Blogs</h1>
         </div>

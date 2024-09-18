@@ -4,10 +4,16 @@ import Hero from "../components/atoms/Hero";
 import { getCollection } from "astro:content";
 import BlogCard from "../components/templates/BlogCard";
 import About from "../components/pages/index/About.astro";
+import dayjs from "dayjs";
+import type { CollectionEntry } from "astro:content";
 
-const posts = await getCollection("posts");
+let posts = await getCollection("posts");
 
-const firstSix = posts.slice(0, 6);
+posts = posts.slice(0, 6);
+
+posts.sort((a:CollectionEntry<"posts">,b:CollectionEntry<"posts">)=> dayjs(a.data.date).unix() < dayjs(b.data.date).unix() ? 1 : -1)
+
+
 ---
 
 <Layout title="David'Space">
@@ -18,7 +24,7 @@ const firstSix = posts.slice(0, 6);
       class="container grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
       id="News"
     >
-      {firstSix.map((post) => <BlogCard post={post} />)}
+      {posts.map((post) => <BlogCard post={post} />)}
     </section>
     <About />
   </main>
