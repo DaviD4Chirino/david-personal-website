@@ -13,7 +13,11 @@ interface Props {
 }
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const posts: CollectionEntry<"posts">[] = await getCollection("posts");
+  let posts: CollectionEntry<"posts">[] = await getCollection("posts");
+
+  // take out the drafts
+  posts = posts.filter((post)=>!post.data.draft)
+
   let paginated = paginate(posts, { pageSize: 10 });
 
   paginated = paginated.map((pag) => {

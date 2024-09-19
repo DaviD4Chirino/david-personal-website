@@ -8,9 +8,8 @@ import dayjs from "dayjs";
 import type { CollectionEntry } from "astro:content";
 
 let posts = await getCollection("posts");
-
+posts = posts.filter((post)=>!post.data.draft)
 posts = posts.slice(0, 6);
-
 posts.sort(
   (a:CollectionEntry<"posts">,b:CollectionEntry<"posts">) => (
     dayjs(a.data.date).unix() < dayjs(b.data.date).unix() ? 1 : -1

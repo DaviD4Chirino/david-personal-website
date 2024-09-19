@@ -16,6 +16,11 @@ export default config({
         title: fields.slug({
           name: { label: "Title", validation: { isRequired: true } },
         }),
+        draft: fields.checkbox({
+          label: "Draft",
+          description:
+            "Set this post as draft to prevent it from being published",
+        }),
         description: fields.text({
           label: "Description",
           multiline: true,
@@ -40,11 +45,8 @@ export default config({
           label: "Content",
           options: {
             image: {
-              publicPath: "/articlesImages/",
-              directory: "./public/articlesImages/",
-              transformFilename(originalFilename) {
-                return originalFilename;
-              },
+              publicPath: "/articles/images/",
+              directory: "./public/articles/images/",
             },
           },
         }),
