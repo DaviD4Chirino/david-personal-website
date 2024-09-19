@@ -41,7 +41,7 @@ export default config({
           label: "Publish Date",
           validation: { isRequired: true },
         }),
-        content: fields.markdoc({
+        content: fields.mdx({
           label: "Content",
           options: {
             image: {
