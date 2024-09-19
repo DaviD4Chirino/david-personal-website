@@ -1,12 +1,13 @@
 ---
-import type { GetStaticPaths } from "astro";
+import type { GetStaticPaths, ImageMetadata } from "astro";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import ContinueReadingLink from "../../../components/molecules/ContinueReading";
 import Navlinks from "../../../components/organisms/Navlinks.astro";
 import FigureImg from "../../../components/organisms/FigureImg.astro";
-
+import Link from "../../../components/atoms/Link";
+export const prerender = true
 interface Props {
   post: CollectionEntry<"posts">;
   nextPost: CollectionEntry<"posts"> | undefined;
@@ -30,13 +31,18 @@ export const getStaticPaths = (async () => {
 const { post, nextPost, prevPost } = Astro.props;
 
 const { Content } = await post.render();
+
+const components = {
+  img:FigureImg
+}
+
 ---
 
 <Layout title=`${post.data.title} - David'Space`>
   <Navlinks class="flex absolute top-5 right-5 gap-1 z-10" />
   <section class="container">
     <article class="prose mx-auto mt-32 animate-fade-up">
-      <Content />
+      <Content  components={components} />
     </article>
   </section>
   <footer class="mx-auto mt-32 mb-8">

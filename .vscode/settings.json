@@ -6,6 +6,7 @@
     "luxon",
     "Navlink",
     "Navlinks",
+    "rehype",
     "replyke"
   ]
 }
