@@ -20,6 +20,9 @@ import remarkGfm from "remark-gfm"
 import sitemap from '@astrojs/sitemap';
 
 
+import mdx from '@astrojs/mdx';
+
+
 // https://astro.build/config
 export default defineConfig({
   site:"https://davidspace.vercel.app",
@@ -27,7 +30,7 @@ export default defineConfig({
     remarkPlugins :[remarkGfm,[remarkToc, { heading: "Contents"} ]],
     
   },
-  integrations: [react(), tailwind(), markdoc(), keystatic(), sitemap()],
+  integrations: [react(), tailwind(), markdoc(), keystatic(), sitemap(), mdx()],
   output:"hybrid",
   adapter: vercel(),
 

@@ -16,7 +16,7 @@ export const getStaticPaths = (async ({ paginate }) => {
   let posts: CollectionEntry<"posts">[] = await getCollection("posts");
 
   // take out the drafts
-  posts = posts.filter((post)=>post.data.draft)
+  posts = posts.filter((post)=>!post.data.draft)
 
   let paginated = paginate(posts, { pageSize: 10 });
 
