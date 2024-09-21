@@ -64,7 +64,7 @@ export default {
 
 		extend: {
 			backgroundImage: {
-				"404": "url('/assets/404page/404.svg')"
+				"404": "url('/assets/404page/404.webp')"
 			}
 		},
 	},
