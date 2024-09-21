@@ -1,6 +1,9 @@
+import type { IconType } from "react-icons/lib";
+
 type ButtonLinkProps = {
 	disabled?: boolean;
 	color?: "primary" | "secondary" | "tertiary" | "grey";
+	icon?: React.ReactNode;
 };
 
 type ButtonOrLinkProps<T> = T extends { href: string }
@@ -18,12 +21,13 @@ const generalClasses: string = `
 				cursor-pointer 
 				disabled:cursor-not-allowed
 				transition-colors
+				grid grid-cols-[auto_auto] w-max h-max gap-1 align-items-center
 		`;
 
 export default function ButtonLink<T extends { href: string }>(
 	props: ButtonOrLinkProps<T>,
 ) {
-	const { href, children, color = "primary", disabled, ...rest } = props;
+	const { href, children, color = "primary", disabled, icon, ...rest } = props;
 
 	const theme: string = coloredInteractiveClasses("secondary", disabled);
 	console.log(theme);
@@ -56,4 +60,8 @@ export default function ButtonLink<T extends { href: string }>(
 			{children}
 		</button>
 	);
+}
+
+function IconContainer({ children }: JSX.IntrinsicElements["div"]) {
+	return <div className="flex icon-container">{children}</div>;
 }

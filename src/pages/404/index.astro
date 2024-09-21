@@ -1,4 +1,5 @@
 ---
+import { FaRegArrowAltCircleLeft as ArrowLeftCircleI } from "react-icons/fa";
 import ButtonLink from "../../components/atoms/ButtonLink";
 import Layout from "../../layouts/Layout.astro";
 import { getRandomInArray } from "../../utils";
@@ -34,12 +35,12 @@ const legends: string[] = [
         grid h-max place-items-center
         text-center"
 		>
-			<h1 id="Code404" class="text-[15rem]">404</h1>
+			<h1 id="Code404" class="text-[40vmin]">404</h1>
 			<ButtonLink href="/" color="secondary">
-				{getRandomInArray(legends)}
-			</ButtonLink>
-			<ButtonLink color="secondary">
-				{getRandomInArray(legends)}
+				<div class="flex items-center gap-2">
+					<ArrowLeftCircleI className="size-5 -translate-y-[2px]" />
+					<p class="text-xl">{getRandomInArray(legends)}</p>
+				</div>
 			</ButtonLink>
 		</section>
 	</main>
