@@ -5,27 +5,22 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  --text: #050315;
-  --background: #fbfbfe;
-  --primary: #474646;
-  --secondary: #b6b6b6;
-  --accent: #141414;
+	--text: #050315;
+	--background: #fbfbfe;
+	--primary: #474646;
+	--secondary: #b6b6b6;
+	--accent: #141414;
 }
 @layer base {
-  #Article .article-md,
-  #ArticleEditor * {
-    ul,
-    ol {
-      list-style: revert;
-      margin-inline-start: 2rem;
-    }
-  }
+	.container {
+		@apply px-3.5 mx-auto;
+	}
 }
 body {
-  font-family: "Josefin Sans", "Urbanist";
-  font-weight: 400;
-  background: theme(colors.grey.200);
-  color: theme(colors.grey.900);
+	font-family: "Josefin Sans", "Urbanist";
+	font-weight: 400;
+	background: theme(colors.grey.200);
+	color: theme(colors.grey.900);
 }
 
 h1,
@@ -33,34 +28,34 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Lunasima";
-  font-weight: 700;
+	font-family: "Lunasima";
+	font-weight: 700;
 }
 
 html {
-  font-size: 100%;
+	font-size: 100%;
 } /* 16px */
 
 h1 {
-  font-size: 2.027rem; /* 48.8px */
+	font-size: 2.027rem; /* 48.8px */
 }
 
 h2 {
-  font-size: 1.802rem; /* 39.04px */
+	font-size: 1.802rem; /* 39.04px */
 }
 
 h3 {
-  font-size: 1.602rem; /* 31.2px */
+	font-size: 1.602rem; /* 31.2px */
 }
 
 h4 {
-  font-size: 1.424rem; /* 24.96px */
+	font-size: 1.424rem; /* 24.96px */
 }
 
 h5 {
-  font-size: 1.125rem; /* 20px */
+	font-size: 1.125rem; /* 20px */
 }
 
 small {
-  font-size: 0.889rem; /* 12.8px */
+	font-size: 0.889rem; /* 12.8px */
 }

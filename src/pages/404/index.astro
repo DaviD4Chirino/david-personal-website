@@ -1,0 +1,46 @@
+---
+import ButtonLink from "../../components/atoms/ButtonLink";
+import Layout from "../../layouts/Layout.astro";
+import { getRandomInArray } from "../../utils";
+import "./404.css";
+
+const legends: string[] = [
+	"Turn back, now",
+	"You're a little lost",
+	"There's nothing in here for you",
+	"You are out of bounds",
+	"The fun is back there",
+];
+---
+
+<Layout title="404 - David'Space">
+	<main
+		class="w-screen h-screen
+    bg-tertiary-darkest text-grey-100
+    relative"
+		id="404Page"
+	>
+		<span
+			class="block size-full
+            bg-404
+            bg-[size:7rem]
+            bg-[position:-15px]
+            opacity-20"
+		></span>
+		<section
+			class="absolute
+        bottom-[50%] right-[50%]
+        translate-x-2/4 translate-y-2/4
+        grid h-max place-items-center
+        text-center"
+		>
+			<h1 id="Code404" class="text-[15rem]">404</h1>
+			<ButtonLink href="/" color="secondary">
+				{getRandomInArray(legends)}
+			</ButtonLink>
+			<ButtonLink color="secondary">
+				{getRandomInArray(legends)}
+			</ButtonLink>
+		</section>
+	</main>
+</Layout>

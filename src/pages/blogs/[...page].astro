@@ -8,32 +8,34 @@ import Blog from "../../components/pages/Blog";
 import Navlinks from "../../components/organisms/Navlinks.astro";
 
 interface Props {
-  page: PaginatedCollection<"posts">;
-  allPosts: CollectionEntry<"posts">[];
+	page: PaginatedCollection<"posts">;
+	allPosts: CollectionEntry<"posts">[];
 }
 
 export const getStaticPaths = (async ({ paginate }) => {
-  let posts: CollectionEntry<"posts">[] = await getCollection("posts");
+	let posts: CollectionEntry<"posts">[] = await getCollection("posts");
 
-  // take out the drafts
-  posts = posts.filter((post)=>!post.data.draft)
+	// take out the drafts
+	posts = posts.filter((post) => !post.data.draft);
 
-  let paginated = paginate(posts, { pageSize: 10 });
+	let paginated = paginate(posts, { pageSize: 1 });
 
-  paginated = paginated.map((pag) => {
-    return {
-      params: { ...pag.params },
-      props: { ...pag.props, allPosts: posts },
-    };
-  });
+	paginated = paginated.map((pag) => {
+		return {
+			params: { ...pag.params },
+			props: { ...pag.props, allPosts: posts },
+		};
+	});
 
-  return paginated;
+	return paginated;
 }) satisfies GetStaticPaths;
 
 const { page, allPosts } = Astro.props;
 ---
 
 <Layout title="Blogs - David'Space">
-  <Navlinks class="flex absolute top-5 right-5 gap-1 z-10" />
-  <Blog page={page} totalPosts={allPosts} client:load />
+	<main>
+		<Navlinks class="flex absolute top-5 right-5 gap-1 z-10" />
+		<Blog page={page} totalPosts={allPosts} client:load />
+	</main>
 </Layout>
