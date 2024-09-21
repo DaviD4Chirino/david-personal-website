@@ -2,10 +2,14 @@ import ButtonLink from "../atoms/ButtonLink";
 
 interface Props {
 	pageData: PageUrl;
+	/**
+	 * If it has 1 of 1 page to show, it means both buttons are disabled and are useless, if you want, you can hide the pagination all together or just the buttons (or none)
+	 */
+	hideOnSinglePage?: "hide" | "hide-buttons";
 }
 const WORD_REGEX: RegExp = /([a-zA-Z\/]+)/gm;
 
-export default function Pagination({ pageData }: Props) {
+export default function Pagination({ pageData, hideOnSinglePage }: Props) {
 	const { next, prev, last, current } = pageData;
 
 	const currentIndex: string = current.replace(WORD_REGEX, "")
@@ -14,29 +18,43 @@ export default function Pagination({ pageData }: Props) {
 	const lastIndex: string = last?.replace(WORD_REGEX, "")
 		? last?.replace(WORD_REGEX, "")
 		: currentIndex;
+
+	const isSinglePage: boolean = currentIndex == "1" && lastIndex == "1";
+
+	if (hideOnSinglePage === "hide" && isSinglePage) {
+		return <></>;
+	}
+
+	const hideButtons: boolean =
+		hideOnSinglePage === "hide-buttons" && isSinglePage;
+
 	return (
 		<nav id="Pagination" className="">
 			<ul
 				className="grid grid-cols-[auto_1fr_auto] gap-2
-  place-items-center text-center
-  h-max"
+							place-items-center text-center
+							h-max"
 			>
-				{prev ? (
-					<li id="PreviousPage">
-						<ButtonLink href={prev}>Prev</ButtonLink>
-					</li>
+				{hideButtons ? (
+					<div></div>
 				) : (
-					<div className="min-w-[6ch]" />
+					<li id="PreviousPage">
+						<ButtonLink disabled={prev === undefined} href={prev}>
+							Prev
+						</ButtonLink>
+					</li>
 				)}
 				<li id="PageInfo">
 					<b>{currentIndex}</b> of {lastIndex}
 				</li>
-				{next ? (
-					<li id="NextPage">
-						<ButtonLink href={next}>Next</ButtonLink>
-					</li>
+				{hideButtons ? (
+					<div></div>
 				) : (
-					<div className="min-w-[6ch]" />
+					<li id="NextPage">
+						<ButtonLink disabled={next === undefined} href={next}>
+							Next
+						</ButtonLink>
+					</li>
 				)}
 			</ul>
 		</nav>
