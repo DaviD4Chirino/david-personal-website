@@ -1,5 +1,3 @@
-import type { IconType } from "react-icons/lib";
-
 type ButtonLinkProps = {
 	disabled?: boolean;
 	color?: "primary" | "secondary" | "tertiary" | "grey";
@@ -10,18 +8,19 @@ type ButtonOrLinkProps<T> = T extends { href: string }
 	? JSX.IntrinsicElements["a"] & ButtonLinkProps
 	: JSX.IntrinsicElements["button"] & ButtonLinkProps;
 
+// NOTE: I should not be constructing tailwindcss classes like this
 const coloredInteractiveClasses = (color: string, disabled?: boolean) =>
 	disabled
-		? `bg-${color} text-${color}-light`
-		: `bg-${color}-darkest text-${color}-lightest hover:bg-${color}-dark active:bg-${color}-darkest`;
+		? `bg-${color} text-${color}-lightest`
+		: `bg-${color}-darkest text-${color}-lightest  hover:bg-${color}-dark active:bg-${color}-darkest`;
 
 const generalClasses: string = `
-				px-3 py-2
-				rounded
-				cursor-pointer 
-				disabled:cursor-not-allowed
-				transition-colors
-				grid grid-cols-[auto_auto] w-max h-max gap-1 align-items-center
+		px-3 py-2
+		rounded
+		cursor-pointer 
+		disabled:cursor-not-allowed
+		transition-colors
+		grid grid-cols-[auto_auto] w-max h-max gap-1 align-items-center
 		`;
 
 export default function ButtonLink<T extends { href: string }>(
@@ -29,8 +28,7 @@ export default function ButtonLink<T extends { href: string }>(
 ) {
 	const { href, children, color = "primary", disabled, icon, ...rest } = props;
 
-	const theme: string = coloredInteractiveClasses("secondary", disabled);
-	console.log(theme);
+	const theme: string = coloredInteractiveClasses(color, disabled);
 
 	if (href) {
 		if (disabled) {

@@ -18,7 +18,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 	// take out the drafts
 	posts = posts.filter((post) => !post.data.draft);
 
-	let paginated = paginate(posts, { pageSize: 1 });
+	let paginated = paginate(posts, { pageSize: 10 });
 
 	paginated = paginated.map((pag) => {
 		return {
