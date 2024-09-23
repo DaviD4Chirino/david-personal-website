@@ -79,8 +79,12 @@ export default function Blog({ page, totalPosts }: Props) {
 			>
 				<div
 					id="search"
-					className="grid grid-rows-[auto_auto] h-max gap-5 outline outline-1
-    rounded-sm p-4"
+					className="
+					grid grid-rows-[auto_auto] gap-5 
+					h-max 
+					outline outline-1
+   					rounded-sm p-4
+					"
 				>
 					<div className="grid-rows-[auto_1fr] gap-5 grid h-max">
 						<SearchFilter
