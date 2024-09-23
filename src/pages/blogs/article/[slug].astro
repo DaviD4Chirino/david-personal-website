@@ -7,6 +7,7 @@ import ContinueReadingLink from "../../../components/molecules/ContinueReading";
 import Navlinks from "../../../components/organisms/Navlinks.astro";
 import FigureImg from "../../../components/organisms/FigureImg.astro";
 import Link from "../../../components/atoms/Link";
+import dayjs from "dayjs";
 export const prerender = true;
 interface Props {
 	post: CollectionEntry<"posts">;
@@ -14,7 +15,11 @@ interface Props {
 	prevPost: CollectionEntry<"posts"> | undefined;
 }
 export const getStaticPaths = (async () => {
-	const posts: CollectionEntry<"posts">[] = await getCollection("posts");
+	let posts: CollectionEntry<"posts">[] = await getCollection("posts");
+	posts = posts.sort(
+		(a: CollectionEntry<"posts">, b: CollectionEntry<"posts">) =>
+			dayjs(a.data.date).unix() > dayjs(b.data.date).unix() ? 1 : -1
+	);
 
 	const paths = posts.map((post, index) => {
 		const nextPost = index + 1 > posts.length ? undefined : posts[index + 1];

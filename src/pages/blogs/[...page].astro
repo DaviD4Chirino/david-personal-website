@@ -6,6 +6,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Blog from "../../components/pages/Blog";
 import Navlinks from "../../components/organisms/Navlinks.astro";
+import dayjs from "dayjs";
 
 interface Props {
 	page: PaginatedCollection<"posts">;
@@ -17,7 +18,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 	// take out the drafts
 	posts = posts.filter((post) => !post.data.draft);
-
+	posts = posts.sort(
+		(a: CollectionEntry<"posts">, b: CollectionEntry<"posts">) =>
+			dayjs(a.data.date).unix() < dayjs(b.data.date).unix() ? 1 : -1
+	);
 	let paginated = paginate(posts, { pageSize: 10 });
 
 	paginated = paginated.map((pag) => {
