@@ -8,13 +8,13 @@ export default function Hero() {
 	return (
 		<header
 			className="
-      isolate
-    bg-secondary h-screen w-full
-    grid grid-rows-[1fr_.05fr]
-    place-items-center 
-    p-3
-    relative  
-    "
+				isolate
+				bg-secondary h-screen w-full
+				grid grid-rows-[1fr_.05fr]
+				place-items-center 
+				p-3
+				relative  
+			"
 		>
 			<div className="w-full opacity-30 bg-pattern-noisy"></div>
 			<div className="grid relative grid-rows-2 w-full max-w-56 md:max-w-md">
@@ -23,19 +23,19 @@ export default function Hero() {
 
 				<RandomQuote
 					className="
-            absolute top-[140%] md:top-36 right-0 
-            text-xs text-right animate-fade
-            "
+						absolute top-[140%] md:top-36 right-0 
+						text-xs text-right animate-fade animate-delay-[1s]
+					"
 				/>
 			</div>
 			<ul className="flex gap-2 place-content-center w-full text-xl">
-				<li>
+				<li className="text-grey-600">
 					Writer
 					{/* <Link to={routes.library} aria-disabled>
             Writer
           </Link> */}
 				</li>
-				<li>
+				<li className="text-grey-600">
 					Developer
 					{/* <Link to={routes.projects} aria-disabled>
             Developer
@@ -52,17 +52,17 @@ export default function Hero() {
 			</ul>
 			<span
 				className="
-          absolute
-          bottom-5 right-5
-          animate-fade animate-delay-700 animate-duration-[400ms]
-        "
+					absolute
+					bottom-5 right-5
+					animate-fade animate-delay-[3s] animate-duration-[400ms]
+				"
 			>
 				<ArrowI
 					className="
-          size-16
-          text-secondary-dark
-          animate-bounce animate-infinite animate-duration-[800ms]
-      "
+						size-16
+						text-secondary-dark
+						animate-bounce animate-infinite animate-duration-[600ms]
+					"
 				/>
 			</span>
 		</header>
