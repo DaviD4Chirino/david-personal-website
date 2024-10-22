@@ -40,25 +40,43 @@ export default function BlogCard({ post }: Props) {
 
 	return (
 		<article
-			className={`p-3 no-underline rounded-2xl transition-transform ${getOutline(
+			className={`
+				
+			p-3 no-underline rounded-2xl transition-transform ${getOutline(
 				category,
-			)} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-50 shadow-lg`}
+			)} hover:rotate-2 motion-reduce:hover:rotate-0 bg-grey-50 shadow-lg 
+
+			
+			`}
 			id="BlogCard"
 		>
 			<a
 				href={`${routes.article}/${post.slug}`}
-				className="grid gap-5 no-underline h-[100%]"
+				className="
+				grid gap-4 h-full grid-rows-[auto_1fr_auto]
+				no-underline
+				"
 			>
-				<div className="flex flex-wrap gap-3 justify-between w-full">
-					<b className="hover:cursor-pointer leading-5 no-underline [align-self:baseline]">
+				<div
+					className="flex flex-wrap gap-3 h-max justify-between w-full"
+					id="Head"
+				>
+					<b className="leading-5 no-underline [align-self:baseline]">
 						<h5 id="Title">{title}</h5>
 					</b>
 					<p className="text-sm text-right text-grey-600 text-kanit" id="Date">
 						{formattedDate}
 					</p>
 				</div>
-				{description}
-				<div className="flex overflow-x-auto gap-2 py-1 h-max" id="Tags">
+				<p>{description}</p>
+				<div
+					className="
+					flex overflow-x-auto gap-2 
+					place-content-end
+					py-2
+					"
+					id="Tags"
+				>
 					<Tag title={capitalize(cleanString(category))} variant="filled" />
 					{tags.map((tag: string) => tag && <Tag title={tag} key={uuid()} />)}
 				</div>
