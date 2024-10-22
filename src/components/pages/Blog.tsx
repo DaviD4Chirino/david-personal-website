@@ -182,7 +182,7 @@ function OrderBy({
 						className="
           text-left 
           outline-grey-600 outline outline-1 text-grey-900
-          bg-grey-100
+          bg-grey-50
           p-2 rounded
           flex items-center gap-1
           "

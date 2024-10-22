@@ -28,5 +28,6 @@ export default defineConfig({
   integrations: [react(), tailwind(), markdoc(), keystatic(), sitemap(), mdx()],
   output: "hybrid",
   adapter: vercel(),
+  devToolbar: { enabled: false }
 
 });

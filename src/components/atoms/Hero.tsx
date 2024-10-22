@@ -1,10 +1,19 @@
 import RandomQuote from "./RandomQuote";
 import routes from "../../routes.json";
 import { FaArrowDown as ArrowI } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
+	const [ready, setReady] = useState(false);
 	const textClassNames: string =
-		" text-[3.8rem] md:text-[6rem] leading-8 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-outside   ";
+		" text-[3.8rem] md:text-[6rem] leading-8 md:leading-[3rem]  text-stroke-[5px] text-stroke text-stroke-outside text-grey-900 ";
+
+	useEffect(() => {
+		setReady(true);
+
+		return () => {};
+	}, []);
+
 	return (
 		<header
 			className="
@@ -20,13 +29,14 @@ export default function Hero() {
 			<div className="grid relative grid-rows-2 w-full max-w-56 md:max-w-md">
 				<h1 className={textClassNames + "text-left"}>David</h1>
 				<h1 className={textClassNames + "text-right "}>Space</h1>
-
-				<RandomQuote
-					className="
+				{ready && (
+					<RandomQuote
+						className="
 						absolute top-[140%] md:top-36 right-0 
 						text-xs text-right animate-fade animate-delay-[1s]
 					"
-				/>
+					/>
+				)}
 			</div>
 			<ul className="flex gap-2 place-content-center w-full text-xl">
 				<li className="text-grey-600">
@@ -50,21 +60,23 @@ export default function Hero() {
 					</a>
 				</li>
 			</ul>
-			<span
-				className="
+			{ready && (
+				<span
+					className="
 					absolute
 					bottom-5 right-5
-					animate-fade animate-delay-[3s] animate-duration-[400ms]
+					animate-fade animate-duration-[400ms] animate-delay-[4s]
 				"
-			>
-				<ArrowI
-					className="
+				>
+					<ArrowI
+						className="
 						size-16
 						text-secondary-dark
-						animate-bounce animate-infinite animate-duration-[600ms]
+						animate-bounce animate-infinite animate-duration-[600ms] 
 					"
-				/>
-			</span>
+					/>
+				</span>
+			)}
 		</header>
 	);
 }

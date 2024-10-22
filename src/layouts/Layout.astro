@@ -1,8 +1,9 @@
 ---
 interface Props {
-  title: string;
-  className?: string;
+	title: string;
+	className?: string;
 }
+import Footer from "../components/organisms/Footer.astro";
 import "./App.css";
 import "./fonts.css";
 import "./index.css";
@@ -12,22 +13,24 @@ const { title, className = "" } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title="David'Space"
-      href={new URL("rss.xml", Astro.site)}
-    />
-    <title>{title}</title>
-  </head>
-  <body class={className}>
-    <slot />
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="David'Space"
+			href={new URL("rss.xml", Astro.site)}
+		/>
+		<title>{title}</title>
+	</head>
+	<Footer />
+	<body class={className}>
+		<slot />
+	</body>
+
 </html>

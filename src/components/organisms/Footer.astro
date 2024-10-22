@@ -1,0 +1,36 @@
+---
+import { Image } from "astro:assets";
+---
+
+<footer
+	class="grid h-max gap-4
+    p-3
+    bg-tertiary-darkest text-tertiary-lightest
+    justify-center"
+>
+	<h4><b>David Space</b></h4>
+	<Image
+		width={512}
+		height={512}
+		src="/icons/davidspace-icon.webp"
+		alt="David'Space Icon"
+		loading="lazy"
+		class="size-16 mx-auto"
+	/>
+
+	<section id="FindMe" class="space-y-1">
+		<p class="text-kanit text-sm text-grey-400">Contact Me:</p>
+		<ul class="space-y-2">
+			<li>
+				<a
+					href="/blogs"
+					class="text-primary underline active:underline hover:no-underline hover:text-primary-light visited:text-primary-dark"
+				>
+					Twitter
+				</a>
+			</li>
+			<li>Twitter</li>
+			<li>Twitter</li>
+		</ul>
+	</section>
+</footer>

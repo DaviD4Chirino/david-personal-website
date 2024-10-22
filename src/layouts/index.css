@@ -19,7 +19,7 @@
 body {
 	font-family: "Josefin Sans", "Urbanist";
 	font-weight: 400;
-	background: theme(colors.grey.200);
+	background: theme(colors.grey.100);
 	color: theme(colors.grey.900);
 }
 
