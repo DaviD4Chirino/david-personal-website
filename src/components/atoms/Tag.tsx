@@ -23,7 +23,7 @@ export default function Tag({ title, variant }: TagProps) {
 		color = `hsl(${lerp(0, 360, rand)}deg,100%,70%)`;
 	}
 
-	const variantFilled: string = `${color}`;
+	const variantFilled: string = `${color} border  border-1`;
 	const variantOutlined: string = `border  border-1 `;
 
 	return (
@@ -33,12 +33,12 @@ export default function Tag({ title, variant }: TagProps) {
         px-3 py-2 
         rounded-md
         text-sm leading-none whitespace-nowrap
-        content-end
         `}
 			style={{
 				backgroundColor: variant === "filled" ? color : "none",
-				borderColor: variant === "filled" ? "none" : color,
+				borderColor: color,
 				color: textColor ? textColor : "",
+				alignContent: "-webkit-baseline-middle",
 			}}
 		>
 			{title}
