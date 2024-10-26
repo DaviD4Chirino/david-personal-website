@@ -1,5 +1,9 @@
 ---
 import { Image } from "astro:assets";
+import { FaTwitter } from "react-icons/fa";
+import { FaBluesky, FaGithub } from "react-icons/fa6";
+import { SiGmail } from "react-icons/si";
+import SocialIcon from "../../atoms/SocialIcon.astro";
 ---
 
 <footer
@@ -19,18 +23,8 @@ import { Image } from "astro:assets";
 	/>
 
 	<section id="FindMe" class="space-y-1">
-		<p class="text-kanit text-sm text-grey-400">Contact Me:</p>
-		<ul class="space-y-2">
-			<li>
-				<a
-					href="/blogs"
-					class="text-primary underline active:underline hover:no-underline hover:text-primary-light visited:text-primary-dark"
-				>
-					Twitter
-				</a>
-			</li>
-			<li>Twitter</li>
-			<li>Twitter</li>
-		</ul>
+		<SocialIcon href="">
+			<FaTwitter />
+		</SocialIcon>
 	</section>
 </footer>
