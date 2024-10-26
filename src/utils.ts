@@ -1,6 +1,6 @@
 export function startsWithVowel(word: string): boolean {
-  var vowels = "aeiouAEIOU";
-  return vowels.indexOf(word[0]) !== -1;
+	var vowels = "aeiouAEIOU";
+	return vowels.indexOf(word[0]) !== -1;
 }
 
 /**
@@ -9,36 +9,36 @@ export function startsWithVowel(word: string): boolean {
  * @returns
  */
 export function cleanString(text: string): string {
-  return text.replaceAll(/[\W_]/gm, " ");
+	return text.replaceAll(/[\W_]/gm, " ");
 }
 
 export function breakText(text: string, separator: string): string[] {
-  return text.split(separator).map((el) => el.trim());
+	return text.split(separator).map((el) => el.trim());
 }
 export function toSnakeCase(text: string): string {
-  return text.toLowerCase().replaceAll(" ", "_");
+	return text.toLowerCase().replaceAll(" ", "_");
 }
 
 export function toKebabCase(text: string): string {
-  return text.toLowerCase().replaceAll(" ", "-");
+	return text.toLowerCase().replaceAll(" ", "-");
 }
 export function capitalize(string: string): string {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export function getRandomInArray(arr: any[]) {
-  return arr[Math.floor(Math.random() * arr.length)];
+	return arr[Math.floor(Math.random() * arr.length)];
 }
 
 export function toPascalCase(str: string) {
-  return (str.match(/[a-zA-Z0-9]+/g) || [])
-    .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
-    .join("");
+	return (str.match(/[a-zA-Z0-9]+/g) || [])
+		.map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
+		.join("");
 }
 
 export function paginateArray(arr: any[], count: number, page: number): any[] {
-  const newArr: any[] = arr.slice((page - 1) * count, page * count);
-  return newArr;
+	const newArr: any[] = arr.slice((page - 1) * count, page * count);
+	return newArr;
 }
 
 /**
@@ -54,23 +54,23 @@ export function paginateArray(arr: any[], count: number, page: number): any[] {
  * @type Number
  */
 export function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
+	return Math.min(Math.max(value, min), max);
 }
 
 export function lerp(a: number, b: number, alpha: number) {
-  return a + alpha * (b - a);
+	return a + alpha * (b - a);
 }
 
 export function getContrastHex(hexcolor: string) {
-  var r = parseInt(hexcolor.substring(1, 3), 16);
-  var g = parseInt(hexcolor.substring(3, 5), 16);
-  var b = parseInt(hexcolor.substring(5, 7), 16);
-  var yiq = (r * 299 + g * 587 + b * 114) / 1000;
-  return yiq >= 128 ? "black" : "white";
+	const r = parseInt(hexcolor.substring(1, 3), 16);
+	const g = parseInt(hexcolor.substring(3, 5), 16);
+	const b = parseInt(hexcolor.substring(5, 7), 16);
+	const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+	return yiq >= 128 ? "black" : "white";
 }
 
 export function inRange(num: number, min: number, max: number): boolean {
-  return num >= min && num <= max;
+	return num >= min && num <= max;
 }
 
 // export function paginate(
@@ -94,19 +94,19 @@ export function inRange(num: number, min: number, max: number): boolean {
 // }
 
 export function sortAlphabetically(a: string, b: string) {
-  return a.localeCompare(b);
+	return a.localeCompare(b);
 }
 export function sortByNumberSize(
-  a: number,
-  b: number,
-  order: "bigger" | "lower"
+	a: number,
+	b: number,
+	order: "bigger" | "lower",
 ) {
-  return order == "bigger" ? (a <= b ? 1 : -1) : a >= b ? 1 : -1;
+	return order == "bigger" ? (a <= b ? 1 : -1) : a >= b ? 1 : -1;
 }
 
 export function stringIncludes(text: string, compareText: string): boolean {
-  if (text.toLowerCase().trim().includes(compareText.toLowerCase().trim())) {
-    return true;
-  }
-  return false;
+	if (text.toLowerCase().trim().includes(compareText.toLowerCase().trim())) {
+		return true;
+	}
+	return false;
 }
