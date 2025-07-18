@@ -1,5 +1,6 @@
 {
-  "name": "eminent-earth",
+  "name": "david-space",
+  "description": "David's personal website",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
